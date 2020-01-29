@@ -3,7 +3,7 @@
 ### 后端技术：
 - Ruby on Rails | Python Flask | Node
 - Rest API
-- 支款： ？？？
+- 支付： ？？？
 ### 前端：
 - React 或 React native
 - Or Server Rendering
