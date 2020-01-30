@@ -131,7 +131,7 @@
 			var title_info = $(this).text();
 			$.ajax({
 			  type: "POST",
-			  url: 'http://0.0.0.0:5000/info_request',
+			  url: 'http://3.135.232.235:5000/info_request',
 			  data: {title: title_info},
 			  success: function(data){
 			  	updateInfo(data);
