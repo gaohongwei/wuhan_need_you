@@ -27,7 +27,7 @@
 - 数据库设计、实现；
 - 给 前端 提供动态数据
 
-## 4. 动态数据(公示）列表显示，view/template, no owner yet
+## 4. 动态数据(公示）列表显示，view/template, owner: 伊迪Edie
 - route: /information, /notice
 
 ## 5. 动态数据(公示）的准备, no owner yet
