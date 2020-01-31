@@ -12,7 +12,7 @@
 - 把Godaddy网站上的网页，下了载下来，整理一下
 - 放到我们的source code 的目录下面 pages
 - 做为静态页面
-## 2. 在新网站支持页面, owner: Hao
+## 2. 在新网站支持Godaddy页面, owner: Hao
 - 定义 menu/path mapping
 - 定义通用路由
 - pages/:id， id 是变量
