@@ -1,14 +1,20 @@
 # Overall Architect
+
 ## Architect
+
 ### 后端技术：
-- Ruby on Rails | Python Flask
-- Rest API
+
+- Python Flask
 - 捐赠/付款： ？？？
+
 ### 前端：
-- React 或 React native
-- Or Server Rendering
+
+- Server Rendering
+
 ### 前端美化： bootstrap or antd
+
 ### Database:
-- mysql 或 postgres
+- postgres
+
 ### 部署平台： 阿里云，aws?
 
