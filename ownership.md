@@ -30,7 +30,7 @@
 ## 4. 动态数据(公示）列表显示，view/template, owner: 伊迪Edie
 - route: /information, /notice
 
-## 5. 动态数据(公示）的准备, no owner yet
+## 5. 动态数据(公示）的准备, owner: @戬杨 
 - 输入，编辑, preview,审核，发布
 - 需要使用 Rich Text Editor 之类的
 
