@@ -23,14 +23,14 @@
 
 - 这样，多少页面都透过已处理，都没关系
 
-## 3. 动态数据展示后端， owner: wangwentao,
+## 3. 动态数据后端准备， owner: wangwentao,
 - 数据库设计、实现；
 - 给 前端 提供动态数据
 
-## 4. 态数据(公示）列表，view/template, no owner yet
+## 4. 动态数据(公示）列表显示，view/template, no owner yet
 - route: /information, /notice
 
-## 5. 动态数据(公示的准备, no owner yet
+## 5. 动态数据(公示）的准备, no owner yet
 - 输入，编辑, preview,审核，发布
 
 ## 6. 用户登录, no owner yet
