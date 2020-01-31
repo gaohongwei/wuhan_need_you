@@ -27,10 +27,10 @@
 - 数据库设计、实现；
 - 给 前端 提供动态数据
 
-## 4. 展示动态数据(公示）view/template, no owner yet
+## 4. 态数据(公示）列表，view/template, no owner yet
 - route: /information, /notice
 
-## 5. 动态数据(公示）准备, no owner yet
-- 编辑, preview,审核，发布
+## 5. 动态数据(公示的准备, no owner yet
+- 输入，编辑, preview,审核，发布
 
 ## 6. 用户登录, no owner yet
