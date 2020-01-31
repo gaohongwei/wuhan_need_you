@@ -35,3 +35,5 @@
 - 需要使用 Rich Text Editor 之类的
 
 ## 6. 用户登录, no owner yet
+- 登录界面
+- 认证
