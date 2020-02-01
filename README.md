@@ -32,3 +32,6 @@ To restart the server
 ```bash
 sudo systemctl restart wuhan_need_you
 ```
+
+**NOTE**: The deploy scripts are only tested on Ubuntu18.04.
+
