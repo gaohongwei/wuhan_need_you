@@ -1,10 +1,10 @@
 
 
 
-
-后端：Python Flask
-前端：Server Rendering + Bootstrap + jQuery
-数据库：PostgreSQL
+# 技术框架
+- 后端：Python Flask
+- 前端：Server Rendering + Bootstrap + jQuery
+- 数据库：PostgreSQL
 
 # 技术分工：
 ## 1. Godaddy 网站迁移， owner: @robyy
@@ -30,10 +30,10 @@
 ## 4. 动态数据(公示）列表显示，view/template, owner: 伊迪Edie
 - route: /information, /notice
 
-## 5. 动态数据(公示）的准备, owner: @戬杨 
+## 5. 动态数据(公示）的准备, no owner
 - 输入，编辑, preview,审核，发布
 - 需要使用 Rich Text Editor 之类的
 
-## 6. 用户登录, no owner yet
+## 6. 用户登录,  owner: wangwentao
 - 登录界面
 - 认证
