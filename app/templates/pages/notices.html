@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Info{% endblock %}
+{% block body %}
+<div class="container">
+  <p></p>
+  <h1 class="text-center text-primary">信息发布</h1>
+
+  {% for notice in notices %}
+
+  <h2 class="text-center text-success">
+    {% if notice.title %} {{ notice.title }} {% endif %}
+  </h2>
+  <p>
+    {% if notice.content %} {{ notice.content }} {% endif %}
+  </p>
+  <br />
+  {% endfor %}
+</div>
+{% endblock %}
