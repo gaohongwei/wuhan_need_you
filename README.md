@@ -11,7 +11,7 @@ python3 run.py
 
 ## Deployment
 
-The website is deployed by flask+uwsgi+nginx.
+The website is powered by flask+uwsgi+nginx.
 
 ```bash
 git clone https://github.com/gaohongwei/wuhan_need_you.git
@@ -31,6 +31,11 @@ sudo systemctl status wuhan_need_you
 To restart the server
 ```bash
 sudo systemctl restart wuhan_need_you
+```
+
+To update, just update the repository and re-install.
+```bash
+git pull && sudo deploy/install.sh
 ```
 
 **NOTE**: The deploy scripts are only tested on Ubuntu18.04.
