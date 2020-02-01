@@ -21,7 +21,8 @@ pip3 install -r requirements.txt
 
 # Install service
 cp deploy/wuhan_need_you.service /etc/systemd/system/
-systemctl start wuhan_need_you
+systemctl daemon-reload
+systemctl restart wuhan_need_you
 systemctl enable wuhan_need_you
 systemctl status --no-pager wuhan_need_you
 
