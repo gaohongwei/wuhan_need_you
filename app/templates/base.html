@@ -3,31 +3,36 @@
 
 <head>
 	<meta http-equiv=”Content-Type” content=”text/html; charset=utf-8″>
-	<script type="text/javascript" src="{{ url_for('static', filename='jQuery.js') }}"></script>
-	<script type="text/javascript" src="{{ url_for('static', filename='bootstrap-4.4.1-dist/js/bootstrap.min.js') }}"></script>
-	<script type="text/javascript" src="{{ url_for('static', filename='bootstrap-4.4.1-dist/js/bootstrap.bundle.js') }}"></script>
-	<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-4.4.1-dist/css/bootstrap-grid.css') }}">
-	<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-4.4.1-dist/css/bootstrap.min.css') }}">
+	<script type="text/javascript"
+		src="{{ url_for('static', filename='jQuery.js') }}"></script>
+	<script type="text/javascript"
+		src="{{ url_for('static', filename='bootstrap-4.4.1-dist/js/bootstrap.min.js') }}"></script>
+	<script type="text/javascript"
+		src="{{ url_for('static', filename='bootstrap-4.4.1-dist/js/bootstrap.bundle.js') }}"></script>
+	<link rel="stylesheet"
+		href="{{ url_for('static', filename='bootstrap-4.4.1-dist/css/bootstrap-grid.css') }}">
+	<link rel="stylesheet"
+		href="{{ url_for('static', filename='bootstrap-4.4.1-dist/css/bootstrap.min.css') }}">
 </head>
 
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-	  	<a class="navbar-brand" href="#">武大北加州校友会</a>
-	  	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-	    <span class="navbar-toggler-icon"></span>
-	  	</button>
-	  	<div class="collapse navbar-collapse" id="navbarNav">
-	    	<ul class="navbar-nav">
-	    		{% for menu in menus %}
-	    			<li class="nav-item active">
-	        			<a class="nav-link" href="{{menu.path}}">{{menu.label.decode('utf-8')}}</a>
-	      			</li>
-	    		{% endfor %}
-	    	</ul>
-	  	</div>
+		<a class="navbar-brand" href="#">武大北加州校友会</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav">
+				{% for menu in menus %}
+				<li class="nav-item active">
+					<a class="nav-link" href="{{menu.path}}">{{menu.label}}</a>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
 	</nav>
 	{% block body %}
-    {% endblock %}
+	{% endblock %}
 </body>
-
-
