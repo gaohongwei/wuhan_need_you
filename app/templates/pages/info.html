@@ -1,7 +1,19 @@
 {% extends "base.html" %} 
 {% block title %}Info{% endblock %}
-{% block body %}
-<div class="jumbotron">
-  <h1>公示页面</h1>
-</div>
+{% block title %}Movie list{% endblock %}
+{% block content %}
+    <h1 class="title">公示页面</h1>
+    {% if info %}
+    <table class="table is-striped is-fullwidth">
+      
+      {% for info_item in info %}
+      <tr>
+        <td>
+          {{ info_item.title }}
+          {% if info_item.desc %} ({{ info_item.desc }}) {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% endif %}
 {% endblock %}
