@@ -10,10 +10,6 @@ menus = [
 	    'label': "捐赠",
 	    'path': '/donate'
   	},
-	{
-	    'label': "物流",
-	    'path': '/supply'
-  	},
   	{
     	'label': "信息公示",
     	'path': '/info'
