@@ -1,6 +1,6 @@
 from flask import render_template
 from app import app
-from parameter import *
+from app.menus import *
 
 @app.route('/')
 def index():
@@ -9,5 +9,4 @@ def index():
 @app.route('/<page_name>')
 def menu(page_name):
 	return render_template('pages/' + page_name + '.html', menus = menus)
-
 
