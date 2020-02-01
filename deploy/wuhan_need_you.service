@@ -3,8 +3,8 @@ Description=website for WuHan Need You
 After=network.target
 
 [Service]
-User=root
-Group=root
+User=www-data
+Group=www-data
 WorkingDirectory=/usr/local/wuhan_need_you
 ExecStart=/usr/local/bin/uwsgi --ini /usr/local/wuhan_need_you/deploy/uwsgi.ini
 
