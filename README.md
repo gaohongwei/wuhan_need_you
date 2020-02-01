@@ -11,5 +11,10 @@ python3 run.py
 
 ## Deployment
 
-gunicorn vs. uwsgi?
+The website is deployed by flask+uwsgi+nginx.
+
+```bash
+sudo deploy/install.sh
+sudo systemctl status wuhan_need_you
+```
 
