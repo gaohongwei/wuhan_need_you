@@ -1,6 +1,8 @@
 # Python cache
 __pycache__/
 *.pyc
+*.db
+venv
 
 # Mac desktop service store files
 .DS_Store

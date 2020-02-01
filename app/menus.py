@@ -11,8 +11,8 @@ menus = [
 	    'path': '/donate'
   	},
   	{
-    	'label': "信息公示",
-    	'path': '/info'
+    	'label': "信息发布",
+    	'path': '/notices'
   	}
 ]
 
