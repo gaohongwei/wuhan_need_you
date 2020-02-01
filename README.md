@@ -1,6 +1,6 @@
 # Wuhan Need You
 
-A website for publishing donation information to WuHan.
+A [website](http://wuhanuniversity.org/) for publishing donation information to the people fighting Coronavirus.
 
 ## Development
 
