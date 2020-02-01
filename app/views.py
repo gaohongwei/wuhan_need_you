@@ -1,6 +1,7 @@
 from flask import render_template
 from app import app
-from parameter import *
+from app.menus import *
+from app.info import *
 
 @app.route('/')
 def index():
@@ -8,22 +9,7 @@ def index():
 
 @app.route('/<page_name>')
 def menu(page_name):
-	return render_template('pages/' + page_name + '.html', menus = menus)
+	print(info)
+	return render_template('pages/' + page_name + '.html', menus = menus, info = info)
 
-@app.route('/info')
-def info():
-	# db = app.config["db"]
-	#info = db.get_info()
-	# a mock info obj list
-	info = [
-		{
-			title: "mock1",
-			desc: "something"
-		},
-		{
-			title: "mock 2",
-			desc: "something"
-		}
-	];
-	return render_template("info.html", info)
 
