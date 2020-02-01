@@ -3,7 +3,7 @@
 ROOT=/usr/local/wuhan_need_you
 rm -rf $ROOT
 mkdir -p $ROOT
-SRC_DIR=`readlink -f $0`/..
+SRC_DIR=`dirname $(readlink -f $0)`/..
 cd $SRC_DIR
 
 # Install server
@@ -16,7 +16,7 @@ systemctl start wuhan_need_you
 systemctl enable wuhan_need_you
 
 # Configure nginx
-apt install nginx
+apt install nginx-full
 if ! [ -f /etc/nginx/nginx.conf.bak ]; then
 	cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
 fi
