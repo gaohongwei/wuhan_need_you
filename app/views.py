@@ -10,6 +10,12 @@ from app.notices import *
 def index():
 	return render_template('pages/index.html', menus = menus)
 
+@app.route('/favicon.ico')
+def favicon():
+
+	# Add favicon
+	return ''
+
 @app.route('/notices')
 def list_notices():
 	total_page =20
@@ -21,4 +27,6 @@ def list_notices():
 @app.route('/<page_name>')
 def menu(page_name):
 	return render_template('pages/' + page_name + '.html', menus = menus)
+
+
 
