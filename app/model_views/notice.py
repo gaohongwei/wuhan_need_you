@@ -1,6 +1,7 @@
 from flask import Markup
 from flask_ckeditor import CKEditorField
 from flask_admin.contrib.sqla import ModelView
+import flask_login as login
 
 
 class NoticeModelView(ModelView):
@@ -26,4 +27,6 @@ class NoticeModelView(ModelView):
         'content': _content_formatter
     }
 
+    def is_accessible(self):
+        return login.current_user.is_authenticated
 
