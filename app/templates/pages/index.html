@@ -13,6 +13,7 @@
       		<li>{{member}}</li>
       		{% endfor %}
 		</ul>
+		<a href={{pages_info.alumni_association.legality.link}} target="_blank">{{pages_info.alumni_association.legality.title}}</a>
     </div>
 
     <div class="col-md-6 col-lg-6 col-xl-6">
@@ -51,11 +52,13 @@
 			</div>
 		</div>
 
-		<!-- <div class="jumbotron">
-		  <p class="lead">
-		  	<h5 class="card-title">武汉加油行动专题</h5>
-		  </p>
-		</div> -->
+	  	<div class="card" style="width: 20rem;">
+		  <img src="{{ url_for('static', filename=pages_info.special_topic.image) }}" class="card-img-top" alt="...">
+		  <div class="card-body">
+		    <!-- <h5 class="card-title">{{pages_info.special_topic.title}}</h5> -->
+		    <a href={{pages_info.special_topic.link}} class="btn btn-primary">{{pages_info.special_topic.title}}</a>
+		  </div>
+		</div>
 
     </div>
     <div class="col-md-3 col-lg-3 col-xl-3 jumbotron">
