@@ -11,17 +11,16 @@
 ## 动态数据后端准备， owner: wangwentao,
 - 数据库设计、实现；
 - 给 前端 提供动态数据
-
-## 动态数据(公示）列表显示， owner: 伊迪Edie/Gaohong
-- route: /information, /notice
-
-## 动态数据(公示）的准备, 伊迪Edie/Gaohong
-- 输入，编辑, preview,审核，发布
-- 需要使用 Rich Text Editor 之类的
-
 ## 用户登录,  owner: wangwentao
 - 登录界面
 - 认证
+
+## 动态数据(公示）列表显示， owner: 伊迪Edie/Gaohong
+- route: /notices
+
+## 动态数据(公示）输入、编辑, 伊迪Edie/Gaohong
+- 输入，编辑, preview,审核，发布
+- 需要使用 Rich Text Editor 之类的
 
 ## 美图， no owner
 
