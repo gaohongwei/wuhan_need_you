@@ -5,17 +5,20 @@ A [website](http://wuhanuniversity.org/) for publishing donation information to 
 ## Development
 
 ```
+git clone https://github.com/gaohongwei/wuhan_need_you.git
+cd wuhan_need_you
 pip3 install -r requirements.txt
 python3 run.py
 ```
 
 ## Deployment
 
-The website is deployed by flask+uwsgi+nginx.
+The website is powered by flask+uwsgi+nginx.
 
 ```bash
 git clone https://github.com/gaohongwei/wuhan_need_you.git
 cd wuhan_need_you
+git checkout dev
 sudo deploy/install.sh
 ```
 
@@ -31,6 +34,13 @@ sudo systemctl status wuhan_need_you
 To restart the server
 ```bash
 sudo systemctl restart wuhan_need_you
+```
+
+To update, just update the repository and re-install.
+```bash
+git pull
+git checkout dev
+sudo deploy/install.sh
 ```
 
 **NOTE**: The deploy scripts are only tested on Ubuntu18.04.
