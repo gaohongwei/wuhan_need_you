@@ -1,6 +1,3 @@
-
-
-
 # 技术框架
 - 后端：Python Flask
 - 前端：Server Rendering + Bootstrap + jQuery
@@ -24,7 +21,7 @@
 
 ## Google Analytice: owner: 唯唯安
 ## 美图， owner: QRN, 孟鹏秋
-
+## 网页信息的收集、整理、审核和验证， 周广宇Gavin
 
 # Done
 ## Godaddy 网站迁移， owner: @robyy
@@ -46,5 +43,6 @@
 - Daily Deploy, owner: wangwentao, Hao
 ## Donate page: Gaohong Wei
 ## Notice news page: 伊迪Edie/Gaohong Wei
+
 
 
