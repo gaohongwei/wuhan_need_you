@@ -6,7 +6,7 @@
 - 前端：Server Rendering + Bootstrap + jQuery
 - 数据库：PostgreSQL
 
-# 下面的技术分工：
+# 下一步的技术分工：
 ## More pages, owner: Hao
 ## 动态数据后端准备， owner: wangwentao,
 - 数据库设计、实现；
@@ -18,11 +18,12 @@
 ## 动态数据(公示）列表显示， owner: 伊迪Edie/Gaohong
 - route: /notices
 
-## 动态数据(公示）输入、编辑, 伊迪Edie/Gaohong
+## 动态数据(公示）输入、编辑, owner: Aya
 - 输入，编辑, preview,审核，发布
 - 需要使用 Rich Text Editor 之类的
 
-## 美图， no owner
+## Google Analytice: owner: 唯唯安
+## 美图， owner: QRN, 孟鹏秋
 
 
 # Done
@@ -45,4 +46,5 @@
 - Daily Deploy, owner: wangwentao, Hao
 ## Donate page: Gaohong Wei
 ## Notice news page: 伊迪Edie/Gaohong Wei
+
 
