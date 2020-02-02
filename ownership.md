@@ -7,7 +7,7 @@
 - 数据库：PostgreSQL
 
 # 下面的技术分工：
-## More pages, Hao
+## More pages, owner: Hao
 ## 动态数据后端准备， owner: wangwentao,
 - 数据库设计、实现；
 - 给 前端 提供动态数据
