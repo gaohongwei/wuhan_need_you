@@ -2,7 +2,7 @@
 
 # dynamic create menu
 menus = [
-	{
+	 {
 	    'label': "主页",
 	    'path': '/index'
   	},
@@ -32,9 +32,8 @@ menus = [
   	},
 ]
 
-# information about each pages
-pages_info = {
-  'index_page': {
+# information about index pages
+index_info = {
 
     'home_images': ["image/h2/h1.jpg", "image/h2/h2.jpg", "image/h2/h3.jpg", "image/h2/h4.jpg", "image/h2/h5.jpg", "image/h2/h6.jpg"],
 
@@ -61,24 +60,50 @@ pages_info = {
       'content': "",
       'image': "",
     }
-  },
 
+}
 
-  'alumni_activities': {},
+# information about index pages
+alumni_activities_info = {
+  
+}
 
-  'wuhan_situation': {},
+# information about wuhan situation pages
+wuhan_situation_info = {
+  
+}
 
-  'alumni_action': {},
+# information about alumni action pages
+alumni_action_info = {
+  
+}
 
-  'donate': {},
+# information about donate pages
+donate_info = {
+  
+}
 
-  'contact_us': {},
+# information about contact us pages
+contact_us_info = {
+  
+}
 
-  'qa': {}
+# information about qa pages
+qa_info = {
 
 }
 
 
+# pass page info to correct page
+menus2page = {
+  'index': index_info,
+  'alumni_activities': alumni_activities_info,
+  'wuhan_situation': wuhan_situation_info,
+  'alumni_action': alumni_action_info,
+  'donate': donate_info,
+  'contact_us': contact_us_info,
+  'qa': qa_info
+}
 
 
 # dynamic notices
