@@ -1,5 +1,5 @@
 
-from app import db
+from app.db import db
 from sqlalchemy import func
 
 class Notice(db.Model):
