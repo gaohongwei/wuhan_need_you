@@ -8,6 +8,8 @@ from app.db import init_app
 
 from app.model_views.notice import NoticeModelView
 
+from app.model_views.notice import NoticeModelView
+
 # Initialize the app
 app = Flask(__name__, instance_relative_config=True)
 admin = Admin(app=app, index_view=AdminIndexView())
@@ -24,3 +26,4 @@ admin.add_view(UserModelView(User, db.session))
 admin.add_view(NoticeModelView(Notice, db.session))
 
 init_sample_users(app)
+

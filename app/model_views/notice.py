@@ -30,4 +30,3 @@ class NoticeModelView(ModelView):
     def is_accessible(self):
         return login.current_user.is_authenticated
 
-

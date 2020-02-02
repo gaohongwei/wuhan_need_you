@@ -12,3 +12,4 @@ uWSGI==2.0.18
 Werkzeug==0.16.1
 WTForms==2.2.1
 flask-login==0.4.1
+flask_ckeditor==0.4.3

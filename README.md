@@ -7,6 +7,7 @@ A [website](http://wuhanuniversity.org/) for publishing donation information to 
 ```
 git clone https://github.com/gaohongwei/wuhan_need_you.git
 cd wuhan_need_you
+git checkout dev
 pip3 install -r requirements.txt
 python3 run.py
 ```
