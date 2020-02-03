@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% block title %}alumni_activities{% endblock %}
 {% block body %}
+
+
 <div class="jumbotron">
   	
   	<div class="container">
@@ -47,17 +49,20 @@
 	</div>
 </div>
 
-<!-- 
-<div class="container">
-	<div class="card" style="width: 18rem;">
-	  <img src="..." class="card-img-top">
-	  <div class="card-body">
-	    <p class="card-text"></p>
+
+
+<div class="card-columns">
+{% for activity in pages_info.activites_info %}
+	<div class="card m-2 p-2" style="width: 20rem;">
+	   {% for img in activity.image %}
+	  		<img  class="card-img-top img-fluid" src="{{ url_for('static', filename=img) }}">
+	   {% endfor %}
+	  <div class="card-block">
+	    <p class="card-text">{{activity.title}}</p>
 	  </div>
 	</div>
-</div> -->
-
-
+{% endfor %}
+</div>
 
 
 {% endblock %}

@@ -1,7 +1,36 @@
 {% extends "base.html" %}
 {% block title %}alumni_action{% endblock %}
 {% block body %}
+
+<style type="text/css">
+	.card {
+        margin: 0 auto; /* Added */
+        float: none; /* Added */
+        margin-bottom: 10px; /* Added */
+}
+</style>
+
 <div class="jumbotron">
   <h1>校友会在行动</h1>
 </div>
+
+	<h2 class="p-1">{{pages_info.actions[0].title}}</h2>
+
+	<div class="card p-2" style="width: 50rem;">
+		<img src="{{ url_for('static', filename=pages_info.actions[0].image_info.link) }}" class="card-img-top" alt="...">
+		<div class="card-block">
+		  <p class="card-title text-center">{{pages_info.actions[0].image_info.title}}</p>
+		</div>
+	</div>
+
+	<div class="jumbotron">
+	<p>
+		{{pages_info.actions[0].content}}
+	</p>
+
+	<p>{{pages_info.actions[0].source.title}} <a href={{pages_info.actions[0].source.link}} target="_blank">{{pages_info.actions[0].source.content}}</a></p>
+
+</div>
+
+
 {% endblock %}
