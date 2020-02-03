@@ -1,9 +1,15 @@
 # FDD
 ## 用户类型、权限
 ```
-信息输入
-信息读取
-审核（批准）
+信息输入 writer
+信息读取 reader
+审核（批准）admin
+
+pre-create only one user: an admin user
+disable signup/register
+create user by admin user
+new user default role: reader
+assign role by admin
 ```
 ## 数据库设计。
 ```
@@ -31,7 +37,7 @@ tag
 
 提交审核
 ```
-审核，Admin用户()
+审核，Admin用户
 ```
 List 待审核的信息
 Preview
@@ -42,8 +48,8 @@ Edit：
 ## 界面。
 ### 输入界面。
 ```
-  有些字段的值应该系统判断，如当前用户名，系统（如时间。
-  不应该出现在操作界面。
+  有些字段的值应该系统判断，如起草人，审核人，时间
+  不应该作为输入。
 ```
 ### 审核界面。
 ```
