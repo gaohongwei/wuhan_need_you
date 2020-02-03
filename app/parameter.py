@@ -2,10 +2,14 @@
 
 # dynamic create menu
 menus = [
-	{
+	  {
 	    'label': "主页",
 	    'path': '/index'
   	},
+    {
+      'label': '信息发布',
+      'path': '/notices'
+    },
   	{
     	'label': "校友活动",
     	'path': '/alumni_activities'

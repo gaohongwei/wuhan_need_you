@@ -3,4 +3,11 @@
 {% block tail %}
     {{ super() }}
     {{ ckeditor.load(custom_url=url_for('static', filename='ckeditor/ckeditor.js')) }}
+    <script>
+        var role = {{current_user.role|tojson}};
+        if (role !== 'admin') {
+            document.getElementById('status').disabled = true;
+    
+        }
+    </script>
 {% endblock %}

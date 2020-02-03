@@ -9,3 +9,5 @@ SQLALCHEMY_DATABASE_URI = 'sqlite:///./test2.db'
 FLASK_ADMIN_SWATCH = 'cerulean'
 
 SECRET_KEY = 'dev' # production env should be different
+
+NUMS_PER_PAGE = 20
