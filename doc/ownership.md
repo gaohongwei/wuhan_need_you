@@ -12,15 +12,16 @@
 - 登录界面
 - 认证
 
-## 动态数据(公示）列表显示， owner: 伊迪Edie/Gaohong
-- route: /notices
+## 动态数据(公示）列表显示， owner: Aya/伊迪Edie
+- /notices
+- /admin/notices
 
 ## 动态数据(公示）输入、编辑, owner: Aya
 - 输入，编辑, preview,审核，发布
 - 需要使用 Rich Text Editor 之类的
 
 ## Google Analytice: owner: 唯唯安
-## 美图， owner: QRN, 孟鹏秋
+## 美图， owner: QRN, 孟鹏秋, 大游侠
 ## 网页信息的收集、整理、审核和验证， 周广宇Gavin
 
 # Done
