@@ -1,7 +1,14 @@
+# coding: utf-8
 from flask import current_app
 from app.db import db
 from sqlalchemy import func
 from app.libs.date_utils import utcnow
+import flask_login as login
+
+def get_current_user_id():
+    if login.current_user == None:
+        return None
+    return login.current_user.get_id()
 
 class Notice(db.Model):
     __tablename__ = 'notices'
@@ -15,8 +22,8 @@ class Notice(db.Model):
     modified_time = db.Column(db.DateTime, default=utcnow, onupdate=utcnow)
     permitted_time = db.Column(db.DateTime) # permit or not permit
     type = db.Column(db.String, nullable=False)
-    create_user = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    permit_user = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    create_user = db.Column(db.Integer, db.ForeignKey('users.id'), default=get_current_user_id)
+    permit_user = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     priority = db.Column(db.Integer, default=0)
     # comma separated list

@@ -1,3 +1,5 @@
+# coding: utf-8
+
 from flask import Markup
 from flask_ckeditor import CKEditorField
 from flask_admin.contrib.sqla import ModelView
@@ -17,9 +19,21 @@ class NoticeModelView(ModelView):
 
     column_exclude_list = ['content']
     column_searchable_list = ['title', 'status', 'type']
-    column_sortable_list = ['modified_time', 'created_time']
+    column_sortable_list = ['title', 'modified_time', 'created_time', 'permitted_time', 'type', 'status']
+    column_editable_list = ['title', 'content', 'type', 'priority', 'tags']
     
-    form_excluded_columns = ['created_time', 'modified_time']
+    form_excluded_columns = ['created_time', 'modified_time', 'permitted_time']
+    form_choices = {
+            'type': [
+                ('信息', '信息'),
+                ('广告', '广告')
+                ]#,
+            #'priority': [     # TODO: need post-processing
+            #    ('0', '普通'),
+            #    ('1', '优先'),
+            #    ('2', '紧急')
+            #    ]
+            }
 
     # UTC time to local time
     def _time_formatter(view, content, model, name):
