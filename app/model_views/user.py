@@ -4,9 +4,16 @@ import flask_login as login
 from app.models import User
 from app.db import db
 from werkzeug.security import generate_password_hash
+from app.libs.date_utils import as_timezone
 
 class UserModelView(sqla.ModelView):
     column_exclude_list = ['password']
+    def _time_formatter(view, context, model, name):
+        time = getattr(model, name)
+        return as_timezone(time)
+    column_formatters = {
+        'register_time': _time_formatter
+    }
     def is_accessible(self):
         return login.current_user.is_authenticated
 
