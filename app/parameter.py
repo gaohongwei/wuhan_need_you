@@ -39,23 +39,30 @@ index_info = {
 
     'alumni_association': {
       'title': "武汉大学北加州校友会",
-      'content': "武汉大学北加州校友于1980s成立于加州硅谷，是武汉大学校友总会认可的合法合规海外校友会分支，是基金会的执行机构",
+      'content': "武汉大学北加州校友会，草创于1980年代，由部分台湾来美和大陆来美的武大校友联合倡议，于1998年正式成立于加州硅谷，是武汉大学校友总会认可的合法合规海外校友会分支，是基金会的执行机构。",
       'member_info': {
-          'title': "校友会会长:",
-          'member': ["巨辉 (现任会长)", "Harry Wang (副会长)", "沈睿 (副会长)", "陶然 (副会长)", "李晨晨 (副会长)"],
+          'cur_title': "校友会会长:",
+          'cur_member': ["巨辉 (现任会长)", "陶然 (副会长)", "Harry Wang (副会长)", "沈睿 (副会长)", "李晨晨 (副会长)"],
+          'pre_title': "历任校友会会长:",
+          'pre_member': ["王常玉（首任会长)", "宁挺", "李晓景", "陈海雷", "张露", "欧阳明", "陈小春", "陈章鸿", "李金辉"]
       },
       'legality': {
-          'title': "机构资质认定",
+          'title': "机构资质认定 - 序号211",
           'link': "https://alumni.whu.edu.cn/gdxyh.htm"
       }
     },
 
     'foundation': {
       'title': "武汉大学海外校友科学基金会",
-      'content': "由黄彰任、王高峰、李晓景三位武汉大学校友倡议, 基金会成立于1999年，A California Nonprofit Public Benefit Corporation，Public Charity, Under section 501(c)(3) a non-profit public benefit organization exempt from federal income tax under section 501(c)(3) of the Internal Revenue Code in USA.",
+      'content': "由黄彰任、王高峰、李晓景三位武汉大学校友倡议, 基金会成立于1999年，是美国联邦注册非营利性公益组织，公共慈善机构，符合美国《内部税收法》第501（c）（3）条，第501（c）（3）条规定的免税的联邦公益组织。",
       'member_info': {
           'title': "基金会历任会长:",
           'member': ["黄彰任（名誉会长)", "李晓景（首任会长)", "宁挺", "王常玉", "欧阳明", "陈小春", "李金辉 (现任会长)"],
+      },
+      'hzr': {
+        'image': 'image/hzr.jpg',
+        'title': '黄彰任，武汉大学北加州校友会名誉会长',
+        'content': '武汉大学土木系校友 （1930s），美国密歇根大学硕士（1950s），美国国会顾问，泰国森美实业公司董事长。 是一位享誉世界的华人实业家，也是一位享誉世界的华人慈善家。曾任任1940s国民革命军空军总部科长，1950—1951年 台湾大学土木系副教授，1953—1954年 任美国密歇根州公路局桥梁工程师；美国J.G.WHITE纽约总公司结构工程师；1955—1981年 任泰国森美实业公司总经理和泰国森美石油公司董事长。。先后在美国纽约设立黄彰任基金会,在美国史丹福大学、康州州立大学等处设立奖学金。在瑞士设立欧阳遇基金会,资助赴欧美留学深造的家乡学子。捐资修建长沙雅礼中学彰任图书馆和平江县欧阳遇图书馆。1996年，捐资20万美元，在母校武汉大学设立奖励基金，1996年，捐助10万美元在史丹福大学设立黄彰任奖学基金，1994年，捐助10万美元在史丹福大学医院设立肝脏移植中心，1995年，在黄彰任80寿辰之日，美国旧金山市将这一天定为“黄彰任日”，这是对黄彰任一生杰出成就给予的最崇高的荣誉。2001年，武汉大学设立“黄彰任信息技术研究所”，王高峰教授担任所长，周怀北，胡继承任副所长。2012年10月30日，黄彰任先生在美国洛杉矶因病去世。'
       }
     },
 
@@ -69,7 +76,8 @@ index_info = {
 
 # information about index pages
 alumni_activities_info = {
-  'home_images': ["image/alumni_activities/2019_life_science_1.jpg", "image/alumni_activities/2019_life_science_2.jpg", "image/alumni_activities/2019_3551.jpg", "image/alumni_activities/2018_university_council.jpg"],
+  'home_images': ["image/alumni_activities/2018_bbq.jpg", "image/alumni_activities/2017_president.jpg", "image/alumni_activities/2017_bbq.jpg", "image/alumni_activities/2017_admin.jpg", \
+                   "image/alumni_activities/2018_prof.jpg", "image/alumni_activities/2017_president.jpg", "image/alumni_activities/2007_president.jpg"  ],
 
   'activites_info': [
     {
@@ -162,12 +170,25 @@ wuhan_situation_info = {
   'introduction': "武汉市，一个人口1100万的城市，中国中部最大的都市。 2019年12月，武汉地区发现了一种新的冠状病毒。为了限制病毒传播，整座城市正处于封锁状态。到目前为止，该病毒已影响数千名武汉居民，并造成数百人死亡。 \
                   武汉处于紧急状态。武汉需要您的帮助。\
                   我们正在努力支持武汉的医疗物资，并提供对该疾病的报道和认识。",
-  'china_update': 'image/wuhan_situation/wuhan_update_203.jpg',
-  'source': {
-    'title': "来源:",
-    'content': "新浪",
-    'link': "https://news.sina.cn/zt_d/yiqing0121?vt=4&pos=undefined"
+  'china_update_info': {
+    'link': 'image/wuhan_situation/wuhan_update_203.jpg',
+    'source': {
+      'title': "来源:",
+      'content': "新浪新闻",
+      'link': "https://news.sina.cn/zt_d/yiqing0121?vt=4&pos=undefined"
+    }
+  },
+
+  'timeline_info': {
+    'link': 'image/wuhan_situation/timeline.jpg',
+    'source': {
+      'title': "来源:",
+      'content': "察网 - 医改正能量",
+      'link': "http://www.cwzg.cn/politics/202001/54595.html"
+    }
   }
+
+
 }
 
 # information about alumni action pages

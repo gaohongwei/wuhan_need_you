@@ -2,17 +2,25 @@
 {% block title %}Home{% endblock %}
 {% block body %}
 
+
 <div class="container">
   <div class="row">
     <div class="col-md-3 col-lg-3 col-xl-3 jumbotron">
     	<p><strong>{{pages_info.alumni_association.title}}</strong></p>
       	<p>{{pages_info.alumni_association.content}}</p>
-      	<p>{{pages_info.alumni_association.member_info.title}}</p>
+      	<p>{{pages_info.alumni_association.member_info.cur_title}}</p>
       	<ul>
-      		{% for member in pages_info.alumni_association.member_info.member %}
+      		{% for member in pages_info.alumni_association.member_info.cur_member %}
       		<li>{{member}}</li>
       		{% endfor %}
 		</ul>
+		<p>{{pages_info.alumni_association.member_info.pre_title}}</p>
+		<ol>
+      		{% for member in pages_info.alumni_association.member_info.pre_member %}
+      		<li>{{member}}</li>
+      		{% endfor %}
+		</ol>
+
 		<a href={{pages_info.alumni_association.legality.link}} target="_blank">{{pages_info.alumni_association.legality.title}}</a>
     </div>
 
@@ -66,8 +74,32 @@
       	<p>{{pages_info.foundation.content}}</p>
       	<p>{{pages_info.foundation.member_info.title}}</p>
       	<ul>
-      		{% for member in pages_info.foundation.member_info.member %}
-      		<li>{{member}}</li>
+      		{% for index in range(pages_info.foundation.member_info.member|length) %}
+      			{% if index == 0 %}
+      				<!-- Button trigger modal -->
+						<li><button type="button" class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#exampleModal">{{pages_info.foundation.member_info.member[index]}}</button>
+						</li>
+						<!-- Modal -->
+						<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						  <div class="modal-dialog" role="document">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						      	<img src="{{ url_for('static', filename=pages_info.foundation.hzr.image) }}">
+						   
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						          <span aria-hidden="true">&times;</span>
+						        </button>
+						      </div>
+						      <div class="modal-body">
+						      	<h5 class="modal-title" id="exampleModalLabel">{{pages_info.foundation.hzr.title}}</h5>
+						        {{pages_info.foundation.hzr.content}}
+						      </div>
+						    </div>
+						  </div>
+						</div>
+      			{% else %}
+      				<li>{{pages_info.foundation.member_info.member[index]}}</li>
+      			{% endif %}
       		{% endfor %}
 		</ul>
     </div>
