@@ -16,8 +16,6 @@ virtualenv venv
 source ~/works/wuhan_need_you/venv/bin/activate
 pip3 install -r requirements.txt
 python3 run.py
-
-deactivate
 ```
 
 Not first time
@@ -25,7 +23,11 @@ Not first time
 cd ~/works/wuhan_need_you
 source ~/works/wuhan_need_you/venv/bin/activate
 python3 run.py
+```
 
+To leave development environment
+```
+ctrl+c
 deactivate
 ```
 
