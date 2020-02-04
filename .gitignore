@@ -4,6 +4,7 @@ __pycache__/
 *.db
 *.sqlite
 venv
+.*swp
 
 # Mac desktop service store files
 .DS_Store

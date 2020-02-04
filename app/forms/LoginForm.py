@@ -5,10 +5,10 @@ from app.models import User
 from app.db import db
 
 class LoginForm(form.Form):
-    login = fields.StringField(label='登陆名', validators=[validators.required()])
+    username = fields.StringField(label='登陆名', validators=[validators.required()])
     password = fields.PasswordField(label='密码', validators=[validators.required()])
 
-    def validate_login(self, field):
+    def validate_password(self, field):
         user = self.get_user()
 
         if user is None:
@@ -21,4 +21,4 @@ class LoginForm(form.Form):
             raise validators.ValidationError('密码错误')
 
     def get_user(self):
-        return db.session.query(User).filter_by(login=self.login.data).first()
+        return db.session.query(User).filter_by(username=self.username.data).first()

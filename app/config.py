@@ -110,7 +110,7 @@ class TestingConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = TEST_DATABASE_URL
     WTF_CSRF_ENABLED = False
-    # SQLALCHEMY_ECHO = True
+    SQLALCHEMY_ECHO = True
 
 
 config = {

@@ -3,7 +3,6 @@ from flask import url_for, redirect, render_template, request
 import flask_admin as admin
 import flask_login as login
 from flask_admin import helpers, expose
-from werkzeug.security import generate_password_hash
 from app.forms import LoginForm, RegistrationForm
 from app.models import User
 from app.db import db
@@ -21,6 +20,8 @@ class AdminIndexView(admin.AdminIndexView):
         form = LoginForm(request.form)
         if helpers.validate_form_on_submit(form):
             user = form.get_user()
+            if user == None:
+                return redirect(url_for('.login_view'))
             login.login_user(user)
 
         if login.current_user.is_authenticated:
@@ -30,6 +31,7 @@ class AdminIndexView(admin.AdminIndexView):
         self._template_args['form'] = form
         self._template_args['link'] = link
         return super(AdminIndexView, self).index()
+
     @expose('/register/', methods=('GET', 'POST'))
     def register_view(self):
         form = RegistrationForm(request.form)
@@ -39,8 +41,7 @@ class AdminIndexView(admin.AdminIndexView):
             form.populate_obj(user)
             # we hash the users password to avoid saving it as plaintext in the db,
             # remove to use plain text:
-            user.password = generate_password_hash(form.password.data)
-            user.role = 'user'
+            user.set_password(form.password.data)
 
             db.session.add(user)
             db.session.commit()

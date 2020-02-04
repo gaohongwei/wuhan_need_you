@@ -14,13 +14,11 @@ def index():
 
 @app.route('/favicon.ico')
 def favicon():
-
 	# Add favicon
 	return ''
 
 @app.route('/notices')
 def list_notices():
-
 	page = request.args.get('page', 1, type=int)
 	if current_user.is_authenticated:
 		pagination = db.session.query(Notice).paginate(page, app.config['NOTICES_PER_PAGE'], False)

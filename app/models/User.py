@@ -1,17 +1,18 @@
 
 from app.db import db
 from app.libs.date_utils import utcnow
+from werkzeug.security import generate_password_hash
+from sqlalchemy.ext.hybrid import hybrid_property
 
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    login = db.Column(db.String(80), unique=True, nullable=False)
-    username = db.Column(db.String(80), unique=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    password_hash = db.Column(db.String, nullable=False)
     first_name = db.Column(db.String(80))
     last_name = db.Column(db.String(80))
     email = db.Column(db.String(120), unique=True)
     role = db.Column(db.Integer, nullable=False)
-    password = db.Column(db.String, nullable=False)
     # The time is stored without timezone info in database,
     # They are considered UTC
     # Remember to recover to local time when use them
@@ -20,13 +21,27 @@ class User(db.Model):
     def __repr__(self):
         return '<User %r>' % self.username
 
+    @classmethod
+    def role_choices(cls):
+        '''
+        for wtforms.SelectField, 0 is not supported
+        '''
+        return ((1, '超级管理员'), (2, '系统管理员'), (3, '普通管理员'))
     def get_role_name(self):
-        names = ['超级管理员', '系统管理员', '普通管理员']
-        if role < 0:
-            return names[0]
-        if role > len(names):
-            return names[-1]
-        return names[role]
+        names = {1: '超级管理员', 2: '系统管理员', 3: '普通管理员'}
+        return names.get(self.role)
+
+    @hybrid_property
+    def password(self):
+        '''
+        return hashed password
+        '''
+        return self.password_hash
+
+    # not set password directly
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password)
 
     # Integration of flask-login
     @property
