@@ -4,12 +4,29 @@ A [website](http://wuhanuniversity.org/) for publishing donation information to 
 
 ## Development
 
+First time
 ```
+mkdir -p ~/works
+cd ~/works
 git clone https://github.com/gaohongwei/wuhan_need_you.git
 cd wuhan_need_you
-git checkout dev
+git checkout feature/web_beauty
+pip3 install virtualenv
+virtualenv venv
+source ~/works/wuhan_need_you/venv/bin/activate
 pip3 install -r requirements.txt
 python3 run.py
+
+deactivate
+```
+
+Not first time
+```
+cd ~/works/wuhan_need_you
+source ~/works/wuhan_need_you/venv/bin/activate
+python3 run.py
+
+deactivate
 ```
 
 ## Deployment
