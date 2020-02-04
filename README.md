@@ -25,7 +25,9 @@ source ~/works/wuhan_need_you/venv/bin/activate
 python3 run.py
 ```
 
-To leave development environment
+Open in chrome to access the pages: http://0.0.0.0:5000/
+
+To exit development environment
 ```
 ctrl+c
 deactivate
