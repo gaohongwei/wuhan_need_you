@@ -8,12 +8,30 @@
   {% for notice in notices %}
 
   <h2 class="text-center text-success">
-    {% if notice.title %} {{ notice.title }} {% endif %}
+    {{notice.modified_time}} 
+    <a href="{{url_for('get_notice',notice_id=notice.id)}}">{{ notice.title }}</a>
   </h2>
-  <p>
-    {% if notice.content %} {{ notice.content }} {% endif %}
-  </p>
   <br />
   {% endfor %}
+  <nav aria-label="...">
+    <ul class="pagination">
+      {% for p in pagination.iter_pages() %}
+        {% if p %}
+          {% if p == pagination.page %}
+            <li class="page-item active">
+              <span class="page-link">
+                {{p}}
+                <span class="sr-only">(current)</span>
+              </span>
+            </li>
+          {% else %}
+            <li class="page-item">
+              <a class="page-link" href="{{url_for('list_notices', page=p)}}">{{ p }}</a>
+            </li>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </nav>
 </div>
 {% endblock %}

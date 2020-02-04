@@ -22,7 +22,7 @@ login_manager = init_login(app)
 admin.add_view(UserModelView(User, db.session))
 admin.add_view(NoticeModelView(Notice, db.session))
 
-init_sample_users(app)
+# init_sample_users(app)
 
 logger = app.logger
 
