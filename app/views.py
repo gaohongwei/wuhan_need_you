@@ -23,7 +23,7 @@ def get_favicon():
 @app.route('/<page_name>')
 def menu(page_name):
     pages_info = menus2page.get(page_name, None)
-    if pages_info:
+    if pages_info != None:
         return render_template('pages/' + page_name + '.html', menus = menus, pages_info = pages_info)
     else:
         return 'not found', 404
