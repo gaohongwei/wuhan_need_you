@@ -4,7 +4,12 @@
 - 数据库：PostgreSQL
 
 # 下一步的技术分工：
-## More pages, owner: Hao
+
+##More pages:
+### 主页，校友活动，武汉疫情动态，校友会在行动， owner: Hao
+### 捐赠方式和公示，联系我们，Q&A: 古道西风
+
+
 ## 动态数据后端准备， owner: wangwentao,
 - 数据库设计、实现；
 - 给 前端 提供动态数据

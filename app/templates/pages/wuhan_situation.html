@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}wuhan_situation{% endblock %}
+{% block body %}
+<div class="jumbotron">
+  <h1>武汉疫情动态</h1>
+</div>
+
+
+	<p class="p-1">{{pages_info.introduction}}</p>
+
+	<div class="card p-1 m-2" style="width: 50rem;">
+		<img src="{{ url_for('static', filename=pages_info.china_update_info.link) }}" class="card-img-top" alt="...">
+		<div class="card-block">
+		  <p class="card-title text-center">{{pages_info.china_update_info.source.title}} <a href={{pages_info.china_update_info.source.link}} target="_blank">{{pages_info.china_update_info.source.content}}</a></p>
+		</div>
+	</div>
+
+
+	<div class="card p-1 m-2" style="width: 50rem;">
+		<img src="{{ url_for('static', filename=pages_info.timeline_info.link) }}" class="card-img-top" alt="...">
+		<div class="card-block">
+		  <p class="card-title text-center">{{pages_info.timeline_info.source.title}} <a href={{pages_info.timeline_info.source.link}} target="_blank">{{pages_info.timeline_info.source.content}}</a></p>
+		</div>
+	</div>
+
+
+{% endblock %}
