@@ -3,7 +3,7 @@
 from flask_admin.contrib import sqla
 from wtforms import PasswordField, TextField, SelectField, validators
 import flask_login as login
-from app.models import User
+from app.models import User, check_permission
 from app.db import db
 from app.libs.date_utils import as_timezone
 from app.libs.wtforms_utils import select_field
@@ -46,7 +46,7 @@ class UserModelView(sqla.ModelView):
     }
     # required by flask-admin
     def is_accessible(self):
-        return login.current_user.is_authenticated
+        return check_permission(self, login.current_user)
 
 # init flask-login
 def init_login(app):

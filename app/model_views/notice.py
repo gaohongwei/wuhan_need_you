@@ -5,6 +5,7 @@ from flask_ckeditor import CKEditorField
 from flask_admin.contrib.sqla import ModelView
 import flask_login as login
 from app.libs.date_utils import as_timezone
+from app.models import check_permission
 
 
 class NoticeModelView(ModelView):
@@ -50,5 +51,5 @@ class NoticeModelView(ModelView):
     }
 
     def is_accessible(self):
-        return login.current_user.is_authenticated
+        return check_permission(self, login.current_user)
 

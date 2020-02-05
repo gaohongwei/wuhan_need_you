@@ -9,18 +9,6 @@ from app.forms import LoginForm, RegistrationForm
 from app.models import User
 from app.db import db
 
-def require_role_name(role_name):
-    def wrapped1(f):
-        @wraps(f)
-        def wrapped2(*args, **kwargs):
-            if login.current_user.allow_role_name(role_name):
-                return f(*args, **kwargs)
-            else:
-                # TODO
-                return 'not authorized', 404
-        return wrapped2
-    return wrapped1
-
 class AdminIndexView(admin.AdminIndexView):
     @expose('/')
     def index(self):

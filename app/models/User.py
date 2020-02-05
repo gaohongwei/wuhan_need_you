@@ -6,7 +6,7 @@ from app.libs.date_utils import utcnow
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.ext.hybrid import hybrid_property
 
-from .UserPermission import check_permission
+from .UserPermission import check_route_permission
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -43,7 +43,6 @@ class User(db.Model):
 
     def allow_role_name(self, role_name):
         role = self.get_role_by_name(role_name)
-        print(self.role, role_name, role)
         return self.role <= role and role > 0
 
     @hybrid_property
@@ -63,8 +62,7 @@ class User(db.Model):
     # Integration of flask-login
     @property
     def is_authenticated(self):
-        current_app.logger.info('check_permission')
-        return check_permission(self)
+        return check_route_permission(self)
     @property
     def is_active(self):
         return True
