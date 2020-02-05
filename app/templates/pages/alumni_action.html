@@ -14,23 +14,59 @@
   <h1>校友会在行动</h1>
 </div>
 
-	<h2 class="p-1">{{pages_info.actions[0].title}}</h2>
 
-	<div class="card p-2" style="width: 50rem;">
-		<img src="{{ url_for('static', filename=pages_info.actions[0].image_info.link) }}" class="card-img-top" alt="...">
-		<div class="card-block">
-		  <p class="card-title text-center">{{pages_info.actions[0].image_info.title}}</p>
+<div class="container">
+  <div class="row"></div>
+  <div class="row">
+    <div class="col-1"></div>
+    <div class="col-10">		
+		<div id="accordion">
+			{% for index in range(pages_info.notices|length) %}
+				<div class="card">
+			    <div class="card-header" id="heading_{{index}}">
+			      <h5 class='title'>{{pages_info.notices[index][0].title}}</h5>
+		          	{% if pages_info.notices[index][1].paragraph %}
+			        	<p class='pre_text'>{{pages_info.notices[index][1].paragraph}}</p>
+			      	{% elif pages_info.notices[index][2].paragraph %}
+			        	<p class='pre_text'>{{pages_info.notices[index][2].paragraph}}</p>
+			        {% endif %}
+			        <button  class="btn btn-link" data-toggle="collapse" data-target="#collapse_{{index}}" aria-expanded="true" aria-controls="collapse_{{index}}">阅读更多</button>
+			      </h5>
+			    </div>
+			    <div id="collapse_{{index}}" class="collapse" aria-labelledby="heading_{{index}}" data-parent="#accordion">
+			      <div class="card-body">
+			        {% with data=pages_info.notices[index] %}
+				       	{% include 'pages/notice_template.html' %}
+				    {% endwith %}
+			      </div>
+			    </div>
+			  </div>		
+			{% endfor %}
 		</div>
 	</div>
-
-	<div class="jumbotron">
-	<p>
-		{{pages_info.actions[0].content}}
-	</p>
-
-	<p>{{pages_info.actions[0].source.title}} <a href={{pages_info.actions[0].source.link}} target="_blank">{{pages_info.actions[0].source.content}}</a></p>
-
+	<div class="col-1"></div>
+  </div>
 </div>
 
+<script type="text/javascript">
+	
+	var title = "";
+	var pre_text = "";
 
+	$('.collapse').on('shown.bs.collapse', function () {
+		title = $(this).parent().find('.title').text();
+		pre_text = $(this).parent().find('.pre_text').text();
+		$(this).parent().find('.title').text(""); 
+		$(this).parent().find('.pre_text').text("");
+		$(this).parent().find('button').text("返回");
+	})
+	$('.collapse').on('hide.bs.collapse', function () {
+		$(this).parent().find('.title').text(title);
+		$(this).parent().find('.pre_text').text(pre_text);
+		$(this).parent().find('button').text("阅读更多");
+	})
+
+</script>>
+
+	
 {% endblock %}
