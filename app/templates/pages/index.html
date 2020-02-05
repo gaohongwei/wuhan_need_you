@@ -2,24 +2,33 @@
 {% block title %}Home{% endblock %}
 {% block body %}
 
+
 <div class="container">
   <div class="row">
     <div class="col-md-3 col-lg-3 col-xl-3 jumbotron">
-    	<p><strong>{{pages_info.index_page.alumni_association.title}}</strong></p>
-      	<p>{{pages_info.index_page.alumni_association.content}}</p>
-      	<p>{{pages_info.index_page.alumni_association.member_info.title}}</p>
+    	<p><strong>{{pages_info.alumni_association.title}}</strong></p>
+      	<p>{{pages_info.alumni_association.content}}</p>
+      	<p>{{pages_info.alumni_association.member_info.cur_title}}</p>
       	<ul>
-      		{% for member in pages_info.index_page.alumni_association.member_info.member %}
+      		{% for member in pages_info.alumni_association.member_info.cur_member %}
       		<li>{{member}}</li>
       		{% endfor %}
 		</ul>
+		<p>{{pages_info.alumni_association.member_info.pre_title}}</p>
+		<ol>
+      		{% for member in pages_info.alumni_association.member_info.pre_member %}
+      		<li>{{member}}</li>
+      		{% endfor %}
+		</ol>
+
+		<a href={{pages_info.alumni_association.legality.link}} target="_blank">{{pages_info.alumni_association.legality.title}}</a>
     </div>
 
     <div class="col-md-6 col-lg-6 col-xl-6">
       	<div class="home_content w-100 p-1 mx-auto">
 			<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
 			  <ol class="carousel-indicators">
-			  	{% for index in range(pages_info.index_page.home_images|length) %}
+			  	{% for index in range(pages_info.home_images|length) %}
 			  		{% if index == 0 %}
 			  			<li data-target="#carouselExampleIndicators" data-slide-to={{index}}, class="active"></li>
 			    	{% else %}
@@ -28,14 +37,14 @@
 			  	{% endfor %}
 			  </ol>
 			  <div class="carousel-inner">
-			  	{% for index in range(pages_info.index_page.home_images|length) %}
+			  	{% for index in range(pages_info.home_images|length) %}
 			  		{% if index == 0 %}
 			  			<div class="carousel-item active">
-			      		<img class="d-block img-fluid" src="{{ url_for('static', filename=pages_info.index_page.home_images[index]) }}" />
+			      		<img class="d-block img-fluid" src="{{ url_for('static', filename=pages_info.home_images[index]) }}" />
 			    	</div>
 			    	{% else %}
 			    		<div class="carousel-item">
-			      		<img class="d-block img-fluid" src="{{ url_for('static', filename=pages_info.index_page.home_images[index]) }}" />
+			      		<img class="d-block img-fluid" src="{{ url_for('static', filename=pages_info.home_images[index]) }}" />
 			    	</div>
 			  		{% endif %}
 			  	{% endfor %}
@@ -51,20 +60,46 @@
 			</div>
 		</div>
 
-		<!-- <div class="jumbotron">
-		  <p class="lead">
-		  	<h5 class="card-title">武汉加油行动专题</h5>
-		  </p>
-		</div> -->
+	  	<div class="card" style="width: 20rem;">
+		  <img src="{{ url_for('static', filename=pages_info.special_topic.image) }}" class="card-img-top" alt="...">
+		  <div class="card-body">
+		    <!-- <h5 class="card-title">{{pages_info.special_topic.title}}</h5> -->
+		    <a href={{pages_info.special_topic.link}} class="btn btn-primary">{{pages_info.special_topic.title}}</a>
+		  </div>
+		</div>
 
     </div>
     <div class="col-md-3 col-lg-3 col-xl-3 jumbotron">
-      <p><strong>{{pages_info.index_page.foundation.title}}</strong></p>
-      	<p>{{pages_info.index_page.foundation.content}}</p>
-      	<p>{{pages_info.index_page.foundation.member_info.title}}</p>
+      <p><strong>{{pages_info.foundation.title}}</strong></p>
+      	<p>{{pages_info.foundation.content}}</p>
+      	<p>{{pages_info.foundation.member_info.title}}</p>
       	<ul>
-      		{% for member in pages_info.index_page.foundation.member_info.member %}
-      		<li>{{member}}</li>
+      		{% for index in range(pages_info.foundation.member_info.member|length) %}
+      			{% if index == 0 %}
+      				<!-- Button trigger modal -->
+						<li><button type="button" class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#exampleModal">{{pages_info.foundation.member_info.member[index]}}</button>
+						</li>
+						<!-- Modal -->
+						<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						  <div class="modal-dialog" role="document">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						      	<img src="{{ url_for('static', filename=pages_info.foundation.hzr.image) }}">
+						   
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						          <span aria-hidden="true">&times;</span>
+						        </button>
+						      </div>
+						      <div class="modal-body">
+						      	<h5 class="modal-title" id="exampleModalLabel">{{pages_info.foundation.hzr.title}}</h5>
+						        {{pages_info.foundation.hzr.content}}
+						      </div>
+						    </div>
+						  </div>
+						</div>
+      			{% else %}
+      				<li>{{pages_info.foundation.member_info.member[index]}}</li>
+      			{% endif %}
       		{% endfor %}
 		</ul>
     </div>
