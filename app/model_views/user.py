@@ -44,6 +44,7 @@ class UserModelView(sqla.ModelView):
         'register_time': _time_formatter,
         'role': _role_formatter
     }
+    # required by flask-admin
     def is_accessible(self):
         return login.current_user.is_authenticated
 
@@ -58,41 +59,22 @@ def init_login(app):
         return db.session.query(User).get(user_id)
     return login_manager
 
-def _init_sample_users():
-    import string
-    import random
-
-    db.drop_all()
-    db.create_all()
-    # passwords are hashed, to use plaintext passwords instead:
-    # test_user = User(username="test", password="test")
-    test_user = User(username="test", role=1, password="test")
-    db.session.add(test_user)
-
-    first_names = [
-        'Harry', 'Amelia', 'Oliver', 'Jack', 'Isabella', 'Charlie','Sophie', 'Mia',
-        'Jacob', 'Thomas', 'Emily', 'Lily', 'Ava', 'Isla', 'Alfie', 'Olivia', 'Jessica',
-        'Riley', 'William', 'James', 'Geoffrey', 'Lisa', 'Benjamin', 'Stacey', 'Lucy'
-    ]
-    last_names = [
-        'Brown', 'Smith', 'Patel', 'Jones', 'Williams', 'Johnson', 'Taylor', 'Thomas',
-        'Roberts', 'Khan', 'Lewis', 'Jackson', 'Clarke', 'James', 'Phillips', 'Wilson',
-        'Ali', 'Mason', 'Mitchell', 'Rose', 'Davis', 'Davies', 'Rodriguez', 'Cox', 'Alexander'
-    ]
-
-    for i in range(len(first_names)):
-        user = User()
-        user.first_name = first_names[i]
-        user.last_name = last_names[i]
-        user.username = user.first_name.lower()
-        user.email = user.username + "@example.com"
-        user.role = 1
-        user.password = ''.join(random.choice(string.ascii_lowercase + string.digits) for i in range(10))
-        db.session.add(user)
-
-    db.session.commit()
+def init_admin_user(app):
+    with app.app_context():
+        db.drop_all()
+        db.create_all()
+        admin_user = User(username="admin", role=1, password="admin")
+        db.session.add(admin_user)
+        db.session.commit()
 
 def init_sample_users(app):
     with app.app_context():
-        _init_sample_users()
-
+        db.drop_all()
+        db.create_all()
+        test_user = User(username="test", role=1, password="test")
+        db.session.add(test_user)
+        test_user = User(username="test2", role=2, password="test2")
+        db.session.add(test_user)
+        test_user = User(username="test3", role=3, password="test3")
+        db.session.add(test_user)
+        db.session.commit()

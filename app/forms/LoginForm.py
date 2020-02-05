@@ -1,6 +1,6 @@
+# coding: utf-8
 
 from wtforms import form, fields, validators
-from werkzeug.security import check_password_hash
 from app.models import User
 from app.db import db
 
@@ -15,9 +15,7 @@ class LoginForm(form.Form):
             raise validators.ValidationError('非法用户')
 
         # we're comparing the plaintext pw with the the hash from the db
-        if not check_password_hash(user.password, self.password.data):
-        # to compare plain text passwords use
-        # if user.password != self.password.data:
+        if not user.check_password(self.password.data):
             raise validators.ValidationError('密码错误')
 
     def get_user(self):

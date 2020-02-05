@@ -1,8 +1,12 @@
+# coding: utf-8
 
+from flask import current_app
 from app.db import db
 from app.libs.date_utils import utcnow
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.ext.hybrid import hybrid_property
+
+from .UserPermission import check_permission
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -31,6 +35,17 @@ class User(db.Model):
         names = {1: '超级管理员', 2: '系统管理员', 3: '普通管理员'}
         return names.get(self.role)
 
+    def get_role_by_name(self, role_name):
+        for role, name in User.role_choices():
+            if name == role_name:
+                return role
+        return 0
+
+    def allow_role_name(self, role_name):
+        role = self.get_role_by_name(role_name)
+        print(self.role, role_name, role)
+        return self.role <= role and role > 0
+
     @hybrid_property
     def password(self):
         '''
@@ -42,11 +57,14 @@ class User(db.Model):
     @password.setter
     def password(self, password):
         self.password_hash = generate_password_hash(password)
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
 
     # Integration of flask-login
     @property
     def is_authenticated(self):
-        return True
+        current_app.logger.info('check_permission')
+        return check_permission(self)
     @property
     def is_active(self):
         return True
