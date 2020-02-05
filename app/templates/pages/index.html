@@ -2,9 +2,38 @@
 {% block title %}Home{% endblock %}
 {% block body %}
 
+
+
+
+
 <div class="container">
+
+	<!--Carousel placeholder-->
+<div id="carouselExampleIndicators"></div>
+<!--Just to provide urls -->
+<div style="visible:none;height:0px">
+	<div class="slide-image" data-src="{{url_for('static', filename='image/h2/h1.jpg')}}"></div>
+	<div class="slide-image" data-src="{{url_for('static', filename='image/h2/h2.jpg')}}"></div>
+	<div class="slide-image" data-src="{{url_for('static', filename='image/h2/h3.jpg')}}"></div>
+    <div class="slide-image" data-src="{{url_for('static', filename='image/h2/h4.jpg')}}"></div>
+    <div class="slide-image" data-src="{{url_for('static', filename='image/h2/h5.jpg')}}"></div>
+    <div class="slide-image" data-src="{{url_for('static', filename='image/h2/h6.jpg')}}"></div>
+</div>
+<script>
+	const height = '300px';
+	const divs = document.querySelectorAll('div.slide-image');
+	const urls = [];
+	for(let div of divs) {
+		urls.push(div.dataset.src);
+	}
+	document.body.onload = () => {
+		CanvasImage.carousel_bootstrap4('carouselExampleIndicators', urls, height);
+	};
+</script>
+
+
   <div class="row">
-    <div class="col-md-3 col-lg-3 col-xl-3 jumbotron">
+    <div class="col-md-6 col-lg-6 col-xl-6 jumbotron">
     	<p><strong>武汉大学北加州校友会</strong></p>
       	<p>武汉大学北加州校友于1980s成立于加州硅谷，是武汉大学校友总会认可的合法合规海外校友会分支，是基金会的执行机构。</p>
       	<p>校友会会长:</p>
@@ -17,33 +46,7 @@
 		</ul>
     </div>
 
-    <div class="col-md-6 col-lg-6 col-xl-6">
-      	<div class="home_content w-100 p-1 mx-auto">
-			<!--Carousel placeholder-->
-			<div id="carouselExampleIndicators"></div>
-			<!--Just to provide urls -->
-			<div style="visible:none;height:0px">
-				<div class="slide-image" data-src="{{url_for('static', filename='image/h2/h1.jpg')}}"></div>
-				<div class="slide-image" data-src="{{url_for('static', filename='image/h2/h2.jpg')}}"></div>
-				<div class="slide-image" data-src="{{url_for('static', filename='image/h2/h3.jpg')}}"></div>
-			    <div class="slide-image" data-src="{{url_for('static', filename='image/h2/h4.jpg')}}"></div>
-			    <div class="slide-image" data-src="{{url_for('static', filename='image/h2/h5.jpg')}}"></div>
-			    <div class="slide-image" data-src="{{url_for('static', filename='image/h2/h6.jpg')}}"></div>
-			</div>
-			<script>
-				const height = '300px';
-				const divs = document.querySelectorAll('div.slide-image');
-				const urls = [];
-				for(let div of divs) {
-					urls.push(div.dataset.src);
-				}
-				document.body.onload = () => {
-					CanvasImage.carousel_bootstrap4('carouselExampleIndicators', urls, height);
-				};
-			</script>
-	    </div>
-	</div>
-    <div class="col-md-3 col-lg-3 col-xl-3 jumbotron">
+    <div class="col-md-6 col-lg-6 col-xl-6 jumbotron">
       <p><strong>武汉大学海外校友科学基金会</strong></p>
       	<p>由黄彰任、王高峰、李晓景三位武汉大学校友倡议, 基金会成立于1999年，A California Nonprofit Public Benefit Corporation，Public Charity, Under section 501(c)(3)  a non-profit public benefit organization exempt from federal income tax under section 501(c)(3) of the Internal Revenue Code in USA.</p>
       	<p>基金会历任会长:</p>
