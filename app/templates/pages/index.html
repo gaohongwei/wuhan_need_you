@@ -2,12 +2,11 @@
 {% block title %}Home{% endblock %}
 {% block body %}
 
-
 <div class="container">
 
-
-
-      	<div class="home_content w-100 p-1 mx-auto">
+  <div class="row">
+    <div class="col-md-12 col-lg-12 col-xl-12 jumbotron" style="padding: 0">
+      	<div class="home_content w-100 mx-auto">
 			<!--Carousel placeholder-->
 			<div id="carouselExampleIndicators1">
 				<div style="visible:none;height:0px">
@@ -23,7 +22,7 @@
 				const get_urls = id => {
 					const elem = document.getElementById(id);
 					if (!elem) return [];
-					const divs = document.querySelectorAll('div.slide-image');
+					const divs = elem.querySelectorAll('div.slide-image');
 					const urls = [];
 					for(let div of divs) {
 						urls.push(div.dataset.src);
@@ -35,23 +34,13 @@
 					CanvasImage.carousel_bootstrap4(id, urls, height);
 				};
 				const id1 = 'carouselExampleIndicators1';
-				const id2 = 'carouselExampleIndicators2';
 				document.body.onload = () => {
 					carousel(id1, '300px');
-					// carousel(id2, '300px');
 				};
 			</script>
 	    </div>
-<!-- 	  	<div class="card" style="width: 20rem;">
-		  <img src="{{ url_for('static', filename=pages_info.special_topic.image) }}" class="card-img-top" alt="...">
-		  <div class="card-body">
-		    <a href={{pages_info.special_topic.link}} class="btn btn-primary">{{pages_info.special_topic.title}}</a>
-		  </div>
-		</div>
- -->
-
-
-
+	</div>
+  </div>
 
   <div class="row">
     <div class="col-md-6 col-lg-6 col-xl-6 jumbotron">

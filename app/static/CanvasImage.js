@@ -99,7 +99,7 @@ const CanvasImage = (function _() {
     const renderCanvas = (canvas, img) => {
         if (img) {
             fillCanvasInParent(canvas);
-            fillBackground(canvas, 'black');
+            fillBackground(canvas, '#a9acaf');
             drawImageInCenter(canvas, img);
         } else {
             const src = canvas.dataset.src;
@@ -194,6 +194,8 @@ const CanvasImage = (function _() {
         div3.appendChild(a1);
         div3.appendChild(a2);
         register();
+        // a hack to solve not-auto-playing
+        setTimeout(() => a2.click(), 2000);
     };
 
     return {register, carousel_bootstrap4};
