@@ -2,15 +2,14 @@
 
 from flask import Markup
 from flask_ckeditor import CKEditorField
+from flask_admin import expose
 from flask_admin.contrib.sqla import ModelView
 import flask_login as login
+from wtforms.fields import SelectField
 from app.libs.date_utils import as_timezone
 from app.models import check_permission, Notice
-from flask_admin import expose
 
 class NoticeModelView(ModelView):
-
-    form_overrides = dict(content=CKEditorField)
 
     create_template = 'admin/create.html'
     edit_template = 'admin/edit.html'
@@ -24,16 +23,26 @@ class NoticeModelView(ModelView):
     column_editable_list = ['title', 'content', 'type', 'priority', 'tags']
 
     form_excluded_columns = ['created_time', 'modified_time', 'permitted_time']
+
+    form_overrides = {
+            'content': CKEditorField,
+            'priority': SelectField
+            }
     form_choices = {
             'type': [
                 ('信息', '信息'),
                 ('广告', '广告')
-                ]#,
-            #'priority': [     # TODO: need post-processing
-            #    ('0', '普通'),
-            #    ('1', '优先'),
-            #    ('2', '紧急')
-            #    ]
+                ]
+            }
+    form_args = {
+            'priority': {
+                'choices': [
+                    (0, '普通'),
+                    (1, '优先'),
+                    (2, '紧急')
+                    ],
+                'coerce': int
+                }
             }
 
     # UTC time to local time
