@@ -2,11 +2,11 @@
 {% block title %}Home{% endblock %}
 {% block body %}
 
-<div class="container">
+<div class="container" style="max-width: 100%;">
 
-  <div class="row">
-    <div class="col-md-12 col-lg-12 col-xl-12 jumbotron" style="padding: 0">
-      	<div class="home_content w-100 mx-auto">
+  <div class="row" >
+    <div class="col-md-12 col-lg-12 col-xl-12 jumbotron" style="padding: 0;">
+      	<div class="home_content w-100 mx-auto" style="margin-left: 0em;margin-right: 0em;">
 			<!--Carousel placeholder-->
 			<div id="carouselExampleIndicators1">
 				<div style="visible:none;height:0px">
@@ -43,9 +43,9 @@
   </div>
 
   <div class="row">
-    <div class="col-md-6 col-lg-6 col-xl-6 jumbotron">
-    	<p><strong>{{pages_info.alumni_association.title}}</strong></p>
-      	<p>{{pages_info.alumni_association.content}}</p>
+    <div class="col-md-6 col-lg-6 col-xl-6 jumbotron" style="padding: 4rem 10%; background: transparent;">
+    	<p style="text-align: center; line-height: 100px; font-size: 1.5em; color: #243B2B"><strong>{{pages_info.alumni_association.title}}</strong></p>
+      	<p style="text-align: center;">{{pages_info.alumni_association.content}}</p>
       	<p>{{pages_info.alumni_association.member_info.cur_title}}</p>
       	<ul>
       		{% for member in pages_info.alumni_association.member_info.cur_member %}
@@ -59,15 +59,15 @@
       		{% endfor %}
 		</ol>
 
-		<a href={{pages_info.alumni_association.legality.link}} target="_blank">{{pages_info.alumni_association.legality.title}}</a>
+		<a style="text-align: center; margin:0 auto;" href={{pages_info.alumni_association.legality.link}} target="_blank">{{pages_info.alumni_association.legality.title}}</a>
     </div>
 
     
 
 
-    <div class="col-md-6 col-lg-6 col-xl-6 jumbotron">
-      <p><strong>{{pages_info.foundation.title}}</strong></p>
-      	<p>{{pages_info.foundation.content}}</p>
+    <div class="col-md-6 col-lg-6 col-xl-6 jumbotron" style="padding: 4rem 10%; background: transparent;">
+      <p style="text-align: center; line-height: 100px; font-size: 1.5em; color: #243B2B"><strong>{{pages_info.foundation.title}}</strong></p>
+      	<p style="text-align: center;">{{pages_info.foundation.content}}</p>
       	<p>{{pages_info.foundation.member_info.title}}</p>
       	<ul>
       		{% for index in range(pages_info.foundation.member_info.member|length) %}
