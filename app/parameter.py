@@ -192,21 +192,25 @@ wuhan_situation_info = {
 }
 
 # information about alumni action pages
+  ##  first tag should be title
+  ##  second tag should be paragraph
 alumni_action_info = {
   
-
   'notices': [
       # notice start
-      [
-        {
-          'title': "DR捐赠2.7吨医疗物资，与武大华科北加校友会二度联手完成跨洋援助至孝感 （测试）"
-        },
+      # [
+      #   {
+      #     'title': "DR捐赠2.7吨医疗物资，与武大华科北加校友会二度联手完成跨洋援助至孝感 （测试）"
+      #   },
         
-        {
-          'paragraph': "关注本公号的各位读者都知道，在1月31日，由Direct Relief（国际直接救济组织）捐赠重达2.5吨驰援武汉的应急医疗物资从旧金山飞跃太平洋，顺利抵达武汉协和医院，由武汉加油行动武汉分队的志愿者亲手交付到医护工作者手中，其中包括目前急需的20万支医用外科口罩、2.75万双医用手套及4000件防护服。"
-        },
+      #   {
+      #     'paragraph': "关注本公号的各位读者都知道，在1月31日，由Direct Relief（国际直接救济组织）捐赠重达2.5吨驰援武汉的应急医疗物资从旧金山飞跃太平洋，顺利抵达武汉协和医院，由武汉加油行动武汉分队的志愿者亲手交付到医护工作者手中，其中包括目前急需的20万支医用外科口罩、2.75万双医用手套及4000件防护服。"
+      #   },
+      #   {
+      #     'paragraph': "关注本公号的各位读者都知道，在1月31日，由Direct Relief（国际直接救济组织）捐赠重达2.5吨驰援武汉的应急医疗物资从旧金山飞跃太平洋，顺利抵达武汉协和医院，由武汉加油行动武汉分队的志愿者亲手交付到医护工作者手中，其中包括目前急需的20万支医用外科口罩、2.75万双医用手套及4000件防护服。"
+      #   },
         
-      ],
+      # ],
       # notice end
 
       # notice start
@@ -215,13 +219,13 @@ alumni_action_info = {
           'title': "21小时接力护送！2.5吨医用物资从旧金山直接运抵武汉协和医院"
         },
         {
+          'paragraph': "人民网旧金山1月31日电（记者邓圩）21小时接力护送！北京时间1月31日下午，由WuhanUnited(武大和华科北加州校友会）联合国际直接援助组织(Direct Relief)捐赠的2.75万双医用手套，4000件隔离服，20万个外科手术口罩，重达2.5吨货物从旧金山直接运抵武汉协和医院。"
+        },
+        {
           'image': {
              'link': "image/alumni_action/h1.jpg",
              'title': "协和医院和武大中南医院接受捐赠物资"
             }
-        },
-        {
-          'paragraph': "人民网旧金山1月31日电（记者邓圩）21小时接力护送！北京时间1月31日下午，由WuhanUnited(武大和华科北加州校友会）联合国际直接援助组织(Direct Relief)捐赠的2.75万双医用手套，4000件隔离服，20万个外科手术口罩，重达2.5吨货物从旧金山直接运抵武汉协和医院。"
         },
         {
           'sub_title': "“武汉加油” 北加州在行动"
@@ -386,14 +390,14 @@ donate_info = {
     ]
 }
 
-# information about contact21小时完成不可能的任务，背后是与时间赛跑的故事。
+# information about contact。
 contact_us_info = {
-  
+    'title': "联系我们"
 }
 
 # information about qa pages
 qa_info = {
-
+    'title': "Q&A"
 }
 
 
