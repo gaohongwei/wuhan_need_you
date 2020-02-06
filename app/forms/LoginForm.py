@@ -5,7 +5,7 @@ from app.models import User
 from app.db import db
 
 class LoginForm(form.Form):
-    username = fields.StringField(label='登陆名', validators=[validators.required()])
+    username = fields.StringField(label='登录名', validators=[validators.required()])
     password = fields.PasswordField(label='密码', validators=[validators.required()])
 
     def validate_password(self, field):

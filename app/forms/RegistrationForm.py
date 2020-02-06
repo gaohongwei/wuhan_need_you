@@ -4,7 +4,7 @@ from app.db import db
 from app.models import User
 
 class RegistrationForm(form.Form):
-    username = fields.StringField(label='登陆名', validators=[validators.required()])
+    username = fields.StringField(label='登录名', validators=[validators.required()])
     password = fields.PasswordField(label='密码', validators=[validators.required()])
     email = fields.StringField(label='邮箱')
 
