@@ -5,8 +5,8 @@ from flask_ckeditor import CKEditorField
 from flask_admin.contrib.sqla import ModelView
 import flask_login as login
 from app.libs.date_utils import as_timezone
-from app.models import check_permission
-
+from app.models import check_permission, Notice
+from flask_admin import expose
 
 class NoticeModelView(ModelView):
 
@@ -22,7 +22,7 @@ class NoticeModelView(ModelView):
     column_searchable_list = ['title', 'status', 'type']
     column_sortable_list = ['title', 'modified_time', 'created_time', 'permitted_time', 'type', 'status']
     column_editable_list = ['title', 'content', 'type', 'priority', 'tags']
-    
+
     form_excluded_columns = ['created_time', 'modified_time', 'permitted_time']
     form_choices = {
             'type': [
@@ -51,5 +51,10 @@ class NoticeModelView(ModelView):
     }
 
     def is_accessible(self):
-        return check_permission(self, login.current_user)
+        return True # For debug
+        #return check_permission(self, login.current_user)
 
+    @expose('/preview')
+    def index(self):
+        notices = Notice.query.all()
+        return self.render('pages/notices.html', notices = notices)
