@@ -28,8 +28,13 @@
         (例如Benevity)。
       </p>
 
+      <hr>
       <!-- 捐赠公示模版 -->
-      {% include 'pages/donate_notices.html' %}
+      {% for notice in pages_info.notices %}
+        {% with data=notice %}
+          {% include 'pages/notice_template.html' %}
+        {% endwith %} 
+      {% endfor %}             
       <!-- end 捐赠公示模版 -->
       
     </div>
