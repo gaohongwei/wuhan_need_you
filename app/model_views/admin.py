@@ -56,7 +56,7 @@ class AdminIndexView(admin.AdminIndexView):
 
     #        login.login_user(user)
     #        return redirect(url_for('.index'))
-    #    link = '<p>已经有帐号？请点击<a href="' + url_for('.login_view') + '">此处</a>登陆。</p>'
+    #    link = '<p>已经有帐号？请点击<a href="' + url_for('.login_view') + '">此处</a>登录。</p>'
     #    self._template_args['form'] = form
     #    self._template_args['link'] = link
     #    return super().index()

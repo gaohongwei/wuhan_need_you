@@ -22,12 +22,13 @@ class NoticeModelView(ModelView):
     column_sortable_list = ['title', 'modified_time', 'created_time', 'permitted_time', 'type', 'status']
     column_editable_list = ['title', 'content', 'type', 'priority', 'tags']
 
-    form_excluded_columns = ['created_time', 'modified_time', 'permitted_time']
+    form_create_rules = ['title', 'content', 'type', 'priority', 'tags']
+    form_excluded_columns = ['created_time', 'modified_time', 'permitted_time', 'create_user', 'permit_user']
 
     form_overrides = {
             'content': CKEditorField,
-            'priority': SelectField
-            }
+            'status': SelectField,
+        }
     form_choices = {
             'type': [
                 ('信息', '信息'),
@@ -35,15 +36,24 @@ class NoticeModelView(ModelView):
                 ]
             }
     form_args = {
-            'priority': {
+            'status': {
                 'choices': [
-                    (0, '普通'),
-                    (1, '优先'),
-                    (2, '紧急')
-                    ],
+                    (0, '草稿'),
+                    (1, '已提交'),
+                    (2, '已审核'),
+                    (3, '未批准')
+                ],
                 'coerce': int
-                }
-            }
+            },
+            # 'priority': {
+            #     'choices': [
+            #         (0, '普通'),
+            #         (1, '优先'),
+            #         (2, '紧急')
+            #     ],
+            #     'coerce': int
+            # }
+        }
 
     # UTC time to local time
     def _time_formatter(view, content, model, name):
@@ -52,16 +62,34 @@ class NoticeModelView(ModelView):
 
     def _content_formatter(view, context, model, name):
         return Markup(model.content)
+    
+    def _status_formatter(view, context, model, name):
+        return model.get_status_name()
+    
+    def _priority_formatter(view, context, model, name):
+        return model.get_priority_name()
+    
+    def _create_user_formatter(view, context, model, name):
+        return model.create_user.username
+    
+    def _permit_user_formatter(view, context, model, name):
+        if model.permit_user:
+            return model.permit_user.username
+        return None
 
     column_formatters = {
         'content': _content_formatter,
+        'status': _status_formatter,
+        'priority': _priority_formatter,
+        'create_user': _create_user_formatter,
+        'permit_user': _permit_user_formatter,
         'modified_time': _time_formatter,
         'created_time': _time_formatter
     }
 
     def is_accessible(self):
-        return True # For debug
-        #return check_permission(self, login.current_user)
+        # return True # For debug
+        return check_permission(self, login.current_user)
 
     @expose('/preview')
     def index(self):
