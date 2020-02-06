@@ -1,6 +1,6 @@
-<hr>
+<!-- template only for one notice -->
 
-{% for item in pages_info.notices %}
+{% for item in data %}
 	{% for tag in item %}
 		{% if tag == 'title' %}
 			<h2>{{item[tag]}}</h2>
@@ -8,8 +8,11 @@
 			<h4 class='text-center'>{{item[tag]}}</h4>
 		{% elif tag == 'paragraph' %}
 			<p>{{item[tag]}}</p>
+		{% elif tag == 'image' %}
+			<img class="img-fluid" src="{{ url_for('static', filename=item[tag].link) }}" />
+			<p class='text-center'>{{item[tag].title}}</p>
 		{% elif tag == 'source' %}
-			<p><a href={{item[tag].link}} target="_blank">{{item[tag].content}}</a></p>
+			<p>{{item[tag].title}}<a href={{item[tag].link}} target="_blank">{{item[tag].content}}</a></p>
 		{% elif tag == 'list' %}
 			<ol>
       			{% for member in item[tag] %}
