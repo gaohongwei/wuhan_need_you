@@ -20,30 +20,20 @@ class NoticeModelView(ModelView):
     column_exclude_list = ['content']
     column_searchable_list = ['title', 'status', 'type']
     column_sortable_list = ['title', 'modified_time', 'created_time', 'permitted_time', 'type', 'status']
-    column_editable_list = ['title', 'content', 'type', 'priority', 'tags']
+    column_editable_list = ['title', 'content', 'type', 'tags']
 
     form_excluded_columns = ['created_time', 'modified_time', 'permitted_time']
 
-    form_overrides = {
-            'content': CKEditorField,
-            'priority': SelectField
-            }
+    form_overrides = dict(
+            content = CKEditorField,
+            priority = SelectField
+            )
     form_choices = {
-            'type': [
-                ('信息', '信息'),
-                ('广告', '广告')
-                ]
+            'type': [ ('信息', '信息'), ('广告', '广告') ]
             }
-    form_args = {
-            'priority': {
-                'choices': [
-                    (0, '普通'),
-                    (1, '优先'),
-                    (2, '紧急')
-                    ],
-                'coerce': int
-                }
-            }
+    form_args = dict(
+            priority = dict(choices=[(0, '普通'), (1, '优先'), (2, '紧急')], coerce=int, label='优先级')
+            )
 
     # UTC time to local time
     def _time_formatter(view, content, model, name):
@@ -53,10 +43,16 @@ class NoticeModelView(ModelView):
     def _content_formatter(view, context, model, name):
         return Markup(model.content)
 
+    def _priority_formatter(view, context, model, name):
+        priority = getattr(model, name)
+        priorities = {0: '普通', 1: '优先', 2: '紧急'}
+        return priorities.get(priority)
+
     column_formatters = {
         'content': _content_formatter,
         'modified_time': _time_formatter,
-        'created_time': _time_formatter
+        'created_time': _time_formatter,
+        'priority': _priority_formatter
     }
 
     def is_accessible(self):
