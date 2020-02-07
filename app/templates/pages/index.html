@@ -123,6 +123,25 @@
     </div>
   </div>
 
+
+  <div class="row">
+  	{% for topic in pages_info.special_topic %}
+  	<div class="card m-3" style="width: 20rem;">
+  		<img class="card-img-top" src="{{url_for('static', filename=topic.image) }}">
+	  <div class="card-body text-center">
+	  	{% for index in range(topic.link|length) %}
+	    <a href={{topic.link[index]}} class="btn btn-primary">
+	    	{{topic.title[index]}}
+		</a>
+	    {% endfor %}
+	  </div>
+	</div>
+	{% endfor %}
+
+  </div>
+
+
+
 </div>
 
 {% endblock %}

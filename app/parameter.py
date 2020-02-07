@@ -76,11 +76,18 @@ index_info = {
       }
     },
 
-    'special_topic': {
-      'title': "武汉加油行动专题",
+    'special_topic': [
+    {
+      'title': ["疫情动态","我要捐赠"],
       'image': "image/jiayou.jpeg",
-      'link': 'wuhan_situation',
+      'link': ['wuhan_situation', 'donate']
+    },
+    {
+      'title': ["联系我们"],
+      'image': "image/alumni_activities/1998_setup.jpg",
+      'link': ['contact_us']
     }
+    ]
 
 }
 
