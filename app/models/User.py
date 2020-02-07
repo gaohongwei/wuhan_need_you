@@ -81,7 +81,6 @@ class User(db.Model):
     @property
     def is_anonymous(self):
         return False
-
     # required by flask-login
     def get_id(self):
         return self.id

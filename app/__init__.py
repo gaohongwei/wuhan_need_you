@@ -39,6 +39,6 @@ register_route_permission('/admin/notice/details/', '普通管理员')
 register_model_view_permission(UserModelView, '系统管理员')
 register_model_view_permission(NoticeModelView, '普通管理员')
 
-# init_sample_users(app)
+init_sample_users(app)
 
 logger = app.logger
