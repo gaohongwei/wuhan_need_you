@@ -14,6 +14,20 @@ class NoticeModelView(ModelView):
     create_template = 'admin/create.html'
     edit_template = 'admin/edit.html'
 
+    column_labels = {
+            'title': '标题',
+            'content': '正文',
+            'created_time': '创建时间',
+            'modified_time': '最后编辑时间',
+            'permitted_time': '审批时间',
+            'permit_user': '审批人',
+            'type': '类型',
+            'create_user': '创建者',
+            'status': '审批状态',
+            'tags': '标签',
+            'priority': '优先级'
+            }
+
     page_size = 10
     can_view_details = True
 
