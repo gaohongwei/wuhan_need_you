@@ -2,7 +2,9 @@
 {% block title %}About{% endblock %}
 {% block body %}
 
-<h1 class='jumbotron text-center'>捐赠方式</h1>
+<div style="background-color: #0ED0A7;" class="jumbotron">
+  <h1 style="text-align: center; color: white;">捐赠方式</h1>
+</div>
 <div class="container">
   <div class="row"></div>
   <div class="row">
@@ -10,8 +12,10 @@
     <div class="col-10">
       <!-- <h1 class='jumbotron'>捐赠方式</h1> -->
       <span>
-        <h2>武汉大学海外校友会科学基金会, 通过Gofundme捐款 </h2>
+        <h2>基金会 Gofundme </h2>
         {% include 'common/gofundme.html' %}
+        <h1 style="text-align: center; margin-top: 2em; margin-bottom: 2em;">{% include 'common/gofundme.html' %}</h1>
+        <h2 style="text-align: center;">基金会 Gofundme </h2>        
       </span>
       <p>
         武汉大学海外校友科学基金会筹款，也是Wuhan United捐赠平台
@@ -28,7 +32,7 @@
         (例如Benevity)。
       </p>
 
-      <hr>
+      <hr style="margin-top: 5em; margin-bottom: 5em;" > 
       <!-- 捐赠公示模版 -->
       {% for notice in pages_info.notices %}
         {% with data=notice %}
