@@ -10,6 +10,8 @@
 		src="{{ url_for('static', filename='bootstrap-4.4.1-dist/js/bootstrap.min.js') }}"></script>
 	<script type="text/javascript"
 		src="{{ url_for('static', filename='bootstrap-4.4.1-dist/js/bootstrap.bundle.js') }}"></script>
+	<script type="text/javascript"
+		src="{{ url_for('static', filename='CanvasImage.js') }}"></script>
 	<link rel="stylesheet"
 		href="{{ url_for('static', filename='bootstrap-4.4.1-dist/css/bootstrap-grid.css') }}">
 	<link rel="stylesheet"
@@ -18,14 +20,19 @@
 
 <body>
 	{% include 'common/googletagmanager_body.html' %}
+	<!-- <nav class="navbar navbar-expand-lg navbar-light ml-auto fixed-top" > -->
 	<nav class="navbar navbar-expand-lg navbar-light ml-auto" >
 	  	<a href="/">
 	  		<img src="{{url_for('static', filename='image/logo.jpg')}}" width="80" height="80">
 	  	</a>
+		<div style="word-wrap: break-word; margin-left: 1em; margin-right: 1em;">
+			<p style="margin-top: 1em; font-size: 20px; font-weight: bold;">武汉大学北加州校友会</p>
+			<p style="font-size: 16px;">武汉大学海外校友科学基金会</p>
+		</div>
 	  	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 	    <span class="navbar-toggler-icon"></span>
 	  	</button>
-	  	<div class="collapse navbar-collapse" id="navbarNav">
+	  	<div style="position:absolute; right:1em;" class="collapse navbar-collapse" id="navbarNav">
 	    	<ul class="navbar-nav">
 	    		{% for menu in menus %}
 	    			<li class="nav-item active">
@@ -35,18 +42,22 @@
 	    	</ul>
 	  	</div>
 	</nav>
+
 	{% block body %}
-    {% endblock %}
+	{% endblock %}
+	</div>
+
 </body>
 
-<footer class="page-footer font-small mdb-color pt-4 text-white bg-dark">  
+<!-- <footer class="page-footer font-small mdb-color pt-4 text-white bg-dark fixed-bottom"> -->
+<footer class="page-footer font-small mdb-color pt-4 text-white bg-dark">
 
   <div class="container text-center text-md-left">
-    <div class="row text-center text-md-left mt-3 pb-3">
-    <p class="text-center text-md-left">© 2020 Copyright: 武汉大学北加州校友会, 武汉大学海外校友科学基金会</p>
+    <div style="text-align: center;" class="row text-center text-md-left mt-3 pb-3">
+    <p style="margin: auto; line-height: 80px;" class="text-center text-md-left">© 2020 Copyright (V1.0-测试版): 武汉大学北加州校友会, 武汉大学海外校友科学基金会 - 唯一官方网站</p>
     </div>
   </div>
-  
+
 </footer>
 
 
