@@ -1,14 +1,15 @@
 {% extends 'admin/model/edit.html' %}
 {% block tail %}
-{{ super() }}
-{{ ckeditor.load(custom_url=url_for('static', filename='ckeditor/ckeditor.js')) }}
-<script>
-    var role = {{ current_user.role| tojson}};
-    if (role != 1 && role != 2) {
-        console.log('role');
-        console.log(role)
-        document.getElementById('status').disabled = true;
+    {{ super() }}
+    {{ ckeditor.load(custom_url=url_for('static', filename='ckeditor/ckeditor.js')) }}
+    <script>
+        var role = {{current_user.role|tojson}};
+        if (role != 1 && role != 2) {
+            console.log('role');
+            console.log(role)
+            document.getElementById('status').disabled = true;
+    
+        }
+    </script>
+{% endblock %} 
 
-    }
-</script>
-{% endblock %}
