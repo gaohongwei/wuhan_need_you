@@ -1,0 +1,7 @@
+{% extends 'admin/model/list.html' %}
+{% block list_row_actions %}
+    {% for action in list_row_actions %}
+        {{ action.render_ctx(get_pk_value(row), row) }}
+    {% endfor %}
+{% endblock %}
+

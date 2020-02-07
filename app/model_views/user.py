@@ -8,7 +8,13 @@ from app.db import db
 from app.libs.date_utils import as_timezone
 from app.libs.wtforms_utils import select_field
 
+def get_choices():
+    if login.current_user == None:
+        return []
+    return login.current_user.permitted_role_choices()
+
 class UserModelView(sqla.ModelView):
+    list_template = 'admin/list_user.html'
     column_labels = {
             'username': '用户名',
             'first_name': '名',
@@ -24,7 +30,7 @@ class UserModelView(sqla.ModelView):
     column_detail_list = ['username', 'first_name', 'last_name', 'email', 'role', 'register_time']
 
     column_exclude_list = ['password', 'password_hash']
-    column_editable_list = ['username', 'password', 'first_name', 'last_name', 'email', 'role']
+    column_editable_list = ['username', 'first_name', 'last_name', 'email']
     form_excluded_columns = ['register_time']
     form_columns = ['username', 'password', 'first_name', 'last_name', 'email', 'role']
     form_extra_fields = {
@@ -33,8 +39,16 @@ class UserModelView(sqla.ModelView):
             'last_name': TextField('姓', [validators.required()]),
             'password': PasswordField('密码', [validators.required()]),
             'email': TextField('电子邮件', [validators.required()]),
-            'role': SelectField('角色', [validators.required()], choices=User.role_choices(), coerce=int)
+            'role': SelectField('角色', [validators.required()],
+                choices=[],
+                coerce=int)
             }
+    # override to dynamically create choices
+    def create_form(self):
+        form = super().create_form()
+        choices = get_choices()
+        form.role.choices = choices
+        return form
     def _time_formatter(view, context, model, name):
         time = getattr(model, name)
         return as_timezone(time)

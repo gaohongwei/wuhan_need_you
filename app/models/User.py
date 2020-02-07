@@ -25,12 +25,19 @@ class User(db.Model):
     def __repr__(self):
         return '<User %r>' % self.username
 
+    def permitted_role_choices(self):
+        if self.role == 1:
+            return [(2, '系统管理员'), (3, '普通管理员')]
+        elif self.role == 2:
+            return [(3, '普通管理员')]
+        else:
+            return []
     @classmethod
     def role_choices(cls):
         '''
         for wtforms.SelectField, 0 is not supported
         '''
-        return ((1, '超级管理员'), (2, '系统管理员'), (3, '普通管理员'))
+        return [(1, '超级管理员'), (2, '系统管理员'), (3, '普通管理员')]
     def get_role_name(self):
         names = {1: '超级管理员', 2: '系统管理员', 3: '普通管理员'}
         return names.get(self.role)
