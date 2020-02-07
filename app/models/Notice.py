@@ -64,21 +64,3 @@ def before_update_notice(mapper, connection, target):
     if target.status == 2:
         target.permit_user_id = get_current_user_id()
         target.permitted_time = utcnow()
-    status = db.Column(db.Integer, nullable=False)
-    type = db.Column(db.Integer, nullable=False)
-    priority = db.Column(db.Integer, default=0)
-    creator = db.Column(db.String(256))
-    publisher = db.Column(db.String(256))
-    created_time = db.Column(db.DateTime, default=func.now())
-    modified_time = db.Column(db.DateTime, default=func.now(), onupdate=func.now())
-
-
-@event.listens_for(Notice, 'before_insert')
-def before_insert_notice(mapper, connection, target):
-    target.status = Status.PENDING
-    target.creator = login.current_user.username
-
-@event.listens_for(Notice, 'before_update')
-def before_update_notice(mapper, connection, target):
-    if target.status == Status.AGREE:
-        target.publisher = login.current_user.username
