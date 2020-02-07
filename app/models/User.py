@@ -73,9 +73,15 @@ class User(db.Model):
     @property
     def is_active(self):
         return True
+
+    @property
+    def is_admin(self):
+        return self.role == 'admin'
+
     @property
     def is_anonymous(self):
         return False
+
     # required by flask-login
     def get_id(self):
         return self.id

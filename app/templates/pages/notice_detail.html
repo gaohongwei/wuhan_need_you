@@ -2,21 +2,23 @@
 {% block title %}Info{% endblock %}
 {% block body %}
 <div class="container">
-  <h1 class="text-center text-primary">信息发布</h1>
-  <div>
-      <div class="text-center">
-          <p class="text-success">{{notice.title}}</p>
-          <p>Created Time: {{ notice.created_time }} Modified Time: {{ notice.modified_time }}</p>
-          {% if current_user.is_authenticated %}
-          <p>Creator: {{ notice.create_user }} Publisher: {{ notice.permit_user }} </p>
-          <p>Status: {{ notice.status }}</p>
-          <p>Type: {{ notice.type }}</p>
-          <p>Priority: {{ notice.priority }}</p>
-          {% endif %}
-      </div>
-      <div>
-          {{notice.content | safe }}
-      </div>
-  </div>
+    <h1 class="text-center text-primary">信息发布</h1>
+    <div>
+        <div class="text-center">
+            <p class="text-success">{{notice.title}}</p>
+            <p>Created Time: {{ notice.created_time }} Modified Time:
+                {{ notice.modified_time }}</p>
+            {% if current_user.is_authenticated %}
+            <p>Creator: {{ notice.create_user }} Publisher:
+                {{ notice.permit_user }} </p>
+            <p>Status: {{ notice.status }}</p>
+            <p>Type: {{ notice.type }}</p>
+            <p>Priority: {{ notice.priority }}</p>
+            {% endif %}
+        </div>
+        <div>
+            {{notice.content | safe }}
+        </div>
+    </div>
 </div>
-{% endblock %} 
+{% endblock %}
