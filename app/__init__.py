@@ -8,6 +8,7 @@ from app.models import User, Notice, register_route_permission, register_model_v
 from app.model_views import UserModelView, NoticeModelView, AdminIndexView, init_login, init_sample_users
 from app.db import init_app
 from app.config import create_app
+from app.filters import register_filters, register_processors
 
 # Initialize the app, APPLICATION_MODE can be one of 'depolyment', 'development', 'testing'
 app = create_app(os.environ.get('APPLICATION_MODE'))
@@ -24,10 +25,14 @@ login_manager = init_login(app)
 admin.add_view(UserModelView(User, db.session, name='用户管理'))
 admin.add_view(NoticeModelView(Notice, db.session, name='通知管理'))
 
+register_filters(app)
+register_processors(app)
+
 register_route_permission('/admin/', '普通管理员')
 register_route_permission('/admin/login/', '普通管理员')
 register_route_permission('/admin/index/', '普通管理员')
 register_route_permission('/admin/user/', '系统管理员')
+register_route_permission('/admin/user/details/', '普通管理员')
 register_route_permission('/admin/user/edit/', '普通管理员')
 register_route_permission('/admin/user/new/', '普通管理员')
 register_route_permission('/admin/notice/', '普通管理员')

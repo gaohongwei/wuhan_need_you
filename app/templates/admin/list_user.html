@@ -1,7 +1,9 @@
 {% extends 'admin/model/list.html' %}
 {% block list_row_actions %}
     {% for action in list_row_actions %}
-        {{ action.render_ctx(get_pk_value(row), row) }}
+        {% if is_user_row_action_allowed(action, row) %}
+            {{ action.render_ctx(get_pk_value(row), row) }}
+        {% endif %}
     {% endfor %}
 {% endblock %}
 

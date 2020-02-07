@@ -60,15 +60,9 @@ class NoticeModelView(ModelView):
             return model.permit_user.username
         return None
 
-    def _priority_formatter(view, context, model, name):
-        priority = getattr(model, name)
-        priorities = {0: '普通', 1: '优先', 2: '紧急'}
-        return priorities.get(priority)
-
     column_formatters = {
         'content': _content_formatter,
         'status': _status_formatter,
-        'priority': _priority_formatter,
         'create_user': _create_user_formatter,
         'permit_user': _permit_user_formatter,
         'modified_time': _time_formatter,

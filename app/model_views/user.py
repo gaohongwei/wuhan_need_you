@@ -1,12 +1,20 @@
 # coding: utf-8
 
+from sqlalchemy import func
 from flask_admin.contrib import sqla
+from flask_admin.contrib.sqla.filters import BaseSQLAFilter
 from wtforms import PasswordField, TextField, SelectField, validators
 import flask_login as login
 from app.models import User, check_permission
 from app.db import db
 from app.libs.date_utils import as_timezone
 from app.libs.wtforms_utils import select_field
+
+class UserRoleFilter(BaseSQLAFilter):
+    def __init__(self):
+        super().__init__(User.role, 'Role')
+    def apply(self, query, value, alias=None):
+        return query.filter(User.role <= login.current_user.role)
 
 def get_choices():
     if login.current_user == None:
@@ -29,6 +37,9 @@ class UserModelView(sqla.ModelView):
     column_details_exclude_list = ['password', 'password_hash']
     column_detail_list = ['username', 'first_name', 'last_name', 'email', 'role', 'register_time']
 
+    # hide 'With select' 
+    action_disallowed_list = ['delete']
+
     column_exclude_list = ['password', 'password_hash']
     column_editable_list = ['username', 'first_name', 'last_name', 'email']
     form_excluded_columns = ['register_time']
@@ -43,6 +54,12 @@ class UserModelView(sqla.ModelView):
                 choices=[],
                 coerce=int)
             }
+    # override to add auth filter
+    def get_query(self):
+        return self.session.query(User).filter(User.role >= login.current_user.role)
+    # override to add auth filter
+    def get_count_query(self):
+        return self.session.query(func.count('*')).filter(User.role >= login.current_user.role)
     # override to dynamically create choices
     def create_form(self):
         form = super().create_form()
