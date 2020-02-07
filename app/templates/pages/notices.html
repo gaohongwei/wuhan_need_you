@@ -6,11 +6,8 @@
   <h1 class="text-center text-primary">信息发布</h1>
 
   {% for notice in notices %}
-
-  <h2 class="text-center text-success">
-    {{notice.content}}
-    <a
-      href="{{url_for('get_notice',notice_id=notice.id)}}">{{ notice.title }}</a>
+  <h2 class="text-center text-success" style='text-align: center;'>
+    {% if notice.title %} {{ notice.title }} {% endif %}
   </h2>
   <br />
   {% endfor %}
