@@ -7,13 +7,25 @@ from flask_admin.contrib.sqla import ModelView
 import flask_login as login
 from wtforms.fields import SelectField
 from app.libs.date_utils import as_timezone
-from app.models import check_permission, Notice
+from app.models import check_permission, Notice, Tag
+from app.db import db
 
 class NoticeModelView(ModelView):
 
     create_template = 'admin/create.html'
     edit_template = 'admin/edit.html'
 
+    column_list = [
+            'title',
+            'content',
+            'created_time',
+            'modified_time',
+            'create_user',
+            'permit_user',
+            'type',
+            'status',
+            'tags'
+            ]
     column_labels = {
             'title': '标题',
             'content': '正文',
@@ -24,8 +36,29 @@ class NoticeModelView(ModelView):
             'type': '类型',
             'create_user': '创建者',
             'status': '审批状态',
+            'tags.name': '标签',
             'tags': '标签',
             'priority': '优先级'
+            }
+    column_filters = [
+            'title',
+            'created_time',
+            'modified_time',
+            'permitted_time',
+            'type',
+            'create_user',
+            'status',
+            'tags',
+            'priority'
+            ]
+
+    form_ajax_refs = {
+            'tags': {
+                'fields': (Tag.name, ),
+                'minimum_input_length': 0, # show suggestions, even before any user input
+                'placeholder': '请选择',
+                'page_size': 5
+                }
             }
 
     page_size = 10
@@ -33,8 +66,8 @@ class NoticeModelView(ModelView):
 
     column_exclude_list = ['content']
     column_searchable_list = ['title', 'status', 'type']
-    column_sortable_list = ['title', 'modified_time', 'created_time', 'permitted_time', 'type', 'status']
-    column_editable_list = ['title', 'content', 'type', 'tags']
+    column_sortable_list = ['title', 'modified_time', 'created_time', 'permitted_time', 'type', 'status', 'tags.name']
+    column_editable_list = ['title', 'content', 'type']
 
     form_create_rules = ['title', 'content', 'type', 'priority', 'tags']
     form_excluded_columns = ['created_time', 'modified_time', 'permitted_time', 'create_user', 'permit_user']
@@ -51,6 +84,9 @@ class NoticeModelView(ModelView):
             priority = dict(choices=[(0, '普通'), (1, '优先'), (2, '紧急')], coerce=int, label='优先级'),
             status = dict(choices=[(0, '草稿'), (1, '已提交'), (2, '已审核'), (3, '未批准')], coerce=int, label='状态')
             )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(Notice, db.session, name='通知管理')
 
     # UTC time to local time
     def _time_formatter(view, content, model, name):
@@ -85,7 +121,6 @@ class NoticeModelView(ModelView):
     }
 
     def is_accessible(self):
-        # return True # For debug
         return check_permission(self, login.current_user)
 
     @expose('/preview')

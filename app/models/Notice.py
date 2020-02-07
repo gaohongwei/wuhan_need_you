@@ -3,6 +3,7 @@ from flask import current_app
 from app.db import db
 from sqlalchemy import func, event
 from sqlalchemy.orm import relationship
+from sqlalchemy.ext.hybrid import hybrid_property
 from app.libs.date_utils import utcnow
 import flask_login as login
 
@@ -33,9 +34,13 @@ class Notice(db.Model):
 
 
     priority = db.Column(db.Integer, default=0)
-    # comma separated list
-    tags = db.Column(db.Text)
     status = db.Column(db.Integer, default=0)
+
+    tags = db.relationship('Tag', secondary='notice_tag')
+
+    @hybrid_property
+    def tag_names(self):
+        return [tag.name for tag in self.tags]
 
     def get_status(self):
         return self.status

@@ -54,6 +54,8 @@ class UserModelView(sqla.ModelView):
                 choices=[],
                 coerce=int)
             }
+    def __init__(self, *args, **kwargs):
+        super().__init__(User, db.session, name='用户管理')
     # override to add auth filter
     def get_query(self):
         return self.session.query(User).filter(User.role >= login.current_user.role)
