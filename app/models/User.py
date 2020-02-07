@@ -76,7 +76,7 @@ class User(db.Model):
 
     @property
     def is_admin(self):
-        return self.role == 'admin'
+        return self.role == 1 # TODO
 
     @property
     def is_anonymous(self):

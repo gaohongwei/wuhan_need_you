@@ -110,10 +110,10 @@ def before_update_notice(mapper, connection, target):
 @event.listens_for(Notice, 'before_insert')
 def before_insert_notice(mapper, connection, target):
     target.status = Status.PENDING
-    target.creator = login.current_user.login
+    target.creator = login.current_user.username
 
 @event.listens_for(Notice, 'before_update')
 def before_update_notice(mapper, connection, target):
     if target.status == Status.AGREE:
-        target.publisher = login.current_user.login
+        target.publisher = login.current_user.username
 
