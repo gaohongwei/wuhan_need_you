@@ -4,32 +4,12 @@ from flask import Markup
 from flask_ckeditor import CKEditorField
 from flask_admin import expose
 from flask_admin.contrib.sqla import ModelView
-from wtforms import SelectField
 import flask_login as login
+from wtforms.fields import SelectField
 from app.libs.date_utils import as_timezone
 from app.models import check_permission, Notice
 
-from app.models.Notice import Notice, Status, Type, Priority
-
-
 class NoticeModelView(ModelView):
-
-    form_overrides = dict(
-                        content=CKEditorField,
-                        status=SelectField,
-                        type=SelectField,
-                        priority=SelectField
-                    )
-    form_args = dict(
-        status=dict(choices=[
-            (Status.PENDING, 'Pending'), (Status.AGREE, 'Agree'),
-            (Status.DISAGREE, 'Disagree'), (Status.OFFLINE, 'Offline')],
-            coerce=int),
-        type=dict(choices=[
-            (Type.INFORMATION, 'Infomartion'), (Type.ADVERTISEMENT, 'Advertisement')], coerce=int),
-        priority=dict(choices=[
-            (Priority.LOW, 'Low'), (Priority.MEDIUM, 'Medium'), (Priority.HIGH, 'High')], coerce=int)
-    )
 
     create_template = 'admin/create.html'
     edit_template = 'admin/edit.html'
@@ -65,16 +45,16 @@ class NoticeModelView(ModelView):
 
     def _content_formatter(view, context, model, name):
         return Markup(model.content)
-
+    
     def _status_formatter(view, context, model, name):
         return model.get_status_name()
-
+    
     def _priority_formatter(view, context, model, name):
         return model.get_priority_name()
-
+    
     def _create_user_formatter(view, context, model, name):
         return model.create_user.username
-
+    
     def _permit_user_formatter(view, context, model, name):
         if model.permit_user:
             return model.permit_user.username
@@ -84,22 +64,15 @@ class NoticeModelView(ModelView):
         priority = getattr(model, name)
         priorities = {0: '普通', 1: '优先', 2: '紧急'}
         return priorities.get(priority)
-        return Notice.STATUS_DESC[(model.status)]
-
-    def _type_formatter(view, context, model, name):
-        return Notice.TYPE_DESC[model.type]
-
-    def _priority_formatter(view, context, model, name):
-        return Notice.PRIORITY_DESC[model.priority]
 
     column_formatters = {
         'content': _content_formatter,
         'status': _status_formatter,
+        'priority': _priority_formatter,
         'create_user': _create_user_formatter,
         'permit_user': _permit_user_formatter,
         'modified_time': _time_formatter,
         'created_time': _time_formatter,
-        'type': _type_formatter,
         'priority': _priority_formatter
     }
 
@@ -111,4 +84,3 @@ class NoticeModelView(ModelView):
     def index(self):
         notices = Notice.query.all()
         return self.render('pages/notices.html', notices = notices)
-        return login.current_user.is_authenticated
