@@ -1,4 +1,5 @@
 # coding: utf-8
+
 from flask import current_app
 from app.db import db
 from sqlalchemy import func, event
@@ -8,6 +9,7 @@ from app.libs.date_utils import utcnow
 import flask_login as login
 
 from app.models.User import User
+from app.libs.date_utils import as_timezone
 
 def get_current_user_id():
     if login.current_user == None:
@@ -22,9 +24,9 @@ class Notice(db.Model):
     # The time is stored without timezone info in database,
     # They are considered UTC
     # Remember to recover to local time when use them
-    created_time = db.Column(db.DateTime, default=utcnow)
-    modified_time = db.Column(db.DateTime, default=utcnow, onupdate=utcnow)
-    permitted_time = db.Column(db.DateTime) # permit or not permit
+    _created_time = db.Column(db.DateTime, default=utcnow)
+    _modified_time = db.Column(db.DateTime, default=utcnow, onupdate=utcnow)
+    _permitted_time = db.Column(db.DateTime) # permit or not permit
     type = db.Column(db.String, nullable=False)
     create_user_id = db.Column(db.Integer, db.ForeignKey('users.id'), default=get_current_user_id)
     permit_user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -37,6 +39,36 @@ class Notice(db.Model):
     status = db.Column(db.Integer, default=0)
 
     tags = db.relationship('Tag', secondary='notice_tag')
+
+    @hybrid_property
+    def created_time(self):
+        return as_timezone(self._created_time)
+
+    @created_time.expression
+    def created_time(cls):
+        return cls._created_time
+
+    # add timezone info for utc time
+    @hybrid_property
+    def modified_time(self):
+        return as_timezone(self._modified_time)
+
+    # for sqlalchemy expression
+    @modified_time.expression
+    def modified_time(cls):
+        return cls._modified_time
+
+    @hybrid_property
+    def permitted_time(self):
+        return as_timezone(self._permitted_time)
+
+    @permitted_time.expression
+    def permitted_time(cls):
+        return cls._permitted_time
+
+    @permitted_time.setter
+    def permitted_time(self, utctime):
+        self._permitted_time = utctime
 
     @hybrid_property
     def tag_names(self):

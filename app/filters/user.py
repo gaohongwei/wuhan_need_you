@@ -1,3 +1,4 @@
+# coding: utf-8
 
 from app.models import User
 from flask_admin.model.template import EditRowAction, DeleteRowAction, ViewRowAction

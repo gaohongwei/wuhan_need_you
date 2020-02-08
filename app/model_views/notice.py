@@ -8,7 +8,7 @@ from flask_admin.actions import action
 from flask_admin.contrib.sqla import ModelView
 import flask_login as login
 from wtforms.fields import SelectField
-from app.libs.date_utils import as_timezone, utcnow
+from app.libs.date_utils import as_timezone, utcnow, format_cn
 from app.models import check_permission, Notice, Tag
 from app.models.Notice import get_current_user_id
 from app.db import db
@@ -92,13 +92,12 @@ class NoticeModelView(ModelView):
     def __init__(self, *args, **kwargs):
         super().__init__(Notice, db.session, name='通知管理')
 
-    # UTC time to local time
-    def _time_formatter(view, content, model, name):
-        time = getattr(model, name)
-        return as_timezone(time)
-
     def _content_formatter(view, context, model, name):
         return Markup(model.content)
+
+    def _time_formatter(view, context, model, name):
+        value = getattr(model, name)
+        return format_cn(value)
     
     def _status_formatter(view, context, model, name):
         return model.get_status_name()
@@ -119,9 +118,9 @@ class NoticeModelView(ModelView):
         'status': _status_formatter,
         'create_user': _create_user_formatter,
         'permit_user': _permit_user_formatter,
+        'priority': _priority_formatter,
         'modified_time': _time_formatter,
-        'created_time': _time_formatter,
-        'priority': _priority_formatter
+        'permitted_time': _time_formatter
     }
 
     def is_accessible(self):

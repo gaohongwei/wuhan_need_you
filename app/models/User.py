@@ -2,11 +2,11 @@
 
 from flask import current_app
 from app.db import db
-from app.libs.date_utils import utcnow
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.ext.hybrid import hybrid_property
 
 from .UserPermission import check_route_permission
+from app.libs.date_utils import as_timezone, utcnow
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -20,7 +20,15 @@ class User(db.Model):
     # The time is stored without timezone info in database,
     # They are considered UTC
     # Remember to recover to local time when use them
-    register_time = db.Column(db.DateTime, default=utcnow)
+    _register_time = db.Column(db.DateTime, default=utcnow)
+
+    @hybrid_property
+    def register_time(self):
+        return as_timezone(self._register_time)
+
+    @register_time.expression
+    def register_time(cls):
+        return cls._register_time
 
     def __repr__(self):
         return '<User %r>' % self.username

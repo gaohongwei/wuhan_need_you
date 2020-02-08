@@ -1,3 +1,5 @@
+# coding: utf-8
+
 import sys
 sys.path.insert(0, '../data')
 
@@ -25,6 +27,8 @@ def list_notices():
 @app.route('/notice/<notice_id>')
 def get_notice(notice_id):
     notice = db.session.query(Notice).filter_by(id=notice_id).scalar()
+    if notice == None:
+        return 'not found', 404
     return render_template('pages/notice_detail.html', menus = menus, notice = notice)
 
 @app.route('/favicon.ico')

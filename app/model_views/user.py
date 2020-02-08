@@ -7,8 +7,8 @@ from wtforms import PasswordField, TextField, SelectField, validators
 import flask_login as login
 from app.models import User, check_permission
 from app.db import db
-from app.libs.date_utils import as_timezone
 from app.libs.wtforms_utils import select_field
+from app.libs.date_utils import format_cn
 
 class UserRoleFilter(BaseSQLAFilter):
     def __init__(self):
@@ -23,6 +23,16 @@ def get_choices():
 
 class UserModelView(sqla.ModelView):
     list_template = 'admin/list_user.html'
+    # NB: column_list is required, or hybrid_property register_time not work
+    column_list = [
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+            'role',
+            'register_time',
+            'password'
+            ]
     column_labels = {
             'username': '用户名',
             'first_name': '名',
@@ -68,14 +78,15 @@ class UserModelView(sqla.ModelView):
         choices = get_choices()
         form.role.choices = choices
         return form
-    def _time_formatter(view, context, model, name):
-        time = getattr(model, name)
-        return as_timezone(time)
+
     def _role_formatter(view, context, model, name):
         return model.get_role_name()
+    def _time_formatter(view, context, model, name):
+        value = getattr(model, name)
+        return format_cn(value)
     column_formatters = {
-        'register_time': _time_formatter,
-        'role': _role_formatter
+        'role': _role_formatter,
+        'register_time': _time_formatter
     }
     # required by flask-admin
     def is_accessible(self):
