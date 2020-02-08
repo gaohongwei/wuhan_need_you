@@ -7,9 +7,13 @@
 
   {% for notice in notices %}
   <h2 class="text-center text-success" style='text-align: center;'>
-    {% if notice.title %} {{ notice.title }} {% endif %}
+    {% if notice.title %}
+	<a href='/notice/{{notice.id}}'>{{ notice.title }}</a>
+	{% endif %}
   </h2>
   <br />
   {% endfor %}
+
+</div>
 
   {% endblock %}

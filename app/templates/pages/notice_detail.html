@@ -6,12 +6,12 @@
   <div>
       <div class="text-center">
           <p class="text-success">{{notice.title}}</p>
-          <p>Created Time: {{ notice.created_time }} Modified Time: {{ notice.modified_time }}</p>
+          <p>创建时间：{{ notice.created_time | datetime_format_cn }} 修改时间: {{ notice.modified_time | datetime_format_cn }}</p>
           {% if current_user.is_authenticated %}
-          <p>Creator: {{ notice.create_user }} Publisher: {{ notice.permit_user }} </p>
-          <p>Status: {{ notice.status }}</p>
-          <p>Type: {{ notice.type }}</p>
-          <p>Priority: {{ notice.priority }}</p>
+          <p>创建人: {{ notice.create_user }} 审核人: {{ notice.permit_user }} </p>
+          <p>状态: {{ notice.status }}</p>
+          <p>类型: {{ notice.type }}</p>
+          <p>优先级: {{ notice.priority }}</p>
           {% endif %}
       </div>
       <div>

@@ -9,6 +9,10 @@ def register_filters(app):
     register_user_filters(app)
     register_notice_filters(app)
 
+    @app.template_filter('datetime_format_cn')
+    def datetime_format_cn(value):
+        return value
+
 def register_processors(app):
     '''
     global functions/variables for template

@@ -20,12 +20,12 @@ def list_notices():
     else:
         pagination = db.session.query(Notice).filter_by(status=2).paginate(page, 2, False)
     notices = pagination.items
-    return render_template('pages/notices.html', menus=menus, pages_info=pages_info, notices=notices, pagination=pagination)
+    return render_template('pages/notices.html', menus=menus, notices=notices, pagination=pagination)
 
 @app.route('/notice/<notice_id>')
 def get_notice(notice_id):
     notice = db.session.query(Notice).filter_by(id=notice_id).scalar()
-    return render_template('pages/notice_detail.html', menus = menus, pages_info = pages_info, notice = notice)
+    return render_template('pages/notice_detail.html', menus = menus, notice = notice)
 
 @app.route('/favicon.ico')
 def get_favicon():
