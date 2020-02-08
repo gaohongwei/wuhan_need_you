@@ -33,7 +33,7 @@ def get_favicon():
 
 @app.route('/reports')
 def test_report():
-    return render_template('pages/report_overall.html')
+    return render_template('pages/report_overall.html', menus = menus, pages_info = report_info)
 
 @app.route('/<page_name>')
 def menu(page_name):
