@@ -40,6 +40,7 @@
                 const curedCount = info.curedCount;
                 const seriousCount = info.seriousCount;
                 const deadCount = info.deadCount;
+				const suspectedIncr = info.suspectedIncr;
                 const seriousIncr = info.seriousIncr;
                 const curedIncr = info.curedIncr;
                 const deadInc = info.deadIncr;
@@ -64,6 +65,7 @@
                     curedCount,
                     seriousCount,
                     deadCount,
+					suspectedIncr,
                     seriousIncr,
                     curedIncr,
                     deadInc,
@@ -106,9 +108,11 @@
             <div>确认总数<span id='confirmedCount'></span></div>
             <div>治愈总数<span id='curedCount'></span></div>
             <div>重症总数<span id='seriousCount'></span></div>
+            <div>疑似总数<span id='suspectedCount'></span></div>
             <div>死亡总数<span id='deadCount'></span></div>
             <div>新增重症<span id='seriousIncr'></span></div>
             <div>新增治愈<span id='curedIncr'></span></div>
+            <div>新增疑似<span id='suspectedIncr'></span></div>
             <div>新增死亡<span id='deadInc'></span></div>
             <div>备注<span id='remarks'></span></div>
             <div>说明<span id='notes'></span></div>
