@@ -220,7 +220,7 @@ wuhan_situation_info = {
   ##  second tag should be paragraph
 alumni_action_info = {
   
-  'home_images': ["image/alumni_action/h1.jpg", "image/alumni_action/h4.jpg", "image/alumni_action/h7.jpg"],
+  'home_images': ["image/alumni_action/h2.jpg", "image/alumni_action/h4.jpg", "image/alumni_action/h7.jpg"],
 
   'introduction': [ 
                 "2019年年末2019-nCoV疫情在武汉爆发，疫情的动态时刻牵动着校友的心，在了解到一线口罩，手套，防护服等医疗物资短缺的情况，校友会第一时间全力以赴，多渠道开展支援活动，包括校友和社会的资金募捐，采购和运送医疗物资，与美国NGO达成医疗物资合作，在媒体呼吁社会力量关注武汉疫情，鼓励美国民间力量支援武汉疫情防控。",
