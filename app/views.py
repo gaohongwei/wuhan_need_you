@@ -39,7 +39,7 @@ def get_favicon():
 def test_report():
     return render_template('pages/report_overall.html')
 
-@app.route('/<page_name>')
+@app.route('/pages/<page_name>')
 def menu(page_name):
     pages_info = menus2page.get(page_name, None)
     if pages_info != None:
