@@ -4,43 +4,10 @@
 
 <div class="container">
 
-  <div class="row">
-    <div class="col-md-12 col-lg-12 col-xl-12 jumbotron" style="padding: 0">
-      	<div class="home_content w-100 mx-auto">
-			<!--Carousel placeholder-->
-			<div id="carouselExampleIndicators1">
-				<div style="visible:none;height:0px">
-					<div class="slide-image" data-src="{{url_for('static', filename='image/alumni_activities/2018_bbq.jpg')}}"></div>
-					<div class="slide-image" data-src="{{url_for('static', filename='image/alumni_activities/2017_president.jpg')}}"></div>
-					<div class="slide-image" data-src="{{url_for('static', filename='image/h2.jpg')}}"></div>
-				    <div class="slide-image" data-src="{{url_for('static', filename='image/h4.jpg')}}"></div>
-				    <div class="slide-image" data-src="{{url_for('static', filename='image/h5.jpg')}}"></div>
-				    <div class="slide-image" data-src="{{url_for('static', filename='image/h6.jpg')}}"></div>
-				</div>
-			</div>
-			<script>
-				const get_urls = id => {
-					const elem = document.getElementById(id);
-					if (!elem) return [];
-					const divs = elem.querySelectorAll('div.slide-image');
-					const urls = [];
-					for(let div of divs) {
-						urls.push(div.dataset.src);
-					}
-					return urls;
-				};
-				const carousel = (id, height) => {
-					const urls = get_urls(id);
-					CanvasImage.carousel_bootstrap4(id, urls, height);
-				};
-				const id1 = 'carouselExampleIndicators1';
-				document.body.onload = () => {
-					carousel(id1, '300px');
-				};
-			</script>
-	    </div>
-	</div>
-  </div>
+	{% with imgs=['image/alumni_activities/2018_bbq.jpg', 'image/alumni_activities/2017_president.jpg', 'image/h2.jpg', 'image/h4.jpg', 'image/h5.jpg', 'image/h6.jpg'] %}
+		{% include 'common/carousel.html' %}
+	{% endwith %}
+	
 
   <div class="row">
     <div class="col-md-6 col-lg-6 col-xl-6 jumbotron">
