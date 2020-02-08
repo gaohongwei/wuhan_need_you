@@ -36,6 +36,9 @@ class NoticeModelView(ModelView):
             'created_time': '创建时间',
             'modified_time': '最后编辑时间',
             'permitted_time': '审批时间',
+            '_created_time': '创建时间', # a hack for details form
+            '_modified_time': '最后编辑时间', # a hack for details form
+            '_permitted_time': '审批时间', # a hack for details form
             'permit_user': '审批人',
             'type': '类型',
             'create_user': '创建者',
@@ -120,7 +123,10 @@ class NoticeModelView(ModelView):
         'permit_user': _permit_user_formatter,
         'priority': _priority_formatter,
         'modified_time': _time_formatter,
-        'permitted_time': _time_formatter
+        'permitted_time': _time_formatter,
+        '_created_time': lambda v,c,m,n: format_cn(m.created_time), # a hack for details form
+        '_modified_time': lambda v,c,m,n: format_cn(m.modified_time), # a hack for details form
+        '_permitted_time': lambda v,c,m,n: format_cn(m.permitted_time) # a hack for details form
     }
 
     def is_accessible(self):

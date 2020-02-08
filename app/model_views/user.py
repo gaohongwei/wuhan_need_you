@@ -34,12 +34,13 @@ class UserModelView(sqla.ModelView):
             'password'
             ]
     column_labels = {
-            'username': '用户名',
+            'username': '登陆名',
             'first_name': '名',
             'last_name': '姓',
             'email': '电子邮件',
             'role': '角色',
             'register_time': '注册时间',
+            '_register_time': '注册时间', # A hack for details form
             'password': '密码'
             }
     page_size = 10
@@ -81,12 +82,11 @@ class UserModelView(sqla.ModelView):
 
     def _role_formatter(view, context, model, name):
         return model.get_role_name()
-    def _time_formatter(view, context, model, name):
-        value = getattr(model, name)
-        return format_cn(value)
+    def _register_time_formatter(view, context, model, name):
+        return format_cn(model.register_time)
     column_formatters = {
         'role': _role_formatter,
-        'register_time': _time_formatter
+        '_register_time': _register_time_formatter
     }
     # required by flask-admin
     def is_accessible(self):

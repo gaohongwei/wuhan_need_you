@@ -34,6 +34,8 @@ def as_timezone(time, to_zone_name='Asia/ShangHai', from_zone_name='UTC'):
     Convert a time from a zone to another zone
     time: if time.tzinfo is None, consider it is a UTC time
     '''
+    if time == None:
+        return None
     from_zone = tz.gettz(from_zone_name)
     to_zone = tz.gettz(to_zone_name)
     if time.tzinfo == None:
