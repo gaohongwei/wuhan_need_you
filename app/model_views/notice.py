@@ -1,8 +1,10 @@
 # coding: utf-8
 
-from flask import Markup
+from gettext import ngettext
+from flask import Markup, flash
 from flask_ckeditor import CKEditorField
 from flask_admin import expose
+from flask_admin.actions import action
 from flask_admin.contrib.sqla import ModelView
 import flask_login as login
 from wtforms.fields import SelectField
@@ -12,8 +14,9 @@ from app.db import db
 
 class NoticeModelView(ModelView):
 
-    create_template = 'admin/create.html'
-    edit_template = 'admin/edit.html'
+    create_template = 'admin/create_notice.html'
+    edit_template = 'admin/edit_notice.html'
+    list_template = 'admin/list_notice.html'
 
     column_list = [
             'title',
@@ -70,7 +73,7 @@ class NoticeModelView(ModelView):
     column_editable_list = ['title', 'content', 'type']
 
     form_create_rules = ['title', 'content', 'type', 'priority', 'tags']
-    form_excluded_columns = ['created_time', 'modified_time', 'permitted_time', 'create_user', 'permit_user']
+    form_edit_rules = ['title', 'content', 'type', 'priority', 'tags']
 
     form_overrides = dict(
             content = CKEditorField,
@@ -124,6 +127,37 @@ class NoticeModelView(ModelView):
         return check_permission(self, login.current_user)
 
     @expose('/preview')
-    def index(self):
+    def preview(self):
         notices = Notice.query.all()
         return self.render('pages/notices.html', notices = notices)
+
+    
+    @action('approve', 'Approve', 'Are you sure you want to approve selected notices?')
+    def action_approve(self, ids):
+        try:
+            rows = Notice.query.filter(Notice.id.in_(ids)).filter(Notice.status != 2).update({'status': 2}, synchronize_session=False)
+            db.session.commit()
+
+            message = '{} notices have been successfully approved'.format(rows)
+            flash(message, 'success')
+
+        except Exception as ex:
+            if not self.handle_view_exception(ex):
+                raise
+            
+            flash(gettext('Failed to approve notices. %(error)s', error=str(ex)), 'error')
+    
+    @action('disapprove', 'Disapprove', 'Are you sure you want to disapprove selected notices?')
+    def action_disapprove(self, ids):
+        try:
+            rows = Notice.query.filter(Notice.id.in_(ids)).filter(Notice.status != 3).update({'status': 3}, synchronize_session=False)
+            db.session.commit()
+
+            message = '{} notices have been successfully disapproved'.format(rows)
+            flash(message, 'success')
+
+        except Exception as ex:
+            if not self.handle_view_exception(ex):
+                raise
+            
+            flash(gettext('Failed to disapprove notices. %(error)s', error=str(ex)), 'error')
