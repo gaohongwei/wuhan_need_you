@@ -62,11 +62,3 @@ class Notice(db.Model):
             2: '紧急'
         }
         return priority_desc.get(self.priority, None) or self.priority
-
-
-@event.listens_for(Notice, 'before_update')
-def before_update_notice(mapper, connection, target):
-    if target.status == 2 or target.status == 3:
-        target.permit_user_id = get_current_user_id()
-        target.permitted_time = utcnow()
-

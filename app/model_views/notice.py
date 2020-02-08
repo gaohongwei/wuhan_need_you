@@ -8,8 +8,9 @@ from flask_admin.actions import action
 from flask_admin.contrib.sqla import ModelView
 import flask_login as login
 from wtforms.fields import SelectField
-from app.libs.date_utils import as_timezone
+from app.libs.date_utils import as_timezone, utcnow
 from app.models import check_permission, Notice, Tag
+from app.models.Notice import get_current_user_id
 from app.db import db
 
 class NoticeModelView(ModelView):
@@ -135,7 +136,15 @@ class NoticeModelView(ModelView):
     @action('approve', 'Approve', 'Are you sure you want to approve selected notices?')
     def action_approve(self, ids):
         try:
-            rows = Notice.query.filter(Notice.id.in_(ids)).filter(Notice.status != 2).update({'status': 2}, synchronize_session=False)
+            rows = Notice.query.filter(Notice.id.in_(ids)).\
+                                filter(Notice.status != 2).\
+                                update(
+                                    {
+                                        'status': 2,
+                                        'permit_user_id': get_current_user_id(),
+                                        'permitted_time': utcnow()
+                                    }, 
+                                synchronize_session=False)
             db.session.commit()
 
             message = '{} notices have been successfully approved'.format(rows)
@@ -150,7 +159,15 @@ class NoticeModelView(ModelView):
     @action('disapprove', 'Disapprove', 'Are you sure you want to disapprove selected notices?')
     def action_disapprove(self, ids):
         try:
-            rows = Notice.query.filter(Notice.id.in_(ids)).filter(Notice.status != 3).update({'status': 3}, synchronize_session=False)
+            rows = Notice.query.filter(Notice.id.in_(ids)).\
+                                filter(Notice.status != 3).\
+                                update(
+                                    {
+                                        'status': 3,
+                                        'permit_user_id': get_current_user_id(),
+                                        'permitted_time': utcnow()
+                                    }, 
+                                synchronize_session=False)
             db.session.commit()
 
             message = '{} notices have been successfully disapproved'.format(rows)
