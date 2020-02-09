@@ -29,7 +29,7 @@ def get_realtime_overall():
         if data == None:
             return 'fail to get data, no data exist', 404
         Cache.set(str(data['updateTime']), json.dumps(data))
-        return jsonifiy({'results': [data]})
+        return jsonify({'results': [data]})
     else:
         seconds = data['updateTime'] * 0.001 - 8*3600 # Beijing -> UTC
         dataTime = datetime_from_seconds(seconds)  # UTC
