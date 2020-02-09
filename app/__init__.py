@@ -11,6 +11,7 @@ from app.db import init_app
 from app.config import create_app
 from app.filters import register_filters, register_processors
 
+# Load the config file
 # Initialize the app, APPLICATION_MODE can be one of 'depolyment', 'development', 'testing'
 app = create_app(os.environ.get('APPLICATION_MODE'))
 
@@ -21,13 +22,13 @@ csrf = CSRFProtect(app)
 # Load the views
 from app import views
 
-# Load the config file
 db = init_app(app)
+
 login_manager = init_login(app)
 admin.add_view(UserModelView())
 admin.add_view(NoticeModelView())
 admin.add_view(TagModelView())
-admin.add_view(MyFileAdmin())
+admin.add_view(MyFileAdmin(app))
 
 register_filters(app)
 register_processors(app)

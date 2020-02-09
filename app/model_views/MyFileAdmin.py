@@ -2,16 +2,16 @@
 
 import os
 from flask_admin.contrib.fileadmin import FileAdmin
-from app.models import User, check_permission
 import flask_login as login
-
-staticPath = os.path.join(os.path.dirname(__file__), '..', 'static/upload')
+from flask import current_app
+from app.models import User, check_permission
 
 class MyFileAdmin(FileAdmin):
-    def __init__(self):
+    def __init__(self, app):
+        staticPath = app.config['IMAGE_FILE_UPLOAD_DIRECTORY']
         if not os.path.exists(staticPath):
             os.mkdir(staticPath)
-        super().__init__(staticPath, '/upload/', name='文件管理')
+        super().__init__(staticPath, '/files/', name='文件管理')
     # required by flask-admin
     def is_accessible(self):
         return check_permission(self, login.current_user)
