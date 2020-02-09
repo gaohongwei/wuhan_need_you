@@ -44,6 +44,10 @@ def get_favicon():
 def test_report():
     return render_template('pages/report_overall.html', menus = menus, pages_info = report_info)
 
+@app.route('/upload/<path:path>')
+def get_upload(path):
+    return send_from_directory('static/upload', path)
+
 @app.route('/pages/<page_name>')
 def menu(page_name):
     pages_info = menus2page.get(page_name, None)

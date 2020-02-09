@@ -1,5 +1,6 @@
 # coding: utf-8
 
+from fnmatch import fnmatch
 from flask import request, current_app
 
 def get_current_route():
@@ -22,7 +23,7 @@ class RoutePermission(UserPermission):
         return allow_role_name != None and allow_role_name(self.role_name) and self.match_route(self.route)
     @classmethod
     def match_route(cls, route):
-        return route == get_current_route()
+        return fnmatch(get_current_route(), route)
 
 class ModelViewPermission(UserPermission):
     def __init__(self, modelViewClass, role_name):
@@ -46,11 +47,13 @@ def register_model_view_permission(modelViewClass, role_name):
 def check_route_permission(user):
     if user == None:
         return False
-    permission = route_permissions.get(get_current_route())
-    if permission == None:
-        current_app.logger.info('not permitted')
-        return False
-    return permission.allow(user)
+    current_route = get_current_route()
+    for route in route_permissions:
+        if fnmatch(current_route, route):
+            permission = route_permissions.get(route)
+            return permission.allow(user)
+    current_app.logger.info('not permitted for ' + current_route)
+    return False
 
 def check_model_view_permission(modelView, user):
     if modelView == None or user == None:

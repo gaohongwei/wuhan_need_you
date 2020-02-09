@@ -9,3 +9,4 @@ venv
 # Mac desktop service store files
 .DS_Store
 .vscode/
+/app/static/upload/

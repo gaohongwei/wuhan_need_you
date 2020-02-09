@@ -5,6 +5,7 @@ from flask_admin import Admin
 from flask_ckeditor import CKEditor
 from app.models import Tag, User, Notice, register_route_permission, register_model_view_permission, recreate_database
 from app.model_views import TagModelView, UserModelView, NoticeModelView, AdminIndexView, init_login, init_sample_users
+from app.model_views import MyFileAdmin
 from app.db import init_app
 from app.config import create_app
 from app.filters import register_filters, register_processors
@@ -24,6 +25,7 @@ login_manager = init_login(app)
 admin.add_view(UserModelView())
 admin.add_view(NoticeModelView())
 admin.add_view(TagModelView())
+admin.add_view(MyFileAdmin())
 
 register_filters(app)
 register_processors(app)
@@ -49,10 +51,13 @@ register_route_permission('/admin/tag/edit/', '系统管理员')
 register_route_permission('/admin/tag/details/', '系统管理员')
 register_route_permission('/admin/tag/new/', '系统管理员')
 register_route_permission('/admin/tag/delete/', '系统管理员')
+register_route_permission('/admin/myfileadmin/', '普通管理员')
+register_route_permission('/admin/myfileadmin/*/*', '普通管理员')
 
 register_model_view_permission(UserModelView, '系统管理员')
 register_model_view_permission(NoticeModelView, '普通管理员')
 register_model_view_permission(TagModelView, '系统管理员')
+register_model_view_permission(MyFileAdmin, '普通管理员')
 
 recreate_database(app)
 
