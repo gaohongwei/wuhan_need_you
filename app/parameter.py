@@ -4,31 +4,31 @@
 menus = [
 	 {
 	    'label': "主页",
-	    'path': '/index'
+	    'path': '/'
   	},
   	{
     	'label': "校友活动",
-    	'path': '/alumni_activities'
+    	'path': '/pages/alumni_activities'
   	},
   	{
 	    'label': "武汉疫情动态",
-	    'path': '/wuhan_situation'
+	    'path': '/pages/wuhan_situation'
   	},
   	{
 	    'label': "校友会在行动",
-	    'path': '/alumni_action'
+	    'path': '/pages/alumni_action'
   	},
   	{
 	    'label': "捐赠方式和公示",
-	    'path': '/donate'
+	    'path': '/pages/donate'
   	},
   	{
 	    'label': "联系我们",
-	    'path': '/contact_us'
+	    'path': '/pages/contact_us'
   	},
   	{
 	    'label': "Q&A",
-	    'path': '/qa'
+	    'path': '/pages/qa'
   	},
 ]
 
@@ -107,79 +107,79 @@ alumni_activities_info = {
     {
       'title': "2019年10月 校友会年度BBQ (拔河掠影)",
       'image': ["image/alumni_activities/2019_bbq_1.jpg", "image/alumni_activities/2019_bbq_2.jpg"]
-    }, 
+    },
     {
       'title': "2019年10月 校友会协办3551国际创业大赛(硅谷赛区)",
       'image': ["image/alumni_activities/2019_3551.jpg"]
-    }, 
+    },
     {
       'title': "2019年8月校友会对接生命科学院暑期访学团",
       'image': ["image/alumni_activities/2019_life_science_1.jpg", "image/alumni_activities/2019_life_science_2.jpg"]
-    }, 
+    },
     {
       'title': "2018年12 武大校友同武大院士教授欢聚",
       'image': ["image/alumni_activities/2018_prof.jpg"]
-    }, 
+    },
     {
       'title': "2018年10月 校友会年度BBQ合影",
       'image': ["image/alumni_activities/2018_bbq.jpg"]
-    }, 
+    },
     {
       'title': "2018年10月校友会协办3551国际创业大赛(硅谷赛区)",
       'image': ["image/alumni_activities/2018_3551.jpg"]
-    }, 
+    },
     {
       'title': "2018年8月校友会对接生命科学院暑期访学团",
       'image': ["image/alumni_activities/2018_life_science.jpg"]
-    }, 
+    },
     {
       'title': "2018年8月校友会代表队参与第16届北加州华人文化体育协会运动大会",
       'image': ["image/alumni_activities/2018_sport_meet_1.jpg", "image/alumni_activities/2018_sport_meet_2.jpg"]
-    }, 
+    },
     {
       'title': "2018年4月 武大校董喻鹏和新一届校友会成员一起",
       'image': ["image/alumni_activities/2018_university_council.jpg"]
-    }, 
+    },
     {
       'title': "2017年 窦贤康校长与校友会在斯坦福组织武大海外恳谈会",
       'image': ["image/alumni_activities/2017_president.jpg"]
-    }, 
+    },
     {
       'title': "2017年武大校友会全体人员",
       'image': ["image/alumni_activities/2017_alumni.jpg"]
-    }, 
+    },
     {
       'title': "2017年校友会年度BBD(联合兄弟校友会和湖北同乡会)",
       'image': ["image/alumni_activities/2017_bbq.jpg"]
-    }, 
+    },
     {
       'title': "2015年11月 武汉大学副校长黄泰岩 在湾区招才引智",
       'image': ["image/alumni_activities/2015_vice_president.jpg"]
-    }, 
+    },
     {
       'title': "2010年 武大校长刘经南到湾区看望武大校友",
       'image': ["image/alumni_activities/2010_president.jpg"]
-    }, 
+    },
     {
       'title': "2007年12月 黄彰任会长（前排居中），基金会成员与彭旧金山总领事合影",
       'image': ["image/alumni_activities/2017_admin.jpg"]
-    }, 
+    },
     {
       'title': "2007年时任武汉市委书记（现任工信部部长）苗圩-左三与基金会部分成员（欧阳明-右二，王高峰-右一）合影",
       'image': ["image/alumni_activities/2007_wuhan_maire.jpg"]
-    }, 
+    },
     {
       'title': "2007年 刘经南 校长访问基金会留影",
       'image': ["image/alumni_activities/2007_president.jpg"]
-    }, 
+    },
     {
       'title': "2006年 校友会校友年度BBQ",
       'image': ["image/alumni_activities/2006_bbq.jpg"]
-    }, 
+    },
     {
       'title': "2005年宁挺，欧阳明，王高峰等代表基金会参与华人运动会",
       'image': ["image/alumni_activities/2005_sport_meet.jpg"]
-    }, 
+    },
     {
       'title': "1998年校友会成立大会合影留念",
       'image': ["image/alumni_activities/1998_setup.jpg"]
@@ -219,10 +219,10 @@ wuhan_situation_info = {
   ##  first tag should be title
   ##  second tag should be paragraph
 alumni_action_info = {
-  
+
   'home_images': ["image/alumni_action/h1.jpg", "image/alumni_action/h4.jpg", "image/alumni_action/h7.jpg"],
 
-  'introduction': [ 
+  'introduction': [
                 "2019年年末2019-nCoV疫情在武汉爆发，疫情的动态时刻牵动着校友的心，在了解到一线口罩，手套，防护服等医疗物资短缺的情况，校友会第一时间全力以赴，多渠道开展支援活动，包括校友和社会的资金募捐，采购和运送医疗物资，与美国NGO达成医疗物资合作，在媒体呼吁社会力量关注武汉疫情，鼓励美国民间力量支援武汉疫情防控。",
                 "日前为止，武汉大学协同兄弟校友会，武汉大学中国校友会分支，美国NGO，湖北慈善总会等中美校友，社会，政府各界力量，同运送超过5.2吨紧急医疗物资到武汉协和医院，中南医院和孝感中心医院一线医护人员手中，包括23.7万医用口罩，5.75万医用口罩，1.3万医用防护服等，更多的校友会支援武汉行动依然在进行。",
                 "众志成城，抗击疫情，校友会在行动！武汉加油，中国加油！"
@@ -234,7 +234,7 @@ alumni_action_info = {
         {
           'title': "DR捐赠2.7吨医疗物资，与武大华科北加校友会二度联手完成跨洋援助至孝感"
         },
-        
+
         {
           'paragraph': "关注本公号的各位读者都知道，在1月31日，由Direct Relief（国际直接救济组织）捐赠重达2.5吨驰援武汉的应急医疗物资从旧金山飞跃太平洋，顺利抵达武汉协和医院，由武汉加油行动武汉分队的志愿者亲手交付到医护工作者手中，其中包括目前急需的20万支医用外科口罩、2.75万双医用手套及4000件防护服。"
         },
@@ -322,7 +322,7 @@ alumni_action_info = {
           'paragraph': "媒体联系邮箱：Sunny Sun, media@wuhanunited.org"
         }
 
-        
+
       ],
       # notice end
 
@@ -369,7 +369,7 @@ alumni_action_info = {
         },
         {
           'paragraph': "美西时间1月28日，北京时间1月29日凌晨，运送物资的飞机抵达广州,完成清关手续抵达中国邮政广州转运中心，由武汉大学广州校友会全程护送，当晚10点中国邮政EMS货车启程武汉。"
-        },                      
+        },
         {
           'source': {
               'title': "来源: ",
@@ -395,7 +395,7 @@ donate_info = {
     # first notice
     'notices': [
 
-        # notice start 
+        # notice start
         [
           {
             'title': "财务公示和募捐计划重要更新 (2月3日)"
@@ -491,7 +491,7 @@ donate_info = {
           {
             'paragraph': 'A：Gofundme：“All donations are made directly to PayPal Giving Fund (a 501(c)(3) charitable organization). After the deduction of payment processing fees, PayPal Giving Fund delivers the funds they receive on a monthly basis. Payment processing fees including PayPal‘s transaction fee and GoFundMe’s processing cost for the secure transfer of funds. PayPal Giving Fund does not charge a fee for its services.” (Quote from Gofundme policies)； Benevity 账期至少为1个月'
           },
-          { 
+          {
             'paragraph': 'Q：我们如何知道捐款情况的更新'
           },
           {
