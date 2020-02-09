@@ -10,6 +10,8 @@
 		src="{{ url_for('static', filename='bootstrap-4.4.1-dist/js/bootstrap.min.js') }}"></script>
 	<script type="text/javascript"
 		src="{{ url_for('static', filename='bootstrap-4.4.1-dist/js/bootstrap.bundle.js') }}"></script>
+	<script type="text/javascript"
+		src="{{ url_for('static', filename='CanvasImage.js') }}"></script>
 	<link rel="stylesheet"
 		href="{{ url_for('static', filename='bootstrap-4.4.1-dist/css/bootstrap-grid.css') }}">
 	<link rel="stylesheet"
@@ -18,6 +20,7 @@
 
 <body>
 	{% include 'common/googletagmanager_body.html' %}
+	<!-- <nav class="navbar navbar-expand-lg navbar-light ml-auto fixed-top" > -->
 	<nav class="navbar navbar-expand-lg navbar-light ml-auto" >
 	  	<a href="/">
 	  		<img src="{{url_for('static', filename='image/logo.jpg')}}" width="80" height="80">
@@ -35,18 +38,24 @@
 	    	</ul>
 	  	</div>
 	</nav>
+
 	{% block body %}
-    {% endblock %}
+	{% endblock %}
+	</div>
+
 </body>
 
-<footer class="page-footer font-small mdb-color pt-4 text-white bg-dark">  
+<!-- <footer class="page-footer font-small mdb-color pt-4 text-white bg-dark fixed-bottom"> -->
+<footer class="page-footer font-small mdb-color pt-4 text-white bg-dark">
 
   <div class="container text-center text-md-left">
     <div class="row text-center text-md-left mt-3 pb-3">
-    <p class="text-center text-md-left">© 2020 Copyright: 武汉大学北加州校友会, 武汉大学海外校友科学基金会</p>
+    <p class="text-center text-md-left">© 2020 Copyright (V1.0-测试版): 武汉大学北加州校友会, 武汉大学海外校友科学基金会 - 唯一官方网站</p>
+    <p>武汉大学主页: <a href="https://www.whu.edu.cn" target="_blank">https://www.whu.edu.cn</a></p>
+    <p style="margin-left: 10px">武汉大学校友总会: <a href="https://alumni.whu.edu.cn" target="_blank">https://alumni.whu.edu.cn</a></p>
     </div>
   </div>
-  
+
 </footer>
 
 

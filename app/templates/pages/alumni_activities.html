@@ -50,6 +50,11 @@
 </div>
 
 
+<div class="jumbotron"> 
+	{% for p in pages_info.introduction %}
+		<p>{{p}}</p>
+	{% endfor %}
+</div>
 
 <div class="card-columns">
 {% for activity in pages_info.activites_info %}
