@@ -5,12 +5,17 @@ from flask import render_template, request, send_from_directory
 from flask_login import current_user
 from app import app
 from app.parameter import *
-from app.models.Notice import Notice
+from app.models import Notice
 from app.db import db
+from app.libs.api_utils import get_realtime_overall
 
 @app.route('/')
 def index():
     return render_template('pages/index.html', menus = menus, pages_info = index_info)
+
+@app.route('/api/realtime/overall')
+def api_realtime_overall():
+    return get_realtime_overall()
 
 @app.route('/notices')
 def list_notices():
@@ -20,12 +25,14 @@ def list_notices():
     else:
         pagination = db.session.query(Notice).filter_by(status=2).paginate(page, 2, False)
     notices = pagination.items
-    return render_template('pages/notices.html', menus=menus, pages_info=pages_info, notices=notices, pagination=pagination)
+    return render_template('pages/notices.html', menus=menus, notices=notices, pagination=pagination)
 
 @app.route('/notice/<notice_id>')
 def get_notice(notice_id):
     notice = db.session.query(Notice).filter_by(id=notice_id).scalar()
-    return render_template('pages/notice_detail.html', menus = menus, pages_info = pages_info, notice = notice)
+    if notice == None:
+        return 'not found', 404
+    return render_template('pages/notice_detail.html', menus = menus, notice = notice)
 
 @app.route('/favicon.ico')
 def get_favicon():

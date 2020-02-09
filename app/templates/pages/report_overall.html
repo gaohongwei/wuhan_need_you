@@ -80,7 +80,7 @@
         elem.appendChild(ul);
     };
     const displayOverall = async function () {
-        const data = await getJson('https://lab.isaaclin.cn/nCoV/api/overall');
+        const data = await getJson('/api/realtime/overall');
         const info = parseOverall(data);
         for (let key in info) {
             const elem = document.getElementById(key);
