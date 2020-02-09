@@ -1,7 +1,7 @@
 # coding: utf-8
 
 from gettext import ngettext
-from flask import Markup, flash
+from flask import Markup, flash, request, render_template
 from flask_ckeditor import CKEditorField
 from flask_admin import expose
 from flask_admin.actions import action
@@ -101,16 +101,16 @@ class NoticeModelView(ModelView):
     def _time_formatter(view, context, model, name):
         value = getattr(model, name)
         return format_cn(value)
-    
+
     def _status_formatter(view, context, model, name):
         return model.get_status_name()
-    
+
     def _priority_formatter(view, context, model, name):
         return model.get_priority_name()
-    
+
     def _create_user_formatter(view, context, model, name):
         return model.create_user.username
-    
+
     def _permit_user_formatter(view, context, model, name):
         if model.permit_user:
             return model.permit_user.username
@@ -134,10 +134,10 @@ class NoticeModelView(ModelView):
 
     @expose('/preview')
     def preview(self):
-        notices = Notice.query.all()
-        return self.render('pages/notices.html', notices = notices)
+        page = request.args.get('page', 1, type=int)
+        paged_data = db.session.query(Notice).paginate(page = page)
+        return render_template('admin/notices/preview.html', pagination = paged_data)
 
-    
     @action('approve', 'Approve', 'Are you sure you want to approve selected notices?')
     def action_approve(self, ids):
         try:
@@ -148,7 +148,7 @@ class NoticeModelView(ModelView):
                                         'status': 2,
                                         'permit_user_id': get_current_user_id(),
                                         'permitted_time': utcnow()
-                                    }, 
+                                    },
                                 synchronize_session=False)
             db.session.commit()
 
@@ -158,9 +158,9 @@ class NoticeModelView(ModelView):
         except Exception as ex:
             if not self.handle_view_exception(ex):
                 raise
-            
+
             flash(gettext('Failed to approve notices. %(error)s', error=str(ex)), 'error')
-    
+
     @action('disapprove', 'Disapprove', 'Are you sure you want to disapprove selected notices?')
     def action_disapprove(self, ids):
         try:
@@ -171,7 +171,7 @@ class NoticeModelView(ModelView):
                                         'status': 3,
                                         'permit_user_id': get_current_user_id(),
                                         'permitted_time': utcnow()
-                                    }, 
+                                    },
                                 synchronize_session=False)
             db.session.commit()
 
@@ -181,5 +181,5 @@ class NoticeModelView(ModelView):
         except Exception as ex:
             if not self.handle_view_exception(ex):
                 raise
-            
+
             flash(gettext('Failed to disapprove notices. %(error)s', error=str(ex)), 'error')

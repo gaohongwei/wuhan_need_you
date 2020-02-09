@@ -21,8 +21,7 @@ def list_notices():
         pagination = db.session.query(Notice).paginate(page, app.config['NOTICES_PER_PAGE'], False)
     else:
         pagination = db.session.query(Notice).filter_by(status=2).paginate(page, 2, False)
-    notices = pagination.items
-    return render_template('pages/notices.html', menus=menus, notices=notices, pagination=pagination)
+    return render_template('pages/notices.html', menus=menus, pagination=pagination)
 
 @app.route('/notice/<notice_id>')
 def get_notice(notice_id):

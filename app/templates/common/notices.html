@@ -1,0 +1,34 @@
+<div class="container">
+  <h1 class="text-center text-primary">信息发布</h1>
+
+  {% for notice in pagination.items %}
+  <h2 class="text-success">
+    {% if notice.title %}
+    <a href='/notice/{{notice.id}}'>{{ notice.title }}</a>
+    {% endif %}
+  </h2>
+  {{ notice.content | safe }}
+  <br />
+  {% endfor %}
+  <nav aria-label="...">
+    <ul class="pagination">
+      {% for p in pagination.iter_pages() %}
+      {% if p %}
+      {% if p == pagination.page %}
+      <li class="page-item active">
+        <span class="page-link">
+          {{p}}
+          <span class="sr-only">(current)</span>
+        </span>
+      </li>
+      {% else %}
+      <li class="page-item">
+        <a class="page-link"
+          href="{{url_for('list_notices', page=p)}}">{{ p }}</a>
+      </li>
+      {% endif %}
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </nav>
+</div>
