@@ -1,126 +1,138 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block body %}
 
-<html>
-    <head>
-        <script src='static/CanvasImage.js'></script>
-	    <script type="text/javascript" src="static/jQuery.js"></script>
-	    <script type="text/javascript" src="static/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
-	    <script type="text/javascript" src="static/bootstrap-4.4.1-dist/js/bootstrap.bundle.js"></script>
-	    <link rel="stylesheet" href="static/bootstrap-4.4.1-dist/css/bootstrap-grid.css">
-	    <link rel="stylesheet" href="static/bootstrap-4.4.1-dist/css/bootstrap.min.css">
-    <script>
-            const getJson = url => {
-                const req = new XMLHttpRequest();
-                return new Promise((resolve, reject) => {
-                    req.addEventListener('load', function () { resolve(JSON.parse(this.responseText));});
-                    req.open('GET', url);
-                    req.send();
-                });
-            };
-            const dateWithTimeZone = (timeZone, year, month, day, hour, minute, second) => {
-                let date = new Date(Date.UTC(year, month, day, hour, minute, second));
-            
-                let utcDate = new Date(date.toLocaleString('en-US', { timeZone: "UTC" }));
-                let tzDate = new Date(date.toLocaleString('en-US', { timeZone: timeZone }));
-                let offset = utcDate.getTime() - tzDate.getTime();
-            
-                date.setTime( date.getTime() + offset );
-            
-                return date;
-            };
-            const dateFromAsiaSeconds = seconds => {
-                const asiaTime = dateWithTimeZone('Asia/Shanghai', 1970, 0, 1, 0,0,0);
-                asiaTime.setSeconds(seconds);
-                return asiaTime;
-            };
-            const parseOverall = function (data) {
-                const info = data.results[0];
-                const dailyPics = info.dailyPic.split(',');
-                const confirmedCount = info.confirmedCount;
-                const suspectedCount = info.suspectedCount;
-                const curedCount = info.curedCount;
-                const seriousCount = info.seriousCount;
-                const deadCount = info.deadCount;
-				const suspectedIncr = info.suspectedIncr;
-                const seriousIncr = info.seriousIncr;
-                const curedIncr = info.curedIncr;
-                const deadInc = info.deadIncr;
-                const updateTime = dateFromAsiaSeconds(info.updateTime * 0.001);
-                const remarks = [];
-                const notes = [];
-                for (let key in info) {
-                    key = key.toLowerCase();
-                    const value= info[key];
-                    if (!value) continue;
-                    if (key.indexOf('remark') !== -1) {
-                        remarks.push(info[key]);
-                    }
-                    if (key.indexOf('note') !== -1) {
-                        notes.push(info[key]);
-                    }
-                }
-                return {
-                    dailyPics,
-                    confirmedCount,
-                    suspectedCount,
-                    curedCount,
-                    seriousCount,
-                    deadCount,
-					suspectedIncr,
-                    seriousIncr,
-                    curedIncr,
-                    deadInc,
-                    updateTime,
-                    remarks,
-                    notes
-                };
-            };
-            const addList = function (id, texts) {
-                const elem = document.getElementById(id);
-                const ul = document.createElement('ul');
-                texts.forEach(text => {
-                    const li = document.createElement('li');
-                    li.innerText = text;
-                    ul.appendChild(li);
-                });
-                elem.appendChild(ul);
-            };
-            const displayOverall = async function () {
-                const data = await getJson('https://lab.isaaclin.cn/nCoV/api/overall');
-                const info = parseOverall(data);
-                for (let key in info) {
-                    const elem = document.getElementById(key);
-                    if (!elem) continue;
-                    const value = info[key];
-                    if (key === 'dailyPics') {
-                        CanvasImage.carousel_bootstrap4('dailyPics', value, '600px');
-                    } else if (value instanceof Array) {
-                        addList(key, value);
-                    } else {
-                        elem.innerHTML = value;
-                    }
-                }
-            };
-            window.addEventListener('load', () => displayOverall('overall'));
-    </script>
-    </head>
-    <body>
-        <div id='overview'>
-            <div>确认总数<span id='confirmedCount'></span></div>
-            <div>治愈总数<span id='curedCount'></span></div>
-            <div>重症总数<span id='seriousCount'></span></div>
-            <div>疑似总数<span id='suspectedCount'></span></div>
-            <div>死亡总数<span id='deadCount'></span></div>
-            <div>新增重症<span id='seriousIncr'></span></div>
-            <div>新增治愈<span id='curedIncr'></span></div>
-            <div>新增疑似<span id='suspectedIncr'></span></div>
-            <div>新增死亡<span id='deadInc'></span></div>
-            <div>备注<span id='remarks'></span></div>
-            <div>说明<span id='notes'></span></div>
-            <div>概况<div id='dailyPics'></div></div>
-            <div>更新日期<span id='updateTime'></span></div>
-			<div>数据来源：<a href='https://www.dxy.cn'>丁香园</a></div>
-			<div>API接口：<a href='https://lab.isaaclin.cn'>lab.isaaclin.cn</a></div>
+<script>
+    const getJson = url => {
+        const req = new XMLHttpRequest();
+        return new Promise((resolve, reject) => {
+            req.addEventListener('load', function () { resolve(JSON.parse(this.responseText)); });
+            req.open('GET', url);
+            req.send();
+        });
+    };
+    const dateWithTimeZone = (timeZone, year, month, day, hour, minute, second) => {
+        let date = new Date(Date.UTC(year, month, day, hour, minute, second));
+
+        let utcDate = new Date(date.toLocaleString('en-US', { timeZone: "UTC" }));
+        let tzDate = new Date(date.toLocaleString('en-US', { timeZone: timeZone }));
+        let offset = utcDate.getTime() - tzDate.getTime();
+
+        date.setTime(date.getTime() + offset);
+
+        return date;
+    };
+    const dateFromAsiaSeconds = seconds => {
+        const asiaTime = dateWithTimeZone('Asia/Shanghai', 1970, 0, 1, 0, 0, 0);
+        asiaTime.setSeconds(seconds);
+        return asiaTime;
+    };
+    const parseOverall = function (data) {
+        const info = data.results[0];
+        const dailyPics = info.dailyPic.split(',');
+        const confirmedCount = info.confirmedCount;
+        const suspectedCount = info.suspectedCount;
+        const curedCount = info.curedCount;
+        const seriousCount = info.seriousCount;
+        const deadCount = info.deadCount;
+        const suspectedIncr = info.suspectedIncr;
+        const seriousIncr = info.seriousIncr;
+        const curedIncr = info.curedIncr;
+        const deadInc = info.deadIncr;
+        const updateTime = dateFromAsiaSeconds(info.updateTime * 0.001);
+        const remarks = [];
+        const notes = [];
+        for (let key in info) {
+            key = key.toLowerCase();
+            const value = info[key];
+            if (!value) continue;
+            if (key.indexOf('remark') !== -1) {
+                remarks.push(info[key]);
+            }
+            if (key.indexOf('note') !== -1) {
+                notes.push(info[key]);
+            }
+        }
+        return {
+            dailyPics,
+            confirmedCount,
+            suspectedCount,
+            curedCount,
+            seriousCount,
+            deadCount,
+            suspectedIncr,
+            seriousIncr,
+            curedIncr,
+            deadInc,
+            updateTime,
+            remarks,
+            notes
+        };
+    };
+    const addList = function (id, texts) {
+        const elem = document.getElementById(id);
+        const ul = document.createElement('ul');
+        texts.forEach(text => {
+            const li = document.createElement('li');
+            li.innerText = text;
+            ul.appendChild(li);
+        });
+        elem.appendChild(ul);
+    };
+    const displayOverall = async function () {
+        const data = await getJson('https://lab.isaaclin.cn/nCoV/api/overall');
+        const info = parseOverall(data);
+        for (let key in info) {
+            const elem = document.getElementById(key);
+            if (!elem) continue;
+            const value = info[key];
+            if (key === 'dailyPics') {
+                CanvasImage.carousel_bootstrap4('dailyPics', value, '600px');
+            } else if (value instanceof Array) {
+                addList(key, value);
+            } else {
+                elem.innerHTML = value;
+            }
+        }
+    };
+    window.addEventListener('load', () => displayOverall('overall'));
+</script>
+
+<div style="background-color: #0ED0A7;" class="jumbotron">
+    <h1 style="text-align: center; color: white;">武汉疫情动态</h1>
+</div>
+
+<div id='overview' class='row'
+    style="align-items: center; justify-content: center;">
+
+
+
+    <div class="col-1"></div>
+    <div class="col-10">
+        <p>
+            {{pages_info.introduction}}
+        </p>
+
+        <ul>统计数据
+            <li>确认总数<span id='confirmedCount'></span></li>
+            <li>治愈总数<span id='curedCount'></span></li>
+            <li>重症总数<span id='seriousCount'></span></li>
+            <li>疑似总数<span id='suspectedCount'></span></li>
+            <li>死亡总数<span id='deadCount'></span></li>
+            <li>新增重症<span id='seriousIncr'></span></li>
+            <li>新增治愈<span id='curedIncr'></span></li>
+            <li>新增疑似<span id='suspectedIncr'></span></li>
+            <li>新增死亡<span id='deadInc'></span></li>
+        </ul>
+        <div>备注<span id='remarks'></span></div>
+        <div>说明<span id='notes'></span></div>
+        <div>概况<div id='dailyPics'></div>
         </div>
-    </body>
-</html>
+        <div>更新日期<span id='updateTime'></span></div>
+        <div>数据来源：<a href='https://www.dxy.cn'>丁香园</a></div>
+        <div>API接口：<a href='https://lab.isaaclin.cn'>lab.isaaclin.cn</a></div>
+    </div>
+    <div class="col-1"></div>
 
+</div>
+{% endblock %}
