@@ -1,10 +1,12 @@
 # coding: utf-8
 
 import sys
+import os
 sys.path.insert(0, '../data')
 
-from flask import render_template, request, send_from_directory
+from flask import render_template, request, send_from_directory, url_for
 from flask_login import current_user
+from flask_ckeditor import upload_fail, upload_success
 from app import app
 from app.parameter import *
 from app.models import Notice
@@ -56,3 +58,18 @@ def menu(page_name):
     else:
         return 'not found', 404
 
+@app.route('/files/<path:filename>')
+def uploaded_files(filename):
+    path = 'static/upload'
+    return send_from_directory(path, filename)
+
+@app.route('/upload', methods=['POST'])
+def upload():
+    f = request.files.get('upload')
+    # Add more validations here
+    extension = f.filename.split('.')[1].lower()
+    if extension not in ['jpg', 'gif', 'png', 'jpeg']:
+        return upload_fail(message='Image only!')
+    f.save(os.path.join(app.config['IMAGE_FILE_UPLOAD_DIRECTORY'], f.filename))
+    url = url_for('uploaded_files', filename=f.filename)
+    return upload_success(url=url)  # return upload_success call

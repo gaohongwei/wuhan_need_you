@@ -37,6 +37,9 @@ class Config:
     LOG_FILE_BACKUP_COUNT = 10
 
     NOTICES_PER_PAGE = 20
+
+    CKEDITOR_ENABLE_CSRF = True
+    IMAGE_FILE_UPLOAD_DIRECTORY = os.path.join(os.path.dirname(__file__), 'static/upload')
  
     @staticmethod
     def init_app(app):

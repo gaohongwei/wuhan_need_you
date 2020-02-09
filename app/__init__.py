@@ -2,6 +2,7 @@
 
 import os
 from flask_admin import Admin
+from flask_wtf.csrf import CSRFProtect
 from flask_ckeditor import CKEditor
 from app.models import Tag, User, Notice, register_route_permission, register_model_view_permission, recreate_database
 from app.model_views import TagModelView, UserModelView, NoticeModelView, AdminIndexView, init_login, init_sample_users
@@ -15,6 +16,7 @@ app = create_app(os.environ.get('APPLICATION_MODE'))
 
 admin = Admin(app=app, name='后台管理', index_view=AdminIndexView(name='主页'))
 ckeditor = CKEditor(app)
+csrf = CSRFProtect(app)
 
 # Load the views
 from app import views
