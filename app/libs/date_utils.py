@@ -61,3 +61,23 @@ def format_cn(time):
     elif tz_offset < 0:
         tz_str = '(西{}区时间)'.format(-tz_offset)
     return time_str + tz_str
+
+def set_timezone(time, zone_name='UTC'):
+    if time == None:
+        return time
+    return time.replace(tzinfo = tz.gettz(zone_name))
+
+def datetime_from_seconds(seconds, timezone_name='UTC'):
+    dt = datetime(1970, 1, 1, tzinfo=tz.gettz(timezone_name))
+    return dt + timedelta(seconds=seconds)
+
+def time_diff_in_seconds(t1, t2):
+    '''
+    t1 - t2
+    '''
+    if t1.tzinfo == None:
+        t1 = set_timezone(t1, 'UTC')
+    if t2.tzinfo == None:
+        t2 = set_timezone(t2, 'UTC')
+    return (t1 - t2).total_seconds()
+
