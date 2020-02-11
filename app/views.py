@@ -8,6 +8,7 @@ from flask_login import current_user
 from app import app
 from app.parameter import *
 from app.models import Notice
+from app.models import Visitor
 from app.db import db
 from app.libs.api_utils import get_realtime_overall
 
@@ -51,4 +52,21 @@ def menu(page_name):
         return render_template('pages/' + page_name + '.html', menus = menus, pages_info = pages_info)
     else:
         return 'not found', 404
+
+
+@app.after_request
+def after_request(response):
+    url = request.path
+    proxy_ip_addr = request.remote_addr  
+    real_ip_addr = request.remote_addr # nginx ip now, not real user ip
+    # print(request.environ)
+    
+    # ignore admin pages and other request like images request 
+    if url == '/' or url.find('pages') == 1: 
+        visitor = Visitor(url=url, proxy_ip_addr=proxy_ip_addr, real_ip_addr=real_ip_addr)
+        db.session().add(visitor)
+        db.session().commit()
+
+    return response
+
 

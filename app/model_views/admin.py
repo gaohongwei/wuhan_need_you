@@ -7,18 +7,25 @@ from flask_admin import helpers, expose
 from functools import wraps
 from app.forms import LoginForm, RegistrationForm
 from app.models import User
+from app.models import Visitor 
 from app.db import db
+from sqlalchemy import func
 
 class AdminIndexView(admin.AdminIndexView):
     @expose('/')
     def index(self):
+        print('index')
         if not login.current_user.is_authenticated:
             return redirect(url_for('.login_view'))
-        return super().index()
+
+        visitor_data = db.session.query(Visitor.url, func.count(Visitor.url)).group_by(Visitor.url).all()
+        return self.render('admin/index.html', visitor_data=visitor_data)
+        # return super().index()
 
     @expose('/login/', methods=('GET', 'POST'))
     def login_view(self):
         # handle user login
+        print('login')
         current_app.logger.info('login begin...')
         form = LoginForm(request.form)
         if helpers.validate_form_on_submit(form):
