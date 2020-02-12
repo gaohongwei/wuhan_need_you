@@ -198,8 +198,137 @@ const CanvasImage = (function _() {
         setTimeout(() => a2.click(), 2000);
     };
 
-    return {register, carousel_bootstrap4};
+    const slideCSS = `
+* {box-sizing: border-box;}
+body {font-family: Verdana, sans-serif;}
+.mySlides {display: none;}
+img {vertical-align: middle;}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+/* Caption text */
+.text {
+  color: white;
+  font-size: 20px;
+  padding: 8px 12px;
+  position: absolute;
+  margin-left: 10px;
+  bottom: 18px;
+  width: 100%;
+  text-align: left;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active_1 {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+  .text {font-size: 11px}
+}
+    `;
+    const addCSS = cssStr => {
+        cssStr = (cssStr || '').replace(/(\r\n|\n|\r)/gm, '')
+        const styleSheet = document.createElement("style")
+        styleSheet.type = "text/css"
+        styleSheet.innerText = cssStr;
+        document.head.appendChild(styleSheet)
+    };
+    const createElement = (tag, className, styles, options) => {
+        const el = document.createElement(tag);
+        el.className = className;
+        for (let name in styles || {}) {
+            el.style[name] = styles[name];
+        }
+        for (let name in options || {}) {
+            el[name] = options[name];
+        }
+        return el;
+    };
+    let slideIndex = 0;
+    const playSlides = () => {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";  
+        }
+        slideIndex++;
+        if (slideIndex > slides.length) {slideIndex = 1}    
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active_1", "");
+        }
+        slides[slideIndex-1].style.display = "block";  
+        dots[slideIndex-1].className += " active_1";
+        setTimeout(playSlides, 2000); // Change image every 2 seconds
+    };
+    const showSlides = (id, imgUrls) => {
+        const createImageDiv = (imgUrl, text) => {
+            const div = createElement('div', 'mySlides fade');
+            const img = createElement('img', '', {width: '100%', height: '5%'}, {src: imgUrl});
+            const div2 = createElement('div', 'text', {});
+            div2.innerText = text || '';
+            div.appendChild(img);
+            div.appendChild(div2);
+            return div;
+        };
+        const div1 = createElement('div', 'row');
+        const div2 = createElement('div', 'col-md-12 col-lg-12 col-xl-12 jumbotron', {padding: 0});
+        const div3 = createElement('div', '', {'margin-left': '0em', 'margin-right': '0em'});
+        const div4 = createElement('div', 'slideshow-container', {'max-width': '100%'});
+        const div5 = createElement('div', '', {'text-align': 'center', 'background-color': 'white'});
+        imgUrls = imgUrls || [];
+        for (let imgDiv of imgUrls.map(imgUrl => createImageDiv(imgUrl))) {
+            div4.appendChild(imgDiv);
+        }
+        for (let imgDiv of imgUrls) {
+            div5.appendChild(createElement('span', 'dot'));
+        }
+        div4.appendChild(div5);
+        div3.appendChild(div4);
+        div2.appendChild(div3);
+        div1.appendChild(div2);
+        addCSS(slideCSS);
+        const container = document.getElementById(id);
+        container.appendChild(div1);
+        playSlides();
+    };
+
+    return {register, carousel_bootstrap4, showSlides};
 })();
 
 window.CanvasImage = CanvasImage;
-

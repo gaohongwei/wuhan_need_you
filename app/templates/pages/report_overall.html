@@ -87,7 +87,7 @@
             if (!elem) continue;
             const value = info[key];
             if (key === 'dailyPics') {
-                CanvasImage.carousel_bootstrap4('dailyPics', value, '600px');
+                CanvasImage.showSlides('dailyPics', value);
             } else if (value instanceof Array) {
                 addList(key, value);
             } else {
@@ -135,6 +135,5 @@
 		<div><b>API接口：</b><a href='https://lab.isaaclin.cn'>lab.isaaclin.cn</a></div>
     </div>
     <div class="col-1"></div>
-
 </div>
 {% endblock %}
