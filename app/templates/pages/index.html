@@ -142,12 +142,12 @@ img {vertical-align: middle;}
         <p>{{pages_info.foundation.member_info.title}}</p>
         <ul>
           {% for index in range(pages_info.foundation.member_info.member|length) %}
-            {% if index == 0 %}
+            {% if index == 0%}
               <!-- Button trigger modal -->
-            <li><button type="button" class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#exampleModal">{{pages_info.foundation.member_info.member[index]}}</button>
+            <li><button type="button" class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#exampleModal_1">{{pages_info.foundation.member_info.member[index]}}</button>
             </li>
             <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="exampleModal_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_1" aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -158,8 +158,30 @@ img {vertical-align: middle;}
                     </button>
                   </div>
                   <div class="modal-body">
-                    <h5 class="modal-title" id="exampleModalLabel">{{pages_info.foundation.hzr.title}}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel_1">{{pages_info.foundation.hzr.title}}</h5>
                     {{pages_info.foundation.hzr.content}}
+                    <p>{{pages_info.foundation.hzr.source.title}}<a href={{pages_info.foundation.hzr.source.link}} target="_blank">{{pages_info.foundation.hzr.source.content}}</a></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% elif index == 1 %}
+            <!-- Button trigger modal -->
+            <li><button type="button" class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#exampleModal_2">{{pages_info.foundation.member_info.member[index]}}</button>
+            </li>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal_2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_2" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <!-- <img src="{{ url_for('static', filename=pages_info.foundation.hzr.image) }}"> -->
+                  <h5 class="modal-title" id="exampleModalLabel_2">{{pages_info.foundation.wgf.title}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    {{pages_info.foundation.wgf.content}}
                   </div>
                 </div>
               </div>
