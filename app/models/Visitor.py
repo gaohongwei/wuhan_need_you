@@ -19,7 +19,7 @@ class Visitor(db.Model):
     queue = [] 
     capacity = 10
 
-    exclude_patterns = ['*.jpg', '*.png', '*.jpeg', '*.css', '*.js', '*.ico', '.map']
+    exclude_patterns = ['*.jpg', '*.png', '*.jpeg', '*.css', '*.js', '*.ico', '*.map']
 
     def __str__(self):
         return self.url 
