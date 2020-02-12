@@ -4,7 +4,7 @@
 
 <style>.jumbotron{background-color:rgb(36,59,43)!important; } </style>
 <style>.jumbotron{border-radius:0.2rem!important; } </style>
-<h1 class='jumbotron' style="color: rgb(255, 255, 255); padding: 2.0rem;">捐赠方式</h1>
+<h1 class='jumbotron' style="color: rgb(255, 255, 255); padding: 2.0rem; text-align: center;">捐赠方式</h1>
 <div class="container">
   <div class="row"></div>
   <div class="row">
@@ -12,8 +12,8 @@
     <div class="col-10">
       <!-- <h1 class='jumbotron'>捐赠方式</h1> -->
       <span>
-        <h2>武汉大学海外校友会科学基金会, 通过Gofundme捐款 </h2>
-        {% include 'common/gofundme.html' %}
+        <h1 style="text-align: center; margin-top: 2em; margin-bottom: 2em;">{% include 'common/gofundme.html' %}</h1>
+        <h2 style="text-align: center;">武汉大学海外校友会科学基金会, 通过Gofundme捐款 </h2>
       </span>
       <p>
         武汉大学海外校友科学基金会筹款，也是Wuhan United捐赠平台
@@ -30,7 +30,7 @@
         (例如Benevity)。
       </p>
 
-      <hr>
+      <hr style="align-self: center; margin-top: 5em; margin-bottom: 5em;">
       <!-- 捐赠公示模版 -->
       {% for notice in pages_info.notices %}
         {% with data=notice %}

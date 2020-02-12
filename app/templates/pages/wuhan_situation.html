@@ -5,26 +5,25 @@
 <style>.jumbotron{background-color:rgb(36,59,43)!important; } </style>
 <style>.jumbotron{border-radius:0.2rem!important; } </style>
 <div class="jumbotron" style="color: rgb(255, 255, 255); padding: 1.8rem;">
-  <h1 style="color: rgb(255, 255, 255);">武汉疫情动态</h1>
+  <h1 style="color: rgb(255, 255, 255); text-align: center;">武汉疫情动态</h1>
 </div>
 
+<div style="align-items: center; justify-content:center;">
+	<p style="width: 80%; margin: auto;"class = "p-1">{{pages_info.introduction}}</p>
 
-	<p class="p-1">{{pages_info.introduction}}</p>
-
-	<div class="card p-1 m-2" style="width: 50rem;">
+	<div style="margin: auto;" class="card p-1 m-2">
 		<img src="{{ url_for('static', filename=pages_info.china_update_info.link) }}" class="card-img-top" alt="...">
 		<div class="card-block">
 		  <p class="card-title text-center">{{pages_info.china_update_info.source.title}} <a href={{pages_info.china_update_info.source.link}} target="_blank">{{pages_info.china_update_info.source.content}}</a></p>
 		</div>
 	</div>
 
-
-	<div class="card p-1 m-2" style="width: 50rem;">
+	<div style="margin: auto;" class="card p-1 m-2" style="width: 50rem;">
 		<img src="{{ url_for('static', filename=pages_info.timeline_info.link) }}" class="card-img-top" alt="...">
 		<div class="card-block">
 		  <p class="card-title text-center">{{pages_info.timeline_info.source.title}} <a href={{pages_info.timeline_info.source.link}} target="_blank">{{pages_info.timeline_info.source.content}}</a></p>
 		</div>
 	</div>
-
+</div>
 
 {% endblock %}

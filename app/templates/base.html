@@ -24,11 +24,15 @@
 	<nav class="navbar navbar-expand-lg navbar-light ml-auto" >
 	  	<a href="/">
 	  		<img src="{{url_for('static', filename='image/newLogo.jpg')}}" width="220" height="80">
-	  	</a>
+		</a>
+		<div style="word-wrap: break-word; margin-left:1em; margin-right:1em;">
+			<p style="margin-top: 1em; font: size 20px; font-weight: bold;">武汉大学北加州校友会</p>
+			<p style = "font-size: 16px;">武汉大学海外校友科学基金会</p>
+		</div>
 	  	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 	    <span class="navbar-toggler-icon"></span>
 	  	</button>
-	  	<div class="collapse navbar-collapse" id="navbarNav">
+	  	<div style = "position:absolute; right: 1em;" class="collapse navbar-collapse" id="navbarNav">
 	    	<ul class="navbar-nav">
 	    		{% for menu in menus %}
 	    			<li class="nav-item active">
@@ -50,7 +54,7 @@
 
   <div class="container text-center text-md-left">
     <div class="row text-center text-md-left mt-3 pb-3">
-    <p class="text-center text-md-left">© 2020 Copyright (V1.0-测试版): 武汉大学北加州校友会, 武汉大学海外校友科学基金会 - 唯一官方网站</p>
+    <p class = "text-center text-md-left">© 2020 Copyright (V1.0-测试版): 武汉大学北加州校友会, 武汉大学海外校友科学基金会 - 唯一官方网站</p>
     <p>武汉大学主页: <a href="https://www.whu.edu.cn" target="_blank">https://www.whu.edu.cn</a></p>
     <p style="margin-left: 10px">武汉大学校友总会: <a href="https://alumni.whu.edu.cn" target="_blank">https://alumni.whu.edu.cn</a></p>
     </div>
