@@ -15,7 +15,11 @@ class Visitor(db.Model):
     ip_addr = db.Column(db.String(16), nullable=False)
     visited_time = db.Column(db.DateTime, default=utcnow)
 
-    exclude_patterns = ['*.jpg', '*.png', '*.jpeg', '*.css', '*.js', '*.ico']
+    # optimize
+    queue = [] 
+    capacity = 10
+
+    exclude_patterns = ['*.jpg', '*.png', '*.jpeg', '*.css', '*.js', '*.ico', '.map']
 
     def __str__(self):
         return self.url 
@@ -36,9 +40,15 @@ class Visitor(db.Model):
         ip_addr = get_ip()
         visited_time = utcnow()
         visitor = Visitor(url=url, ip_addr=ip_addr, visited_time=visited_time)
-        db.session.add(visitor)
-        db.session.commit()
-        current_app.logger.info(url + ' is recorded')
+        
+        if len(cls.queue) < cls.capacity: 
+        	cls.queue.append(visitor)
+        else:
+        	for v in cls.queue:
+        		db.session.add(v)
+        		current_app.logger.info(url + ' is recorded')
+        	db.session.commit()
+        	cls.queue = []
         return True
 
     @classmethod
