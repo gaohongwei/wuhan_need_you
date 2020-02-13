@@ -1,6 +1,7 @@
 {% extends 'admin/master.html' %}
 {% block body %}
 {{ super() }}
+
 <div class="row-fluid">
 
     <div>
@@ -36,4 +37,23 @@
 
     <a class="btn btn-primary" href="/admin/logout"><i class="icon-arrow-left icon-white"></i>退出</a>
 </div>
+
+<div>
+    <h3 class='text-center'>访问量</h3>
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+              <th scope="col">URL</th>
+              <th scope="col">总访问量</th>
+            </tr>
+            {% for data in visitor_data %}
+            <tr>
+                <th scope="col">{{data[0]}}</th>
+                <th scope="col">{{data[1]}}</th>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
 {% endblock body %}

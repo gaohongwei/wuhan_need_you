@@ -10,6 +10,7 @@ from flask_ckeditor import upload_fail, upload_success
 from app import app
 from app.parameter import *
 from app.models import Notice
+from app.models import Visitor
 from app.db import db
 from app.libs.api_utils import get_realtime_overall
 
@@ -73,3 +74,9 @@ def upload():
     f.save(os.path.join(app.config['IMAGE_FILE_UPLOAD_DIRECTORY'], f.filename))
     url = url_for('uploaded_files', filename=f.filename)
     return upload_success(url=url)  # return upload_success call
+
+@app.after_request
+def after_request(response):
+    url = request.path
+    Visitor.add()
+    return response
