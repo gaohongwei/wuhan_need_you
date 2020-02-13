@@ -84,7 +84,7 @@ index_info = {
     },
     {
       'title': ["联系我们"],
-      'image': "image/alumni_activities/1998_setup.jpg",
+      'image': "image/alumni_activities/2017_alumni.jpg",
       'link': ['contact_us']
     }
     ]
