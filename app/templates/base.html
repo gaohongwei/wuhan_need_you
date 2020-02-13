@@ -18,6 +18,33 @@
 		href="{{ url_for('static', filename='bootstrap-4.4.1-dist/css/bootstrap.min.css') }}">
 </head>
 
+<style>
+	/* menu layout */
+	@media (max-width: 995px) {
+		#navbarNav {
+		    position: fixed;
+		    top: 0;
+		    left: 0;
+		    width: 100%;
+		    height: 100%;
+		    background: rgba(0,0,0,.8);
+		    z-index: 999;
+		}
+		#navbarNav .navbar-nav {
+		    position: absolute;
+		    right: 0;
+		    top: 0;
+		    height: 100%;
+		    background: #0C1D0F;
+		    width: 140px;
+		    padding: 10px;
+		}
+		#navbarNav .navbar-nav .nav-link {
+			color: #fff !important;
+		}
+	}
+</style>
+
 <body>
 	{% include 'common/googletagmanager_body.html' %}
 	<!-- <nav class="navbar navbar-expand-lg navbar-light ml-auto fixed-top" > -->
@@ -28,10 +55,10 @@
 	  	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 	    <span class="navbar-toggler-icon"></span>
 	  	</button>
-	  	<div style = "position:absolute; right: 1em;" class="collapse navbar-collapse" id="navbarNav">
+	  	<div class="collapse navbar-collapse" id="navbarNav" aria-expanded="true">
 	    	<ul class="navbar-nav">
 	    		{% for menu in menus %}
-	    			<li class="nav-item active">
+	    			<li class="nav-item">
 	        			<a class="nav-link" href="{{menu.path}}">{{menu.label}}</a>
 	      			</li>
 	    		{% endfor %}
@@ -39,18 +66,33 @@
 	  	</div>
 	</nav>
 
+	<div sytle="z-index:1">
 	{% block body %}
 	{% endblock %}
 	</div>
 
 </body>
 
+<script type="text/javascript">
+	// fix menu show delay bug
+	$('#navbarNav').on('show.bs.collapse', function () {
+  		$(this).hide();
+	})
+	$('#navbarNav').on('shown.bs.collapse', function () {
+  		$(this).show();
+	})
+</script>
+
+
+
 <!-- <footer class="page-footer font-small mdb-color pt-4 text-white bg-dark fixed-bottom"> -->
 <footer class="page-footer font-small mdb-color pt-4 text-white bg-dark">
 
   <div class="container text-center text-md-left">
-    <div class="row text-center text-md-left mt-3 pb-3">
-    <p class = "text-center text-md-left">© 2020 Copyright (V1.0-测试版): 武汉大学北加州校友会, 武汉大学海外校友科学基金会 - 唯一官方网站</p>
+    <div class="row text-center text-md-left">
+    <p class = "text-center text-md-left">© 2020 Copyright: 武汉大学北加州校友会, 武汉大学海外校友科学基金会 - 唯一官方网站</p>
+	</div>
+	<div class="row">
     <p>武汉大学主页: <a href="https://www.whu.edu.cn" target="_blank">https://www.whu.edu.cn</a></p>
     <p style="margin-left: 10px">武汉大学校友总会: <a href="https://alumni.whu.edu.cn" target="_blank">https://alumni.whu.edu.cn</a></p>
     </div>
