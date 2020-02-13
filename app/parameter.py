@@ -195,7 +195,7 @@ wuhan_situation_info = {
                   武汉处于紧急状态。武汉需要您的帮助。\
                   我们正在努力支持武汉的医疗物资，并提供对该疾病的报道和认识。",
   'china_update_info': {
-    'link': 'image/wuhan_situation/wuhan_update_203.jpg',
+    'link': 'image/wuhan_situation/wuhan_update_213.jpg',
     'source': {
       'title': "来源:",
       'content': "新浪新闻",
