@@ -59,3 +59,16 @@ class Visitor(db.Model):
     def count(cls, url):
         return db.session.query(Visitor.url).filter(Visitor.url == url).count()
 
+    @classmethod
+    def statistics(cls, pageNo, pageSize):
+        '''
+        pageNo: 1-based
+        pageSize: size of each page
+        return: {total, items}
+        '''
+        count = func.count(Visitor.url)
+        return (db.session.query(Visitor.url, count)
+                .group_by(Visitor.url)
+                .order_by(count.desc())
+                .paginate(pageNo, pageSize, True))
+
