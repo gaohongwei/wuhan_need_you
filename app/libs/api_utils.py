@@ -39,7 +39,7 @@ def get_realtime_overall():
         current_app.logger.info('last server update time: ' + str(dataTime))
         now = utcnow()
         current_app.logger.info('current time: ' + str(now))
-        if time_diff_in_seconds(now, dataTime) >= server_timeout and time_diff_in_seconds(now, cache.timestamp) >= load_timeout:
+        if time_diff_in_seconds(now, dataTime) >= server_timeout or time_diff_in_seconds(now, cache.timestamp) >= load_timeout:
             current_app.logger.info('checkout the server')
             data2 = get_overall()
             Cache.set(str(data2['updateTime']), json.dumps(data2))
