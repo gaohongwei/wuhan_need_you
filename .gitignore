@@ -10,3 +10,5 @@ venv
 .DS_Store
 .vscode/
 /app/static/upload/
+/logs
+/backup

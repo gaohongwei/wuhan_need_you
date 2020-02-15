@@ -8,7 +8,7 @@ cd $SRC_DIR
 
 # Configure nginx
 apt-get update
-apt install -y nginx python3 python3-pip
+apt install -y nginx python3 python3-pip postgresql postgresql-client
 if ! [ -f /etc/nginx/nginx.conf.bak ]; then
 	cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
 fi
