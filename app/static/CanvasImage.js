@@ -279,22 +279,63 @@ img {vertical-align: middle;}
         }
         return el;
     };
-    let slideIndex = 0;
-    const playSlides = () => {
-        var i;
-        var slides = document.getElementsByClassName("mySlides");
-        var dots = document.getElementsByClassName("dot");
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";  
+    const playSlide = (id, index) => {
+        index = index || 0;
+        const elem = document.getElementById(id);
+        if (!elem) {
+            return;
         }
-        slideIndex++;
-        if (slideIndex > slides.length) {slideIndex = 1}    
-        for (i = 0; i < dots.length; i++) {
-            dots[i].className = dots[i].className.replace(" active_1", "");
+        const slides = elem.querySelectorAll(".mySlides");
+        if (!slides || slides.length == 0) {
+            return;
         }
-        slides[slideIndex-1].style.display = "block";  
-        dots[slideIndex-1].className += " active_1";
-        setTimeout(playSlides, 2000); // Change image every 2 seconds
+        if (index >= slides.length) {
+            index = index % slides.length;
+        }
+        const dots = elem.querySelectorAll('.dot');
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.display = i === index ? 'block' : 'none';  
+        }
+        for (let i = 0; i < dots.length; i++) {
+            if (i !== index) {
+                dots[i].className = dots[i].className.replace(" active_1", "");
+            } else {
+                dots[i].className += " active_1";
+            }
+        }
+    };
+    const setDataSet = (id, key, value) => {
+        const elem = document.getElementById(id);
+        if (!elem) {
+            return
+        }
+        elem.dataset[key] = value;
+    };
+    const getDataSet = (id, key) => {
+        const elem = document.getElementById(id);
+        if (!elem) {
+            return null;
+        }
+        return elem.dataset[key];
+    };
+    const playSlides = (id, index, period) => {
+        index = index || 0;
+        console.log('playSlides: ', id, index, period);
+        period = period || 2000; // default 2 seconds
+        let currentIndex = index;
+        const play = () => {
+            playSlide(id, currentIndex);
+            currentIndex = currentIndex + 1;
+        };
+        let handle = parseInt(getDataSet(id, 'slide'));
+        if (handle) {
+            clearInterval(handle);
+        }
+        handle = setInterval(play, period);
+        setDataSet(id, 'slide', handle);
+    };
+    const stopSlides = slideHandle => {
+        clearInterval(slideHandle);
     };
     const showSlides = (id, imgUrls) => {
         const createImageDiv = (imgUrl, text) => {
@@ -306,18 +347,35 @@ img {vertical-align: middle;}
             div.appendChild(div2);
             return div;
         };
+        const _createImageDiv = item => {
+            if (!item) {
+                return null;
+            }
+            if (item instanceof String || typeof(item) === 'string') {
+                return createImageDiv(item);
+            } else {
+                const imgUrl = item.imgUrl;
+                const title = item.title;
+                return !!imgUrl ? createImageDiv(imgUrl, title) : null;
+            }
+        };
         const div1 = createElement('div', 'row');
         const div2 = createElement('div', 'col-md-12 col-lg-12 col-xl-12 jumbotron', {padding: 0});
         const div3 = createElement('div', '', {'margin-left': '0em', 'margin-right': '0em'});
         const div4 = createElement('div', 'slideshow-container', {'max-width': '100%'});
         const div5 = createElement('div', '', {'text-align': 'center', 'background-color': 'white'});
         imgUrls = imgUrls || [];
-        for (let imgDiv of imgUrls.map(imgUrl => createImageDiv(imgUrl))) {
-            div4.appendChild(imgDiv);
-        }
-        for (let imgDiv of imgUrls) {
-            div5.appendChild(createElement('span', 'dot'));
-        }
+        const imgDivs = imgUrls.map(_createImageDiv).filter(i => !!i);
+        imgDivs.forEach(div => {
+            div4.appendChild(div);
+        });
+        imgDivs.forEach((div, i) => {
+            const dot = createElement('span', 'dot');
+            dot.addEventListener('click', () => {
+                playSlides(id, i);
+            })
+            div5.appendChild(dot);
+        });
         div4.appendChild(div5);
         div3.appendChild(div4);
         div2.appendChild(div3);
@@ -325,7 +383,7 @@ img {vertical-align: middle;}
         addCSS(slideCSS);
         const container = document.getElementById(id);
         container.appendChild(div1);
-        playSlides();
+        playSlides(id);
     };
 
     return {register, carousel_bootstrap4, showSlides};

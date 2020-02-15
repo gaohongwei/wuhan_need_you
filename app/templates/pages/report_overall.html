@@ -29,7 +29,9 @@
     };
     const parseOverall = function (data) {
         const info = data.results[0];
-        const dailyPics = info.dailyPic.split(',');
+		const dailyPics = (info.dailyPic || '').split(',').filter(i => !!i.trim());
+        const quanguoTrendChart = info.quanguoTrendChart || [];
+        const hbFeiHbTrendChart = info.hbFeiHbTrendChart || [];
         const confirmedCount = info.confirmedCount;
         const suspectedCount = info.suspectedCount;
         const curedCount = info.curedCount;
@@ -55,6 +57,8 @@
         }
         return {
             dailyPics,
+            quanguoTrendChart,
+            hbFeiHbTrendChart,
             confirmedCount,
             suspectedCount,
             curedCount,
@@ -86,12 +90,12 @@
             const elem = document.getElementById(key);
             if (!elem) continue;
             const value = info[key];
-            if (key === 'dailyPics') {
-                CanvasImage.showSlides('dailyPics', value);
+            if (['dailyPics', 'quanguoTrendChart', 'hbFeiHbTrendChart'].indexOf(key) !== -1) {
+                CanvasImage.showSlides(key, value);
             } else if (value instanceof Array) {
                 addList(key, value);
             } else {
-                elem.innerHTML = value;
+                elem.innerHTML = value === undefined ? '待发布' : value;
             }
         }
     };
@@ -115,11 +119,14 @@
 
 		<div><b>统计数据</b>
         <ul>
-            <li>确认总数：<span id='confirmedCount'></span></li>
-            <li>治愈总数：<span id='curedCount'></span></li>
-            <li>重症总数：<span id='seriousCount'></span></li>
-            <li>疑似总数：<span id='suspectedCount'></span></li>
-            <li>死亡总数：<span id='deadCount'></span></li>
+            <li>累计确诊：<span id='confirmedCount'></span></li>
+            <li>累计治愈：<span id='curedCount'></span></li>
+            <li>现存重症：<span id='seriousCount'></span></li>
+            <li>现存疑似：<span id='suspectedCount'></span></li>
+            <li>累计死亡：<span id='deadCount'></span></li>
+        </ul>
+		<div><b>较昨日变化</b>
+        <ul>
             <li>新增重症：<span id='seriousIncr'></span></li>
             <li>新增治愈：<span id='curedIncr'></span></li>
             <li>新增疑似：<span id='suspectedIncr'></span></li>
@@ -128,11 +135,11 @@
 		</div>
 		<div><b>备注</b><span id='remarks'></span></div>
 		<div><b>说明</b><span id='notes'></span></div>
-		<div><b>概况</b><div id='dailyPics'></div>
-        </div>
+		<div><b>概况</b><div id='dailyPics'></div></div>
+        <div><b>全国趋势图</b><div id='quanguoTrendChart'></div></div>
+        <div><b>湖北/非湖北趋势图</b><div id='hbFeiHbTrendChart'></div></div>
 		<div><b>更新日期：</b><span id='updateTime'></span></div>
 		<div><b>数据来源：</b><a href='https://www.dxy.cn'>丁香园</a></div>
-		<div><b>API接口：</b><a href='https://lab.isaaclin.cn'>lab.isaaclin.cn</a></div>
     </div>
     <div class="col-1"></div>
 </div>

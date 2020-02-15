@@ -5,6 +5,7 @@ from app.libs.date_utils import utcnow, datetime_from_seconds, time_diff_in_seco
 from app.libs.net_utils import get_json
 from flask import jsonify, current_app
 from app.models import Cache
+from app.libs.dxy_utils import get_overall
 
 
 def get_realtime_overall_from_server():
@@ -13,6 +14,7 @@ def get_realtime_overall_from_server():
     if data == None:
         return None
     return data['results'][0];
+
 def get_realtime_overall_from_cache():
     current_app.logger.info('get overall from cache')
     cache = Cache.get_latest()
@@ -25,7 +27,7 @@ def get_realtime_overall():
     load_timeout = 3600
     data, cache = get_realtime_overall_from_cache()
     if data == None:
-        data = get_realtime_overall_from_server()
+        data = get_overall()
         if data == None:
             return 'fail to get data, no data exist', 404
         Cache.set(str(data['updateTime']), json.dumps(data))
@@ -39,7 +41,7 @@ def get_realtime_overall():
         current_app.logger.info('current time: ' + str(now))
         if time_diff_in_seconds(now, dataTime) >= server_timeout and time_diff_in_seconds(now, cache.timestamp) >= load_timeout:
             current_app.logger.info('checkout the server')
-            data2 = get_realtime_overall_from_server()
+            data2 = get_overall()
             Cache.set(str(data2['updateTime']), json.dumps(data2))
             return jsonify({'results': [data2]})
         else:
