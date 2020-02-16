@@ -4,7 +4,7 @@
   {% for notice in pagination.items %}
   <h2 class="text-success">
     {% if notice.title %}
-    <a href='/notice/{{notice.id}}'>{{ notice.title }}</a>
+    <a href='/notices/{{notice.id}}'>{{ notice.title }}</a>
     {% endif %}
   </h2>
   {{ notice.content | safe }}

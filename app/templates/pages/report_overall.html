@@ -83,15 +83,23 @@
         });
         elem.appendChild(ul);
     };
+	const displayChinaMap = async function() {
+		const data = await getJson('/api/reports/provinces') || [];
+		const chinaData = data.map(i => {
+			return {name: i.name, value: i.total.confirm, data: i};
+		});
+		const mapData = {name: '各省确认总数', provinces: chinaData}
+		visualization.render_china_map('chinaMap', mapData);
+	};
     const displayOverall = async function () {
-        const data = await getJson('/api/realtime/overall');
+        const data = await getJson('/api/reports/overall');
         const info = parseOverall(data);
         for (let key in info) {
             const elem = document.getElementById(key);
             if (!elem) continue;
             const value = info[key];
             if (['dailyPics', 'quanguoTrendChart', 'hbFeiHbTrendChart'].indexOf(key) !== -1) {
-                CanvasImage.showSlides(key, value);
+                SlideShow.showSlides(key, value);
             } else if (value instanceof Array) {
                 addList(key, value);
             } else {
@@ -99,7 +107,10 @@
             }
         }
     };
-    window.addEventListener('load', () => displayOverall('overall'));
+window.addEventListener('load', () => {
+	displayOverall();
+	displayChinaMap();
+});
 </script>
 
 <div style="background-color: #0ED0A7;" class="jumbotron">
@@ -135,6 +146,7 @@
 		</div>
 		<div><b>备注</b><span id='remarks'></span></div>
 		<div><b>说明</b><span id='notes'></span></div>
+		<div style="height:600px"><b>全国各省概况地图</b><div id='chinaMap'></div></div>
 		<div><b>概况</b><div id='dailyPics'></div></div>
         <div><b>全国趋势图</b><div id='quanguoTrendChart'></div></div>
         <div><b>湖北/非湖北趋势图</b><div id='hbFeiHbTrendChart'></div></div>

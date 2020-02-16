@@ -24,7 +24,7 @@
     </body>
  **/
 
-const CanvasImage = (function _() {
+const SlideShow = (function _() {
     const fillBackground = (canvas, color) => {
         const ctx = canvas.getContext('2d');
         const width = canvas.width;
@@ -389,4 +389,4 @@ img {vertical-align: middle;}
     return {register, carousel_bootstrap4, showSlides};
 })();
 
-window.CanvasImage = CanvasImage;
+window.SlideShow = SlideShow;

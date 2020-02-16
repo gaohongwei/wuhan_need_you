@@ -1,5 +1,5 @@
 
-(function() {
+const visualization = (function() {
 
 const isScriptLoaded = url => {
     var scripts = document.getElementsByTagName('script');
@@ -8,19 +8,22 @@ const isScriptLoaded = url => {
     }
     return false;
 }
-const insert_script = url => {
-    if (isScriptLoaded(url)) return;
+const insert_script = async function (url) {
+    if (isScriptLoaded(url)) return Promise.resolve();
     var head = document.getElementsByTagName('head')[0];
     var script = document.createElement('script');
     script.type = 'text/javascript';
-    script.onload = function() {
-        callFunctionFromScript();
-    }
     script.src = url;
+    const promise = new Promise((resolve, reject) => {
+        script.onload = function() {
+            resolve();
+        }
+    });
     head.appendChild(script);
+    return promise;
 }
 
-const insert_scripts() {
+const insert_scripts = async function () {
     const urls = [
         'https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js',
         'https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js',
@@ -29,14 +32,16 @@ const insert_scripts() {
         'https://cdn.jsdelivr.net/npm/echarts/map/js/china.js',
         'https://cdn.jsdelivr.net/npm/echarts/map/js/world.js'
     ];
-    urls.forEach(insert_script);
+    for (let url of urls) {
+        await insert_script(url);
+    }
 };
 
 /**
  * data: {name, provinces}
  *   provices = [{name, value}]
  **/
-const render_china_map = (containerId, data) => {
+const render_china_map = async function (containerId, data) {
     if (!data) {
         return;
     }
@@ -55,7 +60,7 @@ const render_china_map = (containerId, data) => {
             left: 'left',
             top: 'bottom',
             text: ['High','Low'],
-            seriesIndex: [1],
+            seriesIndex: [0],
             inRange: {
                 color: ['#e0ffff', '#006edd']
             },
@@ -92,17 +97,21 @@ const render_china_map = (containerId, data) => {
         ]
     };
 
-    insert_scripts();
+    await insert_scripts();
     const dom = document.getElementById(containerId);
     const myChart = echarts.init(dom);
-    const app = {};
-
-    if (option && typeof option === "object") {
-        myChart.setOption(option, true);
-    }
+    myChart.setOption(option, true);
+    const resize = () => {
+        dom.style.width = '80%';
+        dom.style.height = '80%';
+        myChart.resize();
+    };
+    window.addEventListener('resize', resize);
+    setTimeout(resize, 1000);
 };
 
 return {render_china_map};
 
 })();
 
+window.visualization = visualization;

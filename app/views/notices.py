@@ -4,6 +4,7 @@ from flask import Blueprint, request, render_template, send_from_directory
 from flask_login import current_user
 from app.models import Notice
 from app.db import db
+from app.parameter import menus
 
 app = Blueprint('notices', __name__)
 

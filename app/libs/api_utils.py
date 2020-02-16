@@ -6,6 +6,7 @@ from app.libs.net_utils import get_json
 from flask import jsonify, current_app
 from app.models import Cache
 from app.libs.dxy_utils import get_overall
+from app.libs.tx_utils import get_china_provinces_data
 
 
 def get_realtime_overall_from_server():
@@ -22,6 +23,7 @@ def get_realtime_overall_from_cache():
         return None, None
     data = json.loads(cache.value)
     return data, cache
+
 def get_realtime_overall():
     server_timeout = 3600 * 3 #  3 hour
     load_timeout = 3600
@@ -46,4 +48,8 @@ def get_realtime_overall():
             return jsonify({'results': [data2]})
         else:
             return jsonify({'results': [data]})
+
+# TODO: cache
+def get_china_provinces_reports():
+    return jsonify(get_china_provinces_data())
 
