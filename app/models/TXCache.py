@@ -1,14 +1,13 @@
-# coding: utf-8
 
 from app.db import db
 from app.libs.date_utils import utcnow, time_diff_in_seconds
 from sqlalchemy import func
 
-class Cache(db.Model):
+class TXCache(db.Model):
     '''
     A database based cache
     '''
-    __tablename__ = 'caches'
+    __tablename__ = 'tx_caches'
     key = db.Column(db.String(80), primary_key=True, nullable=False)
     value = db.Column(db.Text, nullable=False)
     timestamp = db.Column(db.DateTime, default=utcnow, onupdate=utcnow)
@@ -100,4 +99,5 @@ class Cache(db.Model):
         if cache != None:
             cache.timestamp = utcnow()
             db.session.commit()
+
 

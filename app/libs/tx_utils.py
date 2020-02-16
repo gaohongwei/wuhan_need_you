@@ -8,8 +8,8 @@ tx_url = 'https://view.inews.qq.com/g2/getOnsInfo?name=disease_h5'
 def get_tx_json(url=tx_url):
     return json.loads(requests.get(url).json()['data'])
 
-def get_china_provinces_data():
-    data = get_tx_json()
+def get_china_provinces_data(data=None):
+    data = data or get_tx_json()
     if data == None:
         return []
     areaTree = data.get('areaTree', [])
@@ -18,4 +18,11 @@ def get_china_provinces_data():
     if not isinstance(areaTree[0], dict):
         return []
     return areaTree[0].get('children', [])
+
+def get_world_data(data=None):
+    data = data or get_tx_json()
+    if data == None:
+        return []
+    areaTree = data.get('areaTree', [])
+    return areaTree
 

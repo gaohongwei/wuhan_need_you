@@ -6,6 +6,7 @@ from .User import User
 from .Notice import Notice
 from .Tag import Tag
 from .Cache import Cache
+from .TXCache import TXCache
 from .NoticeTag import NoticeTag
 from .Visitor import Visitor
 from .UserPermission import register_route_permission

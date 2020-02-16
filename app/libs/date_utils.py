@@ -81,3 +81,7 @@ def time_diff_in_seconds(t1, t2):
         t2 = set_timezone(t2, 'UTC')
     return (t1 - t2).total_seconds()
 
+def parse_datetime(s, format_, timezone_name='UTC'):
+    timezone_name = timezone_name or 'UTC'
+    return set_timezone(datetime.strptime(s, format_), timezone_name)
+
