@@ -10,6 +10,8 @@ from app.model_views import MyFileAdmin
 from app.db import init_app
 from app.config import create_app
 from app.filters import register_filters, register_processors
+from app.views import register_blueprints
+from app.listeners import register_after_requests, register_before_requests
 
 # Load the config file
 # Initialize the app, APPLICATION_MODE can be one of 'depolyment', 'development', 'testing'
@@ -31,6 +33,9 @@ admin.add_view(TagModelView())
 admin.add_view(VisitorModelView())
 admin.add_view(MyFileAdmin(app))
 
+register_blueprints(app)
+register_after_requests(app)
+register_before_requests(app)
 register_filters(app)
 register_processors(app)
 
