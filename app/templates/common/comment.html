@@ -1,0 +1,58 @@
+
+
+<form id="comment_form" onsubmit="return false" action="" method="POST">
+    <div class="form-group">
+      <label>Your Comment</label>
+      <textarea id="comment" name="comment" class="form-control" rows="3"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Your Name</label>
+      <input id="name" type="name" name="name" class="form-control" aria-describedby="nameHelp" placeholder="">
+    </div>
+    <div class="form-group">
+      <label>Your Email address</label>
+      <input id="email" type="email" name="email" class="form-control" aria-describedby="emailHelp" placeholder="">
+    </div>
+    <button id="post_btn" type="submit" class="btn btn-primary" onclick="post()">Post</button>
+</form>      
+
+
+<div class="row">
+  <div class="col-md-12">
+    <div style="border-bottom: 1px solid #ccc">
+      <h2>Comments</h2>
+    </div> 
+     <div class="comments-list">
+     	{% for c in comment %}
+     		<div style="border-bottom: 1px dotted #ccc">
+             <p class="float-right"><small>{{c.created_time}}</small></p>
+              <div>
+                <h5>{{c.name}}</h5>
+                <p>{{c.comment}}</p>                           
+              </div>
+          	</div>
+     	{% endfor %}
+     </div>
+  </div>
+</div>
+
+
+
+<script type="text/javascript">
+	function post() {
+		var notice_id = $("#notice_id").text();
+		var notice_title = $("#notice_title").text();
+		$.ajax({
+			type: "POST",
+			url: "/post_comment",
+			data: $("#comment_form").serialize() + '&notice_id=' + notice_id + '&notice_title=' + notice_title,
+			success: function(res) {
+				alert('评论成功，感谢您的评论！');
+				location.reload();
+			},
+			error: function(err) {
+				console.log('err')
+			}
+	 	})
+	}
+</script>
