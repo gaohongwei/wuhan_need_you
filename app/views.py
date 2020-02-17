@@ -11,6 +11,7 @@ from app import app
 from app.parameter import *
 from app.models import Notice
 from app.models import Visitor
+from app.models import Comment
 from app.db import db
 from app.libs.api_utils import get_realtime_overall
 
@@ -35,9 +36,10 @@ def list_notices():
 @app.route('/notice/<notice_id>')
 def get_notice(notice_id):
     notice = db.session.query(Notice).filter_by(id=notice_id).scalar()
+    comment = Comment.get_comment_by_noticeid(notice_id)
     if notice == None:
         return 'not found', 404
-    return render_template('pages/notice_detail.html', menus = menus, notice = notice)
+    return render_template('pages/notice_detail.html', menus = menus, notice = notice, comment=comment)
 
 @app.route('/favicon.ico')
 def get_favicon():
@@ -74,6 +76,12 @@ def upload():
     f.save(os.path.join(app.config['IMAGE_FILE_UPLOAD_DIRECTORY'], f.filename))
     url = url_for('uploaded_files', filename=f.filename)
     return upload_success(url=url)  # return upload_success call
+
+
+@app.route('/post_comment', methods=['POST'])
+def post_comment():
+    Comment.add()
+    return 'success', 200
 
 @app.after_request
 def after_request(response):

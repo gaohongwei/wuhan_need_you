@@ -6,7 +6,8 @@
   <h1 class="text-center text-primary">信息发布</h1>
   <div>
       <div class="text-center">
-          <h2>{{notice.title}}</h2>
+          <h2 id="notice_title">{{notice.title}}</h2>
+          <p class="float-right">Notice ID: <small id="notice_id">{{notice.id}}</small></p>
           <p>创建时间：{{ notice.created_time | datetime_format_cn }} 修改时间: {{ notice.modified_time | datetime_format_cn }}</p>
           {% if current_user.is_authenticated %}
           <p>创建人: {{ notice.create_user }} 审核人: {{ notice.permit_user }} </p>
@@ -21,49 +22,7 @@
 
     <hr>
 
-      <form>
-        <div class="form-group">
-          <label for="comment">Your Comment</label>
-          <textarea name="comment" class="form-control" rows="3"></textarea>
-        </div>
-        <div class="form-group">
-          <label for="exampleInputEmail1">Your Name</label>
-          <input type="name" class="form-control" aria-describedby="nameHelp" placeholder="">
-        </div>
-        <div class="form-group">
-          <label for="exampleInputEmail1">Your Email address</label>
-          <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="">
-        </div>
-        <button type="submit" class="btn btn-primary">Post</button>
-      </form>      
-
-
-      <div class="row">
-          <div class="col-md-12">
-            <div style="border-bottom: 1px solid #ccc">
-              <h2>Comments</h2>
-            </div> 
-             <div class="comments-list">
-                  <div style="border-bottom: 1px dotted #ccc">
-                     <p class="float-right"><small>3 days ago</small></p>
-                      <div>
-                        <h5>Balee San</h5>
-                        <p>Wow! this is really great.</p>
-                      </div>
-                  </div>
-                  <div>
-                     <p class="float-right"><small>5 days ago</small></p>
-                      <div>
-                        <h5>Jone Stepven</h5>
-                        <p>Wow! this is really great.</p>                           
-                      </div>
-                  </div>
-             </div>
-          </div>
-      </div>
-
-
-
+     {% include "common/comment.html" %}
 
   </div>
 </div>

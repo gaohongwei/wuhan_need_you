@@ -8,6 +8,7 @@ from .Tag import Tag
 from .Cache import Cache
 from .NoticeTag import NoticeTag
 from .Visitor import Visitor
+from .Comment import Comment
 from .UserPermission import register_route_permission
 from .UserPermission import register_model_view_permission
 from .UserPermission import check_route_permission

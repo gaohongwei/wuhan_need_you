@@ -6,3 +6,4 @@ from .notice import NoticeModelView
 from .tag import TagModelView
 from .visitor import VisitorModelView
 from .MyFileAdmin import MyFileAdmin
+from .comment import CommentModelVise
