@@ -2,7 +2,7 @@
 
 from flask import Blueprint, request, render_template, send_from_directory
 from flask_login import current_user
-from app.models import Notice
+from app.models import Notice, Comment
 from app.db import db
 from app.parameter import menus
 
@@ -21,7 +21,8 @@ def list_notices():
 @app.route('/notices/<notice_id>')
 def get_notice(notice_id):
     notice = db.session.query(Notice).filter_by(id=notice_id).scalar()
+    comments = Comment.get_comments_by_noticeid(notice_id)
     if notice == None:
         return 'not found', 404
-    return render_template('pages/notice_detail.html', menus = menus, notice = notice)
+    return render_template('pages/notice_detail.html', menus=menus, notice=notice, comments=comments)
 

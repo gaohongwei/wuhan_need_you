@@ -3,6 +3,10 @@
 import pkgutil
 
 def register_blueprints(app):
+    '''
+    Load view sub-modules in current module.
+    Assume each sub-module has a Blueprint called app
+    '''
     print(__path__)
     for loader, module_name, is_pkg in pkgutil.walk_packages(__path__):
         try:
