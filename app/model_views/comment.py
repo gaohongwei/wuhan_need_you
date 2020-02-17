@@ -6,7 +6,7 @@ from app.models import Comment, check_permission
 from app.db import db
 from app.libs.date_utils import format_cn
 
-class CommentModelVise(ModelView):
+class CommentModelView(ModelView):
 	can_create = False
 	can_edit = False 
 	can_delete = True 
