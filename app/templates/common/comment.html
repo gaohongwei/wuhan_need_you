@@ -21,10 +21,6 @@
 
 <form id="comment_form" onsubmit="return false" action="" method="POST">
     <div class="form-group">
-      <label>您的留言</label>
-      <textarea id="comment" name="comment" class="form-control" rows="3"></textarea>
-    </div>
-    <div class="form-group">
       <label>姓名</label>
       <input id="name" type="name" name="name" class="form-control" aria-describedby="nameHelp" placeholder="">
     </div>
@@ -32,7 +28,12 @@
       <label>邮件地址</label>
       <input id="email" type="email" name="email" class="form-control" aria-describedby="emailHelp" placeholder="">
     </div>
-    <button id="post_btn" type="submit" class="btn btn-primary" onclick="post()">Post</button>
+    <div class="form-group">
+      <label>您的留言</label>
+      <textarea id="comment" name="comment" class="form-control" rows="3"></textarea>
+    </div>
+    <button id="post_btn" type="submit" class="btn btn-primary" onclick="post()">提交</button>
+	<div>&nbsp;</div>
 </form>      
 
 <script type="text/javascript">
