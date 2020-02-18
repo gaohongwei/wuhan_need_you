@@ -38,6 +38,36 @@ const insert_scripts = async function () {
 };
 
 /**
+ * Create pieces for echarts visualMap
+ * values: an array of any format. 
+ *         If the elements are numbers, mapper can be null,
+ *         or the mapper should be provided to get an array of numbers
+ * numPieces: how many pieces
+ * mapper: map the element to a number [optional if the values are numbers]
+ * */
+const createPieces = (values, numPieces, mapper) => {
+    mapper = mapper || (i => i);
+    let cmp = (i, j) => {i = mapper(i); j = mapper(j); return (i > j) ? 1 : (i < j ? -1 : 0)};
+    values = values.sort(cmp);
+    const numPerPiece = Math.floor(values.length / numPieces);
+    const createPiece = i => {
+        const beg = values[i * numPerPiece];
+        const end = values[i * numPerPiece + numPerPiece - 1];
+        console.log(beg, end);
+        const min = mapper(beg);
+        let max = mapper(end);
+        if (i === numPieces - 1) {
+            max = mapper(values[values.length - 1]);
+        }
+        return {min, max};
+    };
+    const pieces = new Array(numPieces).fill().map((_, i) => createPiece(i));
+    const min = mapper(values[0]);
+    const max = mapper(values[values.length - 2]); // ignore the max
+    return {pieces, min, max};
+};
+
+/**
  * data: {name, provinces}
  *   provices = [{name, value}]
  **/
@@ -52,11 +82,13 @@ const render_china_map = async function (containerId, data) {
         return;
     }
 
+    // const min = Math.min(...provinces.map(i => i.value));
+    // const max = Math.max(...provinces.map(i => i.value));
+
     const option = {
         tooltip: {},
         visualMap: {
-            min: 0,
-            max: 1500,
+            ...createPieces(provinces, 4, i => parseFloat(i.value)),
             left: 'left',
             top: 'bottom',
             text: ['High','Low'],

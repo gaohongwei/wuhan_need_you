@@ -11,6 +11,40 @@
             req.send();
         });
     };
+	const getElementById = id => {
+		const el = document.getElementById(id);
+		if (!el) {
+			throw new Event('no such id ' + id);
+		}
+		return el;
+	};
+	const getElementByTagNameAndId= (tagName, id) => {
+		const el = getElementById(id);
+		const currentTagName = el.tagName.toLowerCase();
+		if (currentTagName !== (tagName + '').toLowerCase()) {
+			throw new Event(`element with id ${id} has tagName ${currentTagName}, but ${tagName} is required`);
+		}
+		return el;
+	};
+	/**
+	 * Add multiple <option value="value">name</option> to the <select></select>
+	 **/
+	const setupSelect = (id, nameValues, callback) => {
+		const select = getElementByTagNameAndId('select', id);
+		const createOption = ({name, value}) => {
+			const option = document.createElement('option');
+			option.value = value;
+			option.innerText = name;
+			return option;
+		};
+		const options = (nameValues || []).map(createOption);
+		options.forEach(option => {
+			select.appendChild(option);
+		});
+		if (callback) {
+			select.addEventListener('change', () => callback(select.value));
+		}
+	};
     const dateWithTimeZone = (timeZone, year, month, day, hour, minute, second) => {
         let date = new Date(Date.UTC(year, month, day, hour, minute, second));
 
@@ -83,13 +117,53 @@
         });
         elem.appendChild(ul);
     };
+	const getAttr = (obj, key) => {
+		const keys = key.split('.');
+		for (let k of keys) {
+			if (obj === undefined || obj === null) {
+				return null;
+			}
+			obj = obj[k];
+		}
+		return obj;
+	};
+	/**
+	 * An dict to [{key, value}]
+	 **/
+	const mapToPairs = map => {
+		const pairs = [];
+		for (let key in map) {
+			pairs.push({key, value: map[key]});
+		}
+		return pairs;
+	};
 	const displayChinaMap = async function() {
-		const data = await getJson('/api/reports/provinces') || [];
-		const chinaData = data.map(i => {
-			return {name: i.name, value: i.total.confirm, data: i};
-		});
-		const mapData = {name: '各省确认总数', provinces: chinaData}
-		visualization.render_china_map('chinaMap', mapData);
+		const dataMap = {
+			'today.confirm': '今日确诊数目',
+			'total.confirm': '累计确诊总数',
+			'total.dead': '累计死亡总数',
+			'total.deadRate': '累计死亡率',
+			'total.heal': '累计治愈',
+			'total.healRate': '累计治愈率'
+		};
+		const getMapData = (key, jsonData) => {
+			const provinces = jsonData.map(i => {
+				return {name: i.name, value: getAttr(i, key), data: i};
+			});
+			const mapData = {name: dataMap[key], provinces};
+			return mapData;
+		};
+		const renderMap = (key, jsonData) => {
+			console.log('render ' + key);
+			const mapData = getMapData(key, jsonData);
+			visualization.render_china_map('chinaMap', mapData);
+		};
+		const jsonData = await getJson('/api/reports/provinces') || [];
+		setupSelect('chinaMapSelect',
+			mapToPairs(dataMap).map(i => new Object({name: i.value, value: i.key})),
+			key => renderMap(key, jsonData)
+		);
+		renderMap('today.confirm', jsonData);
 	};
     const displayOverall = async function () {
         const data = await getJson('/api/reports/overall');
@@ -146,7 +220,11 @@ window.addEventListener('load', () => {
 		</div>
 		<div><b>备注</b><span id='remarks'></span></div>
 		<div><b>说明</b><span id='notes'></span></div>
-		<div style="height:600px"><b>全国各省概况地图</b><div id='chinaMap'></div></div>
+		<div style="height:600px"><b>全国各省概况地图</b>
+			&nbsp;&nbsp;
+			<span><select id='chinaMapSelect'></select></span>
+			<div id='chinaMap'></div>
+		</div>
 		<div><b>概况</b><div id='dailyPics'></div></div>
         <div><b>全国趋势图</b><div id='quanguoTrendChart'></div></div>
         <div><b>湖北/非湖北趋势图</b><div id='hbFeiHbTrendChart'></div></div>
