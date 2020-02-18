@@ -39,16 +39,16 @@ class Visitor(db.Model):
             return False
         ip_addr = get_ip()
         visited_time = utcnow()
-        visitor = Visitor(url=url, ip_addr=ip_addr, visited_time=visited_time)
         
+        current_app.logger.info(url + ' is recorded')
         if len(cls.queue) < cls.capacity: 
-        	cls.queue.append(visitor)
+            cls.queue.append((url, ip_addr, visited_time))
         else:
-        	for v in cls.queue:
-        		db.session.add(v)
-        		current_app.logger.info(url + ' is recorded')
-        	db.session.commit()
-        	cls.queue = []
+            for (url, ip_addr, visited_time) in cls.queue:
+                db.session.add(Visitor(url=url, ip_addr=ip_addr, visited_time=visited_time))
+                current_app.logger.info('batch recording')
+            db.session.commit()
+            cls.queue = []
         return True
 
     @classmethod
