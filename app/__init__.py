@@ -2,6 +2,8 @@
 
 import os
 from flask_admin import Admin
+from flask import request
+from flask_babel import Babel
 from flask_wtf.csrf import CSRFProtect
 from flask_ckeditor import CKEditor
 from app.models import Tag, User, Notice, register_route_permission, register_model_view_permission, recreate_database
@@ -20,6 +22,12 @@ app = create_app(os.environ.get('APPLICATION_MODE'))
 admin = Admin(app=app, name='后台管理', index_view=AdminIndexView(name='主页'))
 ckeditor = CKEditor(app)
 csrf = CSRFProtect(app)
+
+# Use Flask Babel to support multi-languages
+babel = Babel(app)
+@babel.localeselector
+def get_locale():
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 # Load the views
 from app import views

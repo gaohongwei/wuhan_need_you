@@ -40,6 +40,8 @@ class Config:
 
     CKEDITOR_ENABLE_CSRF = True
     IMAGE_FILE_UPLOAD_DIRECTORY = os.path.join(os.path.dirname(__file__), 'static/upload')
+
+    LANGUAGES = ['en', 'cn']
  
     @staticmethod
     def init_app(app):

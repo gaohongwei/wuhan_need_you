@@ -33,6 +33,27 @@ ctrl+c
 deactivate
 ```
 
+## Internationalization
+
+The multiple languages support follows this [instructions](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xiii-i18n-and-l10n)
+
+The command will be used as:
+
+```bash
+(venv) $ flask translate --help
+Usage: flask translate [OPTIONS] COMMAND [ARGS]...
+
+  Translation and localization commands.
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  compile  Compile all languages.
+  init     Initialize a new language.
+  update   Update all languages.
+```
+
 ## Deployment
 
 The website is powered by flask+uwsgi+nginx.

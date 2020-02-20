@@ -1,34 +1,35 @@
 # coding: utf-8
+from flask_babel import lazy_gettext as _l
 
 # dynamic create menu
 menus = [
         {
-            'label': "主页",
+            'label': _l('主页'),
             'path': '/pages/index'
             },
         {
-            'label': "校友活动",
+            'label': _l('校友活动'),
             'path': '/pages/alumni_activities'
             },
         {
-            'label': "武汉疫情动态",
+            'label': _l('武汉疫情动态'),
             #'path': '/pages/wuhan_situation'
             'path': '/reports'
             },
         {
-            'label': "校友会在行动",
+            'label': _l('校友会在行动'),
             'path': '/pages/alumni_action'
             },
         {
-            'label': "捐赠方式和公示",
+            'label': _l('捐赠方式和公示'),
             'path': '/pages/donate'
             },
         {
-            'label': "联系我们",
+            'label': _l('联系我们'),
             'path': '/pages/contact_us'
             },
         {
-            'label': "Q&A",
+            'label': _l('Q&A'),
             'path': '/pages/qa'
             },
         ]
