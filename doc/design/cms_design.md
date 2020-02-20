@@ -1,9 +1,10 @@
 # CMS Design
 ## Components
-- Page, maps to a real web page
-- Asset(img, video), will be uploaded
-- Fragment(paragraphs), from Rich text editor
-
+```
+Page, maps to a real web page
+Asset(img, video), will be uploaded
+Fragment(paragraphs), from Rich text editor
+```
 ## Relation
 ```
 A page has many fragments(paragraphs)
@@ -25,6 +26,6 @@ A layout is something like this
 </div>
 ```
 
-- A Page Show/Edit page should list its components
-- Some predefined layout (injected with the actual data ) can be generated when a user click a layout.
-- So end user are able to modify it by following predefined layput.
+A Page Show/Edit page should list its components
+Some predefined layout (injected with the actual data ) can be generated when a user click a layout.
+So end user are able to modify it by following predefined layput.
