@@ -6,7 +6,9 @@ class Page(db.Model):
     __tablename__ = "pages"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False, unique=True)
-    layout = db.Column(db.Text, nullable=False)
+    description = db.Column(db.String(255))
+    layout = db.Column(db.Text)
+    fragments = db.relationship("Fragment", secondary="page_fragment")
 
     def __str__(self):
         return self.name
@@ -18,6 +20,7 @@ class Fragment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False, unique=True)
     content = db.Column(db.Text, nullable=False)
+    pages = db.relationship("Page", secondary="page_fragment")
 
     def __str__(self):
         return self.name
