@@ -1,0 +1,118 @@
+{% extends 'admin/model/create.html' %}
+
+{% block tail %}
+    {{ super() }}
+    {{ ckeditor.load(custom_url=url_for('static', filename='ckeditor/ckeditor.js')) }}
+    <script>
+    window.addEventListener('load', () => {
+        initWidgets();
+        const type = document.getElementById('type');
+        type.addEventListener('change', () => {
+            updateWidgets();
+        });
+    });
+    function initWidgets() {
+        hideValueFieldWidget();
+        createHTMLWidget('editor', true);
+        createImageWidget(false);
+        createImageListWidget(false);
+        setupCKEditorCallback('editor', setFieldValue);
+    }
+    // set the text to the hiden <textarea> for uploading
+    function setFieldValue(s) {
+        getFieldTextArea().innerText = s;
+    }
+    function updateWidgets() {
+        const type = document.getElementById('type').value;
+        const htmlWidgetContainer = document.getElementById('html-widget-container');
+        const imageWidgetContainer = document.getElementById('image-widget-container');
+        const imageListWidgetContainer = document.getElementById('image-list-widget-container');
+        htmlWidgetContainer.style.display = (type === 'html' ? '' : 'none');
+        imageWidgetContainer.style.display = (type === 'image' ? '' : 'none');
+        imageListWidgetContainer.style.display = (type === 'image_list' ? '': 'none');
+    }
+    function hideValueFieldWidget() {
+        const g = getValueFieldGroup();
+        g.style.display = 'none';
+    }
+    function setupCKEditorCallback(id, callback) {
+        if (!callback) return;
+        CKEDITOR.instances[id].on('change', e => callback(e[id].getData()));
+    }
+    function createHTMLWidget(id, visible) {
+        const div = createElement('div', 'control-group', {}, {id: 'html-widget-container'});
+        const div2 = createElement('div', 'control-label');
+        const label = createElement('label', '', {}, {for: 'value-html-widget'});
+        label.innerHTML = '内容   <strong style="color: red">*</strong>';
+        div2.appendChild(label);
+        const div3 = createElement('div', 'controls', {}, {id: 'html-widget'});
+        const editor = createElement('div', '', {}, {id});
+        div3.appendChild(editor);
+        CKEDITOR.replace(editor);
+        div.appendChild(div2);
+        div.appendChild(div3);
+        insertAfter(getValueFieldGroup(), div);
+        div.style.display = visible ? '' : 'none';
+        return div;
+    }
+    function createImageWidget(visible) {
+        const div = createElement('div', 'control-group', {}, {id: 'image-widget-container'});
+        const div2 = createElement('div', 'control-label');
+        const label = createElement('label', '', {}, {for: 'value-image-widget'});
+        label.innerHTML = '内容   <strong style="color: red">*</strong>';
+        div2.appendChild(label);
+        const div3 = createElement('div', 'controls', {}, {id: 'image-widget'});
+        div3.innerText = '图片控件，需要封装Ajax代码';
+        // TODO
+        div.appendChild(div2);
+        div.appendChild(div3);
+        insertAfter(getValueFieldGroup(), div);
+        div.style.display = visible ? '' : 'none';
+        return div;
+    }
+    function createImageListWidget(visible) {
+        const div = createElement('div', 'control-group', {}, {id: 'image-list-widget-container'});
+        const div2 = createElement('div', 'control-label');
+        const label = createElement('label', '', {}, {for: 'value-image-list-widget'});
+        label.innerHTML = '内容   <strong style="color: red">*</strong>';
+        div2.appendChild(label);
+        const div3 = createElement('div', 'controls', {}, {id: 'image-list-widget'});
+        div3.innerText = '图片列表控件，需要封装Ajax代码';
+        // TODO
+        div.appendChild(div2);
+        div.appendChild(div3);
+        insertAfter(getValueFieldGroup(), div);
+        div.style.display = visible ? '' : 'none';
+        return div;
+    }
+    function insertAfter(el, inserted) {
+        el.parentNode.insertBefore(inserted, el.nextSibling);
+    }
+    function getValueFieldGroup() {
+        const isValueGroup = g => {
+            return g.children[0].querySelector('label').getAttribute('for') === 'value';
+        };
+        for (let g of document.querySelectorAll('.control-group')) {
+            if (isValueGroup(g)) {
+                return g;
+            }
+        }
+        return null;
+    }
+    function getFieldTextArea() {
+        const g = getValueFieldGroup();
+        return g.querySelector('textarea');
+    }
+    const createElement = (tag, className, styles, options) => {
+        const el = document.createElement(tag);
+        el.className = className;
+        for (let name in styles || {}) {
+            el.style[name] = styles[name];
+        }
+        for (let name in options || {}) {
+            el[name] = options[name];
+        }
+        return el;
+    };
+    </script>
+{% endblock %}

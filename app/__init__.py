@@ -6,6 +6,7 @@ from flask_wtf.csrf import CSRFProtect
 from flask_ckeditor import CKEditor
 from app.models import Tag, User, Notice, register_route_permission, register_model_view_permission, recreate_database
 from app.model_views import TagModelView, UserModelView, NoticeModelView, AdminIndexView, VisitorModelView, CommentModelView, init_login, init_sample_users
+from app.model_views import AssetModelView
 from app.model_views import MyFileAdmin
 from app.db import init_app
 from app.config import create_app
@@ -30,6 +31,7 @@ login_manager = init_login(app)
 admin.add_view(UserModelView())
 admin.add_view(NoticeModelView())
 admin.add_view(TagModelView())
+admin.add_view(AssetModelView())
 admin.add_view(VisitorModelView())
 admin.add_view(MyFileAdmin(app))
 admin.add_view(CommentModelView())
@@ -66,6 +68,7 @@ register_route_permission('/admin/myfileadmin/*/*', '普通管理员')
 register_route_permission('/admin/visitor/', '系统管理员')
 register_route_permission('/admin/comment/', '普通管理员')
 register_route_permission('/admin/comment/delete/', '普通管理员')
+register_route_permission('/admin/asset/*', '普通管理员')
 
 register_model_view_permission(UserModelView, '系统管理员')
 register_model_view_permission(NoticeModelView, '普通管理员')
@@ -73,6 +76,7 @@ register_model_view_permission(TagModelView, '系统管理员')
 register_model_view_permission(MyFileAdmin, '普通管理员')
 register_model_view_permission(VisitorModelView, '系统管理员')
 register_model_view_permission(CommentModelView, '普通管理员')
+register_model_view_permission(AssetModelView, '普通管理员')
 
 recreate_database(app)
 

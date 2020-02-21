@@ -2,6 +2,7 @@
 
 from .user import register_user_filters, register_user_processors
 from .notice import register_notice_filters, register_notice_processors
+from .asset import register_asset_processors
 
 from app.libs.date_utils import format_cn
 
@@ -22,4 +23,5 @@ def register_processors(app):
     '''
     register_user_processors(app)
     register_notice_processors(app)
+    register_asset_processors(app)
 

@@ -7,3 +7,4 @@ from .tag import TagModelView
 from .visitor import VisitorModelView
 from .MyFileAdmin import MyFileAdmin
 from .comment import CommentModelView
+from .asset import AssetModelView
