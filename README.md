@@ -54,6 +54,19 @@ Commands:
   update   Update all languages.
 ```
 
+If the above command line doesn't work, pls use the pybabel commandline for updates
+
+```bash
+pybabel extract -F babel.cfg -k _l -o messages.pot .
+pybabel update -i messages.pot -d app/translations
+```
+
+and compile to a publishable version
+
+```bash
+pybabel compile -d app/translations
+```
+
 ## Deployment
 
 The website is powered by flask+uwsgi+nginx.
