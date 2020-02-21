@@ -126,7 +126,7 @@ config = {
     }
 
 # use TestingConfig by default
-def create_app(config_name):
+def app_from_config(config_name):
     try:
         os.mkdir(logPath)
     except Exception as e:
