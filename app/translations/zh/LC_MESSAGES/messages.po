@@ -1,0 +1,166 @@
+# Chinese translations for PROJECT.
+# Copyright (C) 2020 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2020-02-21 15:17+0800\n"
+"PO-Revision-Date: 2020-02-20 19:58+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh\n"
+"Language-Team: zh <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: app/parameter.py:7
+msgid "主页"
+msgstr "主页"
+
+#: app/parameter.py:11
+msgid "校友活动"
+msgstr "校友活动"
+
+#: app/parameter.py:15
+msgid "武汉疫情动态"
+msgstr "武汉疫情动态"
+
+#: app/parameter.py:20
+msgid "校友会在行动"
+msgstr "校友会在行动"
+
+#: app/parameter.py:24
+msgid "捐赠方式和公示"
+msgstr "捐赠方式和公示"
+
+#: app/parameter.py:28 app/templates/pages/contact_us.html:8
+msgid "联系我们"
+msgstr "联系我们"
+
+#: app/parameter.py:32
+msgid "Q&A"
+msgstr "Q&A"
+
+#: app/model_views/notice.py:162
+#, python-format
+msgid "Failed to approve notices. %(error)s"
+msgstr "Failed to approve notices. %(error)s"
+
+#: app/model_views/notice.py:185
+#, python-format
+msgid "Failed to disapprove notices. %(error)s"
+msgstr "Failed to disapprove notices. %(error)s"
+
+#: app/templates/pages/contact_us.html:12
+msgid "我们的邮箱，微信，电话，和地址"
+msgstr "我们的邮箱，微信，电话，和地址"
+
+#: app/templates/pages/contact_us.html:17
+msgid "邮箱"
+msgstr "邮箱"
+
+#: app/templates/pages/contact_us.html:18
+msgid "微信公众号：武大北加校友会"
+msgstr "微信公众号：武大北加校友会"
+
+#: app/templates/pages/contact_us.html:20
+msgid "地址"
+msgstr "地址"
+
+#: app/templates/pages/contact_us.html:22
+msgid "副会长"
+msgstr "副会长"
+
+#: app/templates/pages/contact_us.html:26
+msgid "网站志愿者支持团队"
+msgstr "网站志愿者支持团队"
+
+#: app/templates/pages/contact_us.html:28
+msgid "项目管理"
+msgstr "项目管理"
+
+#: app/templates/pages/contact_us.html:29
+msgid "技术管理"
+msgstr "技术管理"
+
+#: app/templates/pages/contact_us.html:30
+msgid "开发支持"
+msgstr "开发支持"
+
+#: app/templates/pages/contact_us.html:31
+msgid "产品支持"
+msgstr "产品支持"
+
+#: app/templates/pages/contact_us.html:32
+msgid "技术支持"
+msgstr "技术支持"
+
+#: app/templates/pages/contact_us.html:33
+msgid "运营支持"
+msgstr "运营支持"
+
+#: app/templates/pages/contact_us.html:34
+msgid "用户体验"
+msgstr "用户体验"
+
+#: app/templates/pages/contact_us.html:35
+msgid "信息收集"
+msgstr "信息收集"
+
+#: app/templates/pages/contact_us.html:36
+msgid "网站验证"
+msgstr "网站验证"
+
+#: app/templates/pages/contact_us.html:37
+msgid "更多校友支持名单会持续更新"
+msgstr "更多校友支持名单会持续更新"
+
+#: app/templates/pages/contact_us.html:41
+msgid "衷心感谢中美两地校友，朋友的及时支持！为了武汉，我们一直在加油！"
+msgstr "衷心感谢中美两地校友，朋友的及时支持！为了武汉，我们一直在加油！"
+
+#: app/templates/pages/contact_us.html:44
+msgid "版本信息"
+msgstr "版本信息"
+
+#: app/templates/pages/contact_us.html:45
+msgid "团队组建"
+msgstr "团队组建"
+
+#: app/templates/pages/contact_us.html:46
+msgid "上线"
+msgstr "上线"
+
+#: app/templates/pages/contact_us.html:49
+msgid "网站最终解释权归武汉大学北加州校友会所有,如有疑问请联系我们"
+msgstr "网站最终解释权归武汉大学北加州校友会所有,如有疑问请联系我们"
+
+#: app/templates/pages/index.html:78
+msgid "共同抗疫，万里驰援"
+msgstr "共同抗疫，万里驰援"
+
+#: app/templates/pages/index.html:83
+msgid "校友万里驰援中南医院紧急物资"
+msgstr "校友万里驰援中南医院紧急物资"
+
+#: app/templates/pages/index.html:88
+msgid "校友筹备医疗物资援助天门第一人民医院"
+msgstr "校友筹备医疗物资援助天门第一人民医院"
+
+#: app/templates/pages/index.html:93
+msgid "武大硅谷校友一家亲"
+msgstr "武大硅谷校友一家亲"
+
+#: app/templates/pages/index.html:98
+msgid "窦贤康校长来访硅谷"
+msgstr "窦贤康校长来访硅谷"
+
+#: app/templates/pages/index.html:103
+msgid "武大暑期访学团来访硅谷"
+msgstr "武大暑期访学团来访硅谷"
+

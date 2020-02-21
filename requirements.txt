@@ -22,3 +22,5 @@ urllib3==1.25.8
 uWSGI==2.0.18
 Werkzeug==0.16.1
 WTForms==2.2.1
+flask-babel==1.0.0
+Flask-BabelEx==0.9.4
