@@ -8,12 +8,22 @@
 {% set div_id = div_id or 'image_select_' + str(random.randint(1, 100)) %}
 {% set numColumns = 4 %}
 {% set totalPages = math.ceil(len(images) / page_size) %}
-<div id='{{div_id}}' data-page="{{page_no}}" data-total-pages="{{totalPages}}">
+<div class="image-select-table-widget" id='{{div_id}}' data-page="{{page_no}}" data-total-pages="{{totalPages}}">
+<div><b>待选图片</b></div>
 <table style='width:100%'>
     {% for i in range(math.ceil(len(images[(page_no-1)*page_size:page_no*page_size]) / numColumns)) %}
-    <tr>
+    <tr style="min-height:200px">
         {% for j in range(numColumns) %}
-        <td><img height="100px" src="{{images[(page_no-1)*page_size + i*numColumns + j]}}"></img></td>
+		{% if i*numColumns + j < page_size %}
+        <td style="width:25%;height:100%">
+			<div style="position:relative;padding-top:20px;display:inline-block;width:100%;height:100%">
+				<a href="#" onclick="clickImage(this, {{div_id}})">
+					<span class="image-select-mark" style="position:absolute;right:50%;top:50%;background:green;text-align:center;border-radius:30px 30px 30px 30px;color:white;padding:5px 10px;font-size:20px;display:none"></span>
+					<img style="display:block;margin-left:auto;margin-right:auto;max-width:80%;max-height:100px" src="{{images[(page_no-1)*page_size + i*numColumns + j]}}"></img>
+				</a>
+			</div>
+		</td>
+		{% endif %}
         {% endfor %}
     </tr>
     {% endfor %}
@@ -49,6 +59,9 @@
     async function gotoPage(div, page_no, page_size) {
         const html = await getText(`/api/assets/image_select?page_no=${page_no}&page_size=${page_size}&div_id=${div.id}`);
         replaceElementAsHtml(div, html);
+		// the div is replaced, so we should re-fetch the div element
+		const id = div.id;
+		setTimeout(() => IMAGE_SELECT.updateImageSelection(document.getElementById(id)), 100);
     }
     async function gotoPreviousPage(div, page_size) {
         let page_no = parseInt(div.dataset.page);
@@ -61,13 +74,84 @@
     async function gotoNextPage(div, page_size) {
         let page_no = parseInt(div.dataset.page);
         const totalPages = parseInt(div.dataset.totalPages);
-        console.log(totalPages);
         if (page_no >= totalPages) {
             return;
         }
-        console.log(totalPages);
         page_no = page_no + 1;
         gotoPage(div, page_no, page_size);
     }
+	class ImageSelect {
+		constructor() {
+			this.events = {};
+			this.selectedImages = {}; // div_id => [img_src]
+		}
+		on(eventName, callback) {
+			if (!callback) return;
+			this.events[eventName] = callback;
+		}
+		emit(evt) {
+			const callback = this.events[evt.name];
+			if (callback) {
+				callback(evt);
+			}
+		}
+		selectImage(div, img) {
+			const id = div.id;
+			if (!this.selectedImages[id]) {
+				this.selectedImages[id] = [];
+			}
+			const src = img.src;
+			if (this.selectedImages[id].indexOf(src) === -1) {
+				this.selectedImages[id].push(src);
+			}
+		}
+		unselectImage(div, img) {
+			const id = div.id;
+			if (!this.selectedImages[id]) {
+				return;
+			}
+			const idx = this.selectedImages[id].indexOf(img.src);
+			if (idx !== -1) {
+				this.selectedImages[id].splice(idx);
+			}
+		}
+		// update the div to select all the images recorded in selectedImages
+		updateImageSelection(div) {
+			const id = div.id;
+			const urls = this.selectedImages[id] || [];
+			const marks = div.querySelectorAll('span.image-select-mark');
+			for (let mark of marks) {
+				const img = mark.parentNode.querySelector('img');
+				const url = img.src;
+				setElementVisible(mark, urls.indexOf(url) !== -1);
+			}
+		}
+	}
+	const IMAGE_SELECT = new ImageSelect();
+	function setElementVisible(el, visible) {
+		el.style.display = visible ? '' : 'none';
+	}
+	function toggleElement(el) {
+		if (el.style.display === 'none') {
+			el.style.display = '';
+			return true;
+		} else {
+			el.style.display = 'none';
+			return false;
+		}
+	}
+	function clickImage(link, div) {
+		const mark = link.querySelector('span');
+		const img = link.querySelector('img');
+		if (toggleElement(mark)) {
+			IMAGE_SELECT.selectImage(div, img);
+			IMAGE_SELECT.emit({name: 'imageSelected', src: img.src, div});
+		} else {
+			IMAGE_SELECT.unselectImage(div, img);
+			IMAGE_SELECT.emit({name: 'imageUnselected', src: img.src, div});
+		}
+	}
+	// IMAGE_SELECT.on('imageSelected', e => console.log(e));
+	// IMAGE_SELECT.on('imageUnselected', e => console.log(e));
 </script>
 </div>

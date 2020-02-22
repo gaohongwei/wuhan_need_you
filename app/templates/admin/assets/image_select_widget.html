@@ -1,0 +1,52 @@
+<!--
+    parameters:
+      * images: [{url, title}]
+      * page_no: 1-based
+      * page_size
+      * div_id: optional
+-->
+{% set selected_table_id = 'image_select_table_' + str(random.randint(1, 100)) %}
+
+<div>
+<div><b>选中图片</b></div>
+<table id="{{selected_table_id}}">
+</table>
+
+{% include "admin/assets/image_select.html" %}
+
+</div>
+
+<script>
+	IMAGE_SELECT.on('imageSelected', e => {
+		fillImages({{selected_table_id}});
+	});
+	IMAGE_SELECT.on('imageUnselected', e => {
+		fillImages({{selected_table_id}});
+	});
+	function clearChildrenNodes(el) {
+		for (let c of el.childNodes) {
+			el.removeChild(c);
+		}
+	}
+	function fillImages(table) {
+		clearChildrenNodes(table);
+		const ncols = 4;
+		const div = table.parentNode.querySelector('.image-select-table-widget');
+		const images = IMAGE_SELECT.selectedImages[div.id] || [];
+		console.log(images);
+		const nrows = Math.ceil(images.length / ncols);
+		for (let i=0; i<nrows; ++i) {
+			const tr = document.createElement('tr');
+			for (let j=0; j<ncols; ++j) {
+				const url = images[i*ncols + j];
+				if (!url) continue;
+				const img = document.createElement('img');
+				img.src = url;
+				const td = document.createElement('td');
+				td.appendChild(img);
+				tr.appendChild(td);
+			}
+			table.appendChild(tr);
+		}
+	}
+</script>
