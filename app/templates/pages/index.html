@@ -197,16 +197,28 @@ img {vertical-align: middle;}
     {% for topic in pages_info.special_topic %}
     <div class="card m-3" style="width: 100%;">
       <img class="card-img-top" src="{{url_for('static', filename=topic.image) }}">
-    <div class="card-body text-center">
-      {% for index in range(topic.link|length) %}
-      <a href={{topic.link[index]}} class="btn btn-primary">
-        {{topic.title[index]}}
-    </a>
-      {% endfor %}
-    </div>
+      <div class="card-body text-center">
+        {% for index in range(topic.link|length) %}
+        <a href={{topic.link[index]}} class="btn btn-primary">
+          {{topic.title[index]}}
+      </a>
+        {% endfor %}
+      </div>
     </div>
   {% endfor %}
+  </div>
 </div>
+
+
+<div class="card m-3 p-1" style="width: 50%;">
+<h5 class="card-title text-center">通知和公告<small class="float-right"><a href='/notices'>更多</a></small></h5>
+<div class="card-body">
+  {% for notice in pages_info.notices %}
+    {% if notice.title %}
+      <li><a href='/notices/{{notice.id}}'>{{ notice.title }}</a></li>
+    {% endif %}
+  {% endfor %}
+  </div>
 </div>
 
 <script>
