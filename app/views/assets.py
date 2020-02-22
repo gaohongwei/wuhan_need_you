@@ -22,7 +22,7 @@ app = Blueprint('assets', __name__)
 def test_asset():
     return render_template_string('{{_asset("test") | safe}}')
 
-@app.route('/assets/images', methods=['GET'])
+@app.route('/api/assets/images', methods=['GET'])
 def get_images():
     '''
     /assets/images?page_no=1&page_size=3
@@ -33,11 +33,32 @@ def get_images():
     urls = images[(page_no-1)*page_size:page_no*page_size]
     return jsonify({'urls': urls, 'total': len(images)})
 
-@app.route('/assets/images/<int:id>', methods=['GET'])
+@app.route('/api/assets/images/<int:id>', methods=['GET'])
 def get_image(id):
     images = get_image_files()
     if len(images) > id:
         return images[id]
     else:
         return 'Not found', 404
+
+@app.route('/api/assets/image_select', methods=['GET'])
+def render_image_select():
+    images = get_image_files()
+    page_no = (int)(request.args.get('page_no') or 1)
+    page_size = (int)(request.args.get('page_size') or 10)
+    div_id = request.args.get('div_id')
+    return render_template('admin/assets/image_select.html',
+            images = images,
+            page_no = page_no,
+            page_size = page_size,
+            div_id = div_id
+            )
+
+@app.route('/assets/test_image_select')
+def test_image_select():
+    images = get_image_files()
+    page_no = (int)(request.args.get('page_no') or 1)
+    page_size = (int)(request.args.get('page_size') or 10)
+    template = '{% extends "base.html" %} {% block body %} {% include "admin/assets/image_select.html" %} {% endblock body %}'
+    return render_template_string(template, images=images, page_no=page_no, page_size=page_size)
 

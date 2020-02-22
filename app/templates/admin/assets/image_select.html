@@ -1,0 +1,73 @@
+<!--
+    parameters:
+      * images: [{url, title}]
+      * page_no: 1-based
+      * page_size
+      * div_id: optional
+-->
+{% set div_id = div_id or 'image_select_' + str(random.randint(1, 100)) %}
+{% set numColumns = 4 %}
+{% set totalPages = math.ceil(len(images) / page_size) %}
+<div id='{{div_id}}' data-page="{{page_no}}" data-total-pages="{{totalPages}}">
+<table style='width:100%'>
+    {% for i in range(math.ceil(len(images[(page_no-1)*page_size:page_no*page_size]) / numColumns)) %}
+    <tr>
+        {% for j in range(numColumns) %}
+        <td><img height="100px" src="{{images[(page_no-1)*page_size + i*numColumns + j]}}"></img></td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+<nav aria-label='Image navigation'>
+    <ul class="pagination">
+        <li class="page-item {{'disabled' if page_no == 1 else ''}}"><a class="page-link" href="javascript:gotoPreviousPage({{div_id}}, {{page_size}})">Previous</a></li>
+        {% for i in range(1, math.ceil(len(images) / page_size) + 1) %}
+        <li class="page-item {{'active' if page_no == i else ''}}"><a class="page-link" href="javascript:gotoPage({{div_id}}, {{i}}, {{page_size}})">{{i}}</a></li>
+        {% endfor %}
+        <li class="page-item {{'disabled' if page_no >= totalPages else ''}}"><a class="page-link" href="javascript:gotoNextPage({{div_id}}, {{page_size}})">Next</a></li>
+    </ul>
+</nav>
+<script>
+    const getText = url => {
+        const req = new XMLHttpRequest();
+        return new Promise((resolve, reject) => {
+            req.addEventListener('load', function () { resolve(this.responseText); });
+            req.open('GET', url);
+            req.send();
+        });
+    };
+    function insertAfter(el, inserted) {
+        el.parentNode.insertBefore(inserted, el.nextSibling);
+    }
+    const htmlToDom = html => {
+        return new DOMParser().parseFromString(html, "text/xml");
+    }
+    const replaceElementAsHtml = (el, html) => {
+        el.outerHTML = html;
+    }
+    // jinja automatically transform id to element itself
+    async function gotoPage(div, page_no, page_size) {
+        const html = await getText(`/api/assets/image_select?page_no=${page_no}&page_size=${page_size}&div_id=${div.id}`);
+        replaceElementAsHtml(div, html);
+    }
+    async function gotoPreviousPage(div, page_size) {
+        let page_no = parseInt(div.dataset.page);
+        if (page_no <= 1) {
+            return;
+        }
+        page_no = page_no - 1;
+        gotoPage(div, page_no, page_size);
+    }
+    async function gotoNextPage(div, page_size) {
+        let page_no = parseInt(div.dataset.page);
+        const totalPages = parseInt(div.dataset.totalPages);
+        console.log(totalPages);
+        if (page_no >= totalPages) {
+            return;
+        }
+        console.log(totalPages);
+        page_no = page_no + 1;
+        gotoPage(div, page_no, page_size);
+    }
+</script>
+</div>

@@ -6,4 +6,3 @@ def register_asset_processors(app):
         return {
                 '_asset': lambda key: Asset.get_content_by_key(key)
                 }
-        return True

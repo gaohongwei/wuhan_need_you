@@ -5,6 +5,8 @@ from .notice import register_notice_filters, register_notice_processors
 from .asset import register_asset_processors
 
 from app.libs.date_utils import format_cn
+import math
+import random
 
 def register_filters(app):
     '''
@@ -24,4 +26,13 @@ def register_processors(app):
     register_user_processors(app)
     register_notice_processors(app)
     register_asset_processors(app)
+
+    @app.context_processor
+    def inject_common_processors():
+        return {
+                'math': math,
+                'len': len,
+                'random': random,
+                'str': str
+                }
 
