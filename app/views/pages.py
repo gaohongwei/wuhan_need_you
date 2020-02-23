@@ -9,7 +9,10 @@ app = Blueprint('pages', __name__)
 
 @app.route('/')
 def index():
-    return render_template('pages/index.html', menus = menus, pages_info = index_info)
+	pages_info = menus2page.get('index', None)
+	notices = db.session.query(Notice).filter_by(status=2).order_by(Notice._created_time.desc()).limit(5)
+	pages_info['notices'] = notices
+	return render_template('pages/index.html', menus = menus, pages_info = pages_info)
 
 @app.route('/favicon.ico')
 def get_favicon():
@@ -20,7 +23,7 @@ def menu(page_name):
 	pages_info = menus2page.get(page_name, None)
 	if pages_info != None:
 		if page_name == 'index':
-			notices = db.session.query(Notice).filter_by(status=0).order_by(Notice._created_time.desc()).limit(5).all()
+			notices = db.session.query(Notice).filter_by(status=2).order_by(Notice._created_time.desc()).limit(5)
 			pages_info['notices'] = notices
 		return render_template('pages/' + page_name + '.html', menus = menus, pages_info = pages_info)
 	else:
