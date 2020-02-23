@@ -55,6 +55,5 @@ def get_overall(raw_html=None):
     if data == None:
         return None
     data['updateTime'] = get_timestamp(raw_html)
-    print(data['updateTime'])
     return data
 

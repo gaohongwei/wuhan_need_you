@@ -28,24 +28,27 @@ def get_realtime_overall():
     server_timeout = 3600 * 1 #  3 hour
     load_timeout = 1800
     data, cache = get_realtime_overall_from_cache()
-    if data == None:
+    def checkout_server():
         data = get_overall()
         if data == None:
             return 'fail to get data, no data exist', 404
         Cache.set(str(data['updateTime']), json.dumps(data))
         return jsonify({'results': [data]})
+    if data == None:
+        return checkout_server()
     else:
-        seconds = data['updateTime'] * 0.001 - 8*3600 # Beijing -> UTC
+        updateTime = data['updateTime']
+        if updateTime == None:
+            current_app.logger.error('updateTime is None')
+            return checkout_server()
+        seconds = updateTime * 0.001 - 8*3600 # Beijing -> UTC
         dataTime = datetime_from_seconds(seconds)  # UTC
         current_app.logger.info('last update time: ' + str(cache.timestamp))
         current_app.logger.info('last server update time: ' + str(dataTime))
         now = utcnow()
         current_app.logger.info('current time: ' + str(now))
         if time_diff_in_seconds(now, dataTime) >= server_timeout and time_diff_in_seconds(now, cache.timestamp) >= load_timeout:
-            current_app.logger.info('checkout the server')
-            data2 = get_overall()
-            Cache.set(str(data2['updateTime']), json.dumps(data2))
-            return jsonify({'results': [data2]})
+            return checkout_server()
         else:
             return jsonify({'results': [data]})
 
