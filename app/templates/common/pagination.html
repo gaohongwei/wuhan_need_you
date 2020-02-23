@@ -1,0 +1,47 @@
+<!--{#
+    A pagination navigation widget for sqlalchemy pagination result.
+
+    Parameters:
+        pagination: sqlalchemy pagination object, e.g. User.query.paginate(page_no, page_size, False)
+        pagination_endpoint: an endpoint with `page` as the query parameter
+
+    Usage:
+        {% set pagination = pagination_result %}
+        {% set pagination_endpoint = "blueprint_name.endpoint_function" %}
+        {% include "common/pagination.html" %}
+#}-->
+
+  {% if pagination.pages > 1 %}
+  {% set previousDisabled = 'disabled' if pagination.page == 1 else '' %}
+  {% set nextDisabled = 'disabled' if pagination.page == pagination.pages else '' %}
+  {% set previousHref = url_for(pagination_endpoint, page=pagination.page-1) %}
+  {% set nextHref = url_for(pagination_endpoint, page=pagination.page+1) %}
+  <nav aria-label="...">
+    <ul class="pagination">
+        <li class="page-item {{previousDisabled}}">
+            <a class="page-link" href="{{previousHref}}">&lt;&lt;&lt;</a>
+        </li>
+      {% for p in pagination.iter_pages() %}
+        {% set gotoHref = url_for(pagination_endpoint, page=p) %}
+        {% if p %}
+          {% if p == pagination.page %}
+          <li class="page-item active">
+            <span class="page-link">
+              {{p}}
+              <span class="sr-only">(current)</span>
+            </span>
+          </li>
+          {% else %}
+          <li class="page-item">
+            <a class="page-link"
+              href="{{gotoHref}}">{{ p }}</a>
+          </li>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+      <li class="page-item {{nextDisabled}}">
+          <a class="page-link" href="{{nextHref}}">&gt;&gt;&gt;</a></li>
+    </ul>
+  </nav>
+  {% endif %}
+
