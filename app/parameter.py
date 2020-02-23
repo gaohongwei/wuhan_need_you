@@ -24,6 +24,10 @@ menus = [
             'path': '/pages/donate'
             },
         {
+            'label': "历史通知和公告",
+            'path': '/notices'
+            },
+        {
             'label': "联系我们",
             'path': '/pages/contact_us'
             },

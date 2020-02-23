@@ -3,10 +3,10 @@
 {% block body %}
 
 <div class="container">
-  <h1 class="text-center text-primary">信息发布</h1>
+  <h1 class="text-center">历史通知和公告</h1>
   <div>
       <div class="text-center">
-          <h2 id="notice_title">{{notice.title}}</h2>
+          <h2 id="notice_title" class="text-primary">{{notice.title}}</h2>
           <p class="float-right">ID: <small id="notice_id">{{notice.id}}</small></p>
           <p>创建时间：{{ notice.created_time | datetime_format_cn }} 修改时间: {{ notice.modified_time | datetime_format_cn }}</p>
           {% if current_user.is_authenticated %}
