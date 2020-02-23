@@ -74,6 +74,19 @@ class Notice(db.Model):
     def tag_names(self):
         return [tag.name for tag in self.tags]
 
+    @hybrid_property
+    def is_permitted(self):
+        return self.status == 2
+    @is_permitted.expression
+    def is_permitted(cls):
+        return cls.status == 2
+
+    @classmethod
+    def list_latest_notices(cls, num):
+        return (cls.query.filter_by(is_permitted=True)
+                .order_by(Notice._created_time.desc())
+                .limit(num))
+
     def get_status(self):
         return self.status
 

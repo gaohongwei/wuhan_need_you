@@ -209,17 +209,8 @@ img {vertical-align: middle;}
   </div>
 </div>
 
-
-<div class="card m-3 p-1" style="width: 50%;">
-<h5 class="card-title text-center">通知和公告<small class="float-right"><a href='/notices'>更多</a></small></h5>
-<div class="card-body">
-  {% for notice in pages_info.notices %}
-    {% if notice.title %}
-      <li><a href='/notices/{{notice.id}}'>{{ notice.title }}</a></li>
-    {% endif %}
-  {% endfor %}
-  </div>
-</div>
+{% set notices_brief_list = pages_info['notices'] %}
+{% include "notices_brief_list.html" %}
 
 <script>
 var slideIndex = 0;
