@@ -1,9 +1,21 @@
+import os
+import os.path as op
+from flask import url_for
 from flask_admin.contrib.sqla import ModelView
 import flask_login as login
-from app.models.Pages import Page, Fragment, Asset
-from app.db import db
 from flask_ckeditor import CKEditorField
 from flask_admin.actions import action
+from flask_admin import form
+from jinja2 import Markup
+from app.models.Pages import Page, Fragment, Asset
+from app.db import db
+
+# Create directory for file fields to use
+UPLOAD_DIR = op.join(op.dirname(__file__), "../static")
+try:
+    os.mkdir(UPLOAD_DIR)
+except OSError:
+    pass
 
 
 class MyView(ModelView):
@@ -14,7 +26,8 @@ class MyView(ModelView):
 
 
 class PageModelView(MyView):
-    column_list = ["name", "description", "fragments"]
+    column_list = ["name", "description", "fragments", "assets"]
+    column_editable_list = ["name", "description", "layout"]
     form_columns = column_list + ["layout"]
     form_widget_args = {"layout": {"rows": 10, "columns": 60, "style": "color: black"}}
 
@@ -54,3 +67,20 @@ class AssetModelView(MyView):
     def is_accessible(self):
         return True
 
+    def _list_thumbnail(view, context, model, name):
+        if not model.path:
+            return ""
+
+        return Markup(
+            '<img src="%s">'
+            % url_for("static", filename=form.thumbgen_filename(model.path))
+        )
+
+    column_formatters = {"path": _list_thumbnail}
+    # Alternative way to contribute field is to override it completely.
+    # In this case, Flask-Admin won't attempt to merge various parameters for the field.
+    form_extra_fields = {
+        "path": form.ImageUploadField(
+            "Image2", base_path=UPLOAD_DIR, thumbnail_size=(100, 100, True)
+        )
+    }

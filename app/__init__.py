@@ -57,6 +57,7 @@ admin.add_view(PageModelView())
 admin.add_view(AssetModelView())
 admin.add_view(FragmentModelView())
 
+
 register_blueprints(app)
 register_after_requests(app)
 register_before_requests(app)
