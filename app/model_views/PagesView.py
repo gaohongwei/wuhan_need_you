@@ -26,17 +26,26 @@ class MyView(ModelView):
 
 
 class PageModelView(MyView):
-    column_list = ["name", "description", "fragments", "assets"]
-    column_editable_list = ["name", "description", "layout"]
+    column_labels = {
+            'name': '名称',
+            'description': '描述',
+            'fragments': '段落',
+            'assets': '资源',
+            'layout': '布局',
+            'rendered': '渲染结果'
+            }
+    column_list = ["name", "description", "fragments", "assets", "layout"]
+    column_editable_list = ["name", "description"]
     form_columns = column_list + ["layout"]
     form_widget_args = {"layout": {"rows": 10, "columns": 60, "style": "color: black"}}
 
     # form_overrides = {layout: '<div class="row"> {framnet1} </div>'}
 
     def _format_layout(view, context, model, name):
-        return '<div class="row"> {framnet1} </div>'
+        html = '<a href="/pages/{}">预览</a>'.format(model.name)
+        return Markup(html)
 
-    column_formatters = {"layout": "_format_layout"}
+    column_formatters = {"layout": _format_layout}
 
     def __init__(self, *args, **kwargs):
         super().__init__(Page, db.session, category="CMS", name="Page")
@@ -50,6 +59,11 @@ class PageModelView(MyView):
 
 
 class FragmentModelView(MyView):
+    column_labels = {
+            'name': '名称',
+            'pages': '页面',
+            'content': '内容'
+            }
     form_overrides = dict(content=CKEditorField)
     column_list = ["name", "pages", "content"]
 
@@ -61,6 +75,11 @@ class FragmentModelView(MyView):
 
 
 class AssetModelView(MyView):
+    column_labels = {
+            'name': '名称',
+            'path': '缩略图',
+            'file_type': '文件类型'
+            }
     def __init__(self, *args, **kwargs):
         super().__init__(Asset, db.session, category="CMS", name="Asset")
 

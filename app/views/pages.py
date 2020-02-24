@@ -28,15 +28,11 @@ def get_favicon():
 @app.route("/pages/<page_name>")
 def menu(page_name):
     cur_page = Page.query.filter_by(name=page_name).first()
-    if cur_page == None:
-        pages_info = menus2page.get(page_name, None)
-        if pages_info != None:
-            return render_template(
-                "pages/" + page_name + ".html", menus=menus, pages_info=pages_info
+    if cur_page != None:
+        return cur_page.render(menus=menus)
+    pages_info = menus2page.get(page_name, None)
+    if pages_info == None:
+        return "not found", 404
+    return render_template(
+            "pages/" + page_name + ".html", menus=menus, pages_info=pages_info
             )
-        else:
-            return "not found", 404
-    else:
-        page_body = cur_page.parsed()
-
-        return render_template("pages/common.html", menus=menus, page_body=page_body)

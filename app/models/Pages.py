@@ -1,7 +1,7 @@
 from app.db import db
 from app.libs.date_utils import utcnow
 from jinja2 import Markup
-from flask import url_for
+from flask import url_for, render_template_string
 
 
 class Page(db.Model):
@@ -29,8 +29,19 @@ class Page(db.Model):
             )
             data_dic[asset.name] = asset_markup
 
-        return layout.format(**data_dic)
+        # to avoid affect {{...}} and {%...%}
+        for key in data_dic:
+            layout = layout.replace('{' + key + '}', data_dic[key])
+        return layout
 
+    def render(self, **kwargs):
+        template = '''
+{% extends "base.html" %}
+{% block title %}Preview{% endblock %}
+{% block body %}
+''' + self.parsed() + '{% endblock %}'
+        print(template)
+        return render_template_string(template, **kwargs)
 
 # Text paragraphs
 class Fragment(db.Model):
@@ -50,7 +61,6 @@ class Asset(db.Model):
     __tablename__ = "assets"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False, unique=True)
-    name = db.Column(db.String(64))
     path = db.Column(db.String(128))
     file_type = db.Column(db.String(10), nullable=False)
     pages = db.relationship("Page", secondary="page_asset")
