@@ -1,0 +1,61 @@
+{% extends 'admin/model/edit.html' %}
+
+{% block body %}
+	<script type="text/javascript" src="{{ url_for('static', filename='jQuery.js') }}"></script>
+
+	<div class="row text-center">
+		<button id="title_btn"  class="btn btn-primary">名称和描述</button>
+		<button id="frag_btn"   class="btn btn-primary">段落</button>
+		<button id="assets_btn" class="btn btn-primary">资源</button>
+		<button id="layout_btn" class="btn btn-primary">布局</button>
+	</div>
+	<br>
+
+	<fieldset>
+		{% call lib.form_tag(form) %}
+			<div class="row" id="title_area">
+				{{lib.render_form_fields([form.name])}}
+				{{lib.render_form_fields([form.description])}}
+			</div>
+			<div class="row hidden" id="fragments_area">
+				{{lib.render_form_fields([form.fragments])}}
+			</div>
+			<div class="row hidden" id="assets_area">
+				{{lib.render_form_fields([form.assets])}}
+			</div>
+			<div class="row hidden" id="layout_area">
+				{{lib.render_form_fields([form.layout])}}
+			</div>
+			{{ lib.render_form_buttons(return_url) }}
+		{% endcall %}
+	</fieldset>
+
+	<script>
+		function hidden_all() {
+			$("#title_area").addClass("hidden");
+			$("#fragments_area").addClass("hidden");
+			$("#assets_area").addClass("hidden");
+			$("#layout_area").addClass("hidden");
+		}
+		$("#title_btn").on('click', function() {
+			hidden_all();
+			$("#title_area").removeClass("hidden")
+		})
+		$("#frag_btn").on('click', function() {
+			hidden_all();
+			$("#fragments_area").removeClass("hidden")
+		})
+		$("#assets_btn").on('click', function() {
+			hidden_all();
+			$("#assets_area").removeClass("hidden")
+		})
+		$("#layout_btn").on('click', function() {
+			hidden_all();
+			$("#layout_area").removeClass("hidden")
+		})
+	</script>
+
+{% endblock %}
+
+
+
