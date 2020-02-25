@@ -26,6 +26,8 @@ class MyView(ModelView):
 
 
 class PageModelView(MyView):
+    edit_template = "admin/edit_page.html"
+
     column_labels = {
             'name': '名称',
             'description': '描述',
