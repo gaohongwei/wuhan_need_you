@@ -6,8 +6,8 @@
       notices_brief_list: a list of notices to show
 #}-->
 
-<div class="card m-3 p-1" style="width: 50%;">
-<h5 class="card-title text-center">通知和公告<small class="float-right"><a href='/notices'>更多</a></small></h5>
+<div class="card m-3 p-1" style="border-color: grey">
+<h5 class="card-title text-center" style="color: #243B2B; font-size: 1.5em"><strong>通知和公告</strong><small class="float-right"><a href='/notices'>更多</a></small></h5>
 <div class="card-body">
   {% for notice in notices_brief_list %}
     {% if notice.title %}

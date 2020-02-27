@@ -116,7 +116,12 @@ img {vertical-align: middle;}
       </div>
 </div>
 
-<div class="row">
+{% set notices_brief_list = pages_info['notices'] %}
+<div style="width:80%; margin:0 auto;">
+  {% include "notices_brief_list.html" %}
+</div>
+
+<div class="row" style="width: 100%; margin: 0 auto; display: -webkit-flex; display: flex;">
   <div class="col-md-6 col-lg-4 col-xl-4 jumbotron" style="padding: 1rem 4%; background: transparent;">
       <p style="text-align: left; line-height: 80px; font-size: 1.5em; color: #243B2B"><strong>{{pages_info.alumni_association.title}}</strong></p>
         <p style="text-align: left;">{{pages_info.alumni_association.content}}</p>
@@ -209,8 +214,6 @@ img {vertical-align: middle;}
   </div>
 </div>
 
-{% set notices_brief_list = pages_info['notices'] %}
-{% include "notices_brief_list.html" %}
 
 <script>
 var slideIndex = 0;
