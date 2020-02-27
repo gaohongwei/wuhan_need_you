@@ -3,7 +3,7 @@
 {% block body %}
 	<script type="text/javascript" src="{{ url_for('static', filename='jQuery.js') }}"></script>
 
-	<div class="row text-center">
+	<div class="text-center">
 		<button id="title_btn"  class="btn btn-primary">名称和描述</button>
 		<button id="frag_btn"   class="btn btn-primary">段落</button>
 		<button id="assets_btn" class="btn btn-primary">资源</button>
@@ -13,17 +13,17 @@
 
 	<fieldset>
 		{% call lib.form_tag(form) %}
-			<div class="row" id="title_area">
+			<div id="title_area">
 				{{lib.render_form_fields([form.name])}}
 				{{lib.render_form_fields([form.description])}}
 			</div>
-			<div class="row hidden" id="fragments_area">
+			<div class="hidden" id="fragments_area">
 				{{lib.render_form_fields([form.fragments])}}
 			</div>
-			<div class="row hidden" id="assets_area">
+			<div class="hidden" id="assets_area">
 				{{lib.render_form_fields([form.assets])}}
 			</div>
-			<div class="row hidden" id="layout_area">
+			<div class="hidden" id="layout_area">
 				{{lib.render_form_fields([form.layout])}}
 			</div>
 			{{ lib.render_form_buttons(return_url) }}
