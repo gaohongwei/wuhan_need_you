@@ -77,6 +77,12 @@ class Notice(db.Model):
     def get_status(self):
         return self.status
 
+    @classmethod
+    def list_latest_alumni_action_notices(cls, num):
+        return (cls.query.join(Notice.tags)
+                            .filter_by(name="校运会在行动")
+                            .limit(num))
+
     def get_status_name(self):
         maps = ['草稿', '已提交', '已审核', '未批准']
         if self.status < 0:

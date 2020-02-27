@@ -37,5 +37,5 @@ def menu(page_name):
         return "not found", 404
 
     if page_name == 'alumni_action':
-        pages_info['notices'] = db.session.query(Notice).join(Notice.tags).filter_by(name="校运会在行动").limit(5)
+        pages_info['notices'] = Notice.list_latest_alumni_action_notices(5)
     return render_template("pages/" + page_name + ".html", menus=menus, pages_info=pages_info)
