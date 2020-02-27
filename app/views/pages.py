@@ -11,6 +11,8 @@ from flask import (
 )
 from app.parameter import menus, index_info, menus2page
 from app.models.Pages import Page
+from app.models import Notice
+from app.db import db
 
 app = Blueprint("pages", __name__)
 
@@ -33,6 +35,7 @@ def menu(page_name):
     pages_info = menus2page.get(page_name, None)
     if pages_info == None:
         return "not found", 404
-    return render_template(
-            "pages/" + page_name + ".html", menus=menus, pages_info=pages_info
-            )
+
+    if page_name == 'alumni_action':
+        pages_info['notices'] = db.session.query(Notice).join(Notice.tags).filter_by(name="校运会在行动").limit(5)
+    return render_template("pages/" + page_name + ".html", menus=menus, pages_info=pages_info)
