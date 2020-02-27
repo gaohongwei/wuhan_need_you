@@ -15,6 +15,7 @@ from app.filters import register_filters, register_processors
 from app.views import register_blueprints
 from app.listeners import register_after_requests, register_before_requests
 from app.cli import register_commands
+from app.libs.lang_utils import init_babel
 
 def init_management(app):
     admin = Admin(app=app, name='后台管理', index_view=AdminIndexView(name='主页'))
@@ -104,7 +105,7 @@ class Application:
         register_commands(self.app)
     def init(self):
         self._merge_dict(init_management(self.app))
-        self._merge_dict(init_i8n(self.app))
+        self._merge_dict(init_babel(self.app))
         self._merge_dict(init_views(self.app))
         self._merge_dict(init_permissions())
         self._merge_dict(init_database(app))
