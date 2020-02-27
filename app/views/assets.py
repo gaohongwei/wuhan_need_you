@@ -27,8 +27,8 @@ def get_images():
     '''
     /assets/images?page_no=1&page_size=3
     '''
-    page_no = (int)(request.args.get('page_no') or 1)
-    page_size = (int)(request.args.get('page_size') or 10)
+    page_no = request.args.get('page_no', type=int) or 1
+    page_size = request.args.get('page_size', type=int) or 10
     images = get_image_files()
     urls = images[(page_no-1)*page_size:page_no*page_size]
     return jsonify({'urls': urls, 'total': len(images)})
@@ -44,8 +44,8 @@ def get_image(id):
 @app.route('/api/assets/image_select', methods=['GET'])
 def render_image_select():
     images = get_image_files()
-    page_no = (int)(request.args.get('page_no') or 1)
-    page_size = (int)(request.args.get('page_size') or 10)
+    page_no = request.args.get('page_no', type=int) or 1
+    page_size = request.args.get('page_size', type=int) or 10
     div_id = request.args.get('div_id')
     return render_template('admin/assets/image_select.html',
             images = images,
@@ -57,8 +57,8 @@ def render_image_select():
 @app.route('/assets/test_image_select')
 def test_image_select():
     images = get_image_files()
-    page_no = (int)(request.args.get('page_no') or 1)
-    page_size = (int)(request.args.get('page_size') or 10)
+    page_no = request.args.get('page_no', type=int) or 1
+    page_size = request.args.get('page_size', type=int) or 10
     template = '{% extends "base.html" %} {% block body %} {% include "admin/assets/image_select_widget.html" %} {% endblock body %}'
     return render_template_string(template, images=images, page_no=page_no, page_size=page_size)
 
