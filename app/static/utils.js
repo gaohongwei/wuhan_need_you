@@ -149,7 +149,6 @@ const createElement = (tag, className, styles, options) => {
     return el;
 };
 
-
 const Utils = {
     post,
     get,
@@ -167,5 +166,7 @@ const Utils = {
     addCSS,
     createElement
 };
+
+return Utils;
 
 })();
