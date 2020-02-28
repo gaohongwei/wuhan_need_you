@@ -3,6 +3,7 @@
 from flask import Flask, jsonify, request, render_template_string, session
 from flask_language import Language, current_language
 from flask_babelex import Babel
+from flask_googletrans import google_translator
 
 __all__ = ['init_babel']
 
@@ -33,10 +34,10 @@ def _init_language(app):
         template = '''
         <a {{'disabled' if lang=='en' else ''}}" href="javascript:setLang('en')">en</a>
         &nbsp;
-        <a {{'disabled' if lang=='zh' else ''}} href="javascript:setLang('zh')">中文</a>
+        <a {{'disabled' if lang=='zh' else ''}} href="javascript:setLang('zh')">涓枃</a>
         </br>
         <div>Cookies.lang: <span id='cookie_lang'></span></div>
-        <div>模板(<code>_('主页')</code>): {{_('主页')}}</div>
+        <div>妯℃澘(<code>_('涓婚〉')</code>): {{_('涓婚〉')}}</div>
         <script>
         window.addEventListener('load', () => {
             document.getElementById('cookie_lang').innerText = getCookie('lang');
@@ -81,4 +82,9 @@ def init_babel(app):
         session['lang'] = language
         return language
     return {'babel': babel, 'lang': lang}
+
+def translate(text, src='cn', dest='en'):
+    translator = google_translator()
+    res = translator.translate(text, src=src, dest=dest)
+    return res.text
 
