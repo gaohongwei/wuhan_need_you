@@ -135,7 +135,7 @@ class NoticeModelView(ModelView):
     @expose('/preview')
     def preview(self):
         page = request.args.get('page', 1, type=int)
-        paged_data = db.session.query(Notice).paginate(page = page)
+        paged_data = db.session.query(Notice).order_by(Notice._created_time.desc()).paginate(page = page)
         return render_template('admin/notices/preview.html', pagination = paged_data)
 
     @action('approve', 'Approve', 'Are you sure you want to approve selected notices?')

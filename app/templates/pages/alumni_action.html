@@ -131,32 +131,20 @@ img {vertical-align: middle;}
 
 <div class="container" style="min-height: 400px">
   <div class="row">
-    <div class="col-12">		
-		<div id="accordion">
-			{% for index in range(pages_info.notices|length) %}
-				<div class="card">
-			    <div class="card-header" id="heading_{{index}}">
-			      <h4 class='title'>{{pages_info.notices[index].title_info.title}}</h4>
-			      	{% if pages_info.notices[index].title_info.image %}
-			      		<img class="img-fluid d-block" style="height: 200px;width:200px" src="{{ url_for('static', filename=pages_info.notices[index].title_info.image.link) }}" />
-						<!-- <p class='text-center'>{{pages_info.notices[index].title_info.image.title}}</p> -->
-			      	{% endif %}
-			      	<p class='d-inline'>{{pages_info.notices[index].title_info.paragraph}}</p>
-			        <button class='d-inline btn btn-primary btn-sm' data-toggle="collapse" data-target="#collapse_{{index}}" aria-expanded="true" aria-controls="collapse_{{index}}">阅读更多</button>
-			      </h5>
-			    </div>
-			    <div id="collapse_{{index}}" class="collapse" aria-labelledby="heading_{{index}}" data-parent="#accordion">
-			      <div class="card-body">
-			        {% with data=pages_info.notices[index].content_info %}
-				       	{% include 'pages/notice_template.html' %}
-				    {% endwith %}
-			      </div>
-			    </div>
-			  </div>		
-			{% endfor %}
-		</div>
-	</div>
-	<div class="col-1"></div>
+    <div class="col-12">    
+      <div id="accordion">
+        {% for notice in pages_info.notices %}
+          <div class="card">
+            <div class="card-header">
+              <h4>
+                <a href='/notices/{{notice.id}}'>{{ notice.title }}</a>
+                <small class="float-right">{{notice.created_time | datetime_format_cn}}</small>
+              </h4>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
   </div>
 </div>
 

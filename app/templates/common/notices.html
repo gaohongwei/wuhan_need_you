@@ -1,5 +1,10 @@
 <div class="jumbotron" style="background-color:rgb(36,59,43); padding: 1.8rem;">
-  <h1 style="text-align: center;color:white;">历史通知和公告</h1>
+
+  {% if current_user.is_authenticated %}
+    <h1 style="text-align: center;color:white;">所有信息</h1>
+  {% else %}
+    <h1 style="text-align: center;color:white;">历史通知和公告</h1>
+  {% endif %}
 </div>
 
 <div class="container">

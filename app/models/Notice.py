@@ -81,11 +81,39 @@ class Notice(db.Model):
     def is_permitted(cls):
         return cls.status == 2
 
+    # 通知与公告页面
+    @classmethod
+    def list_paginate_latest_notices(cls, page, num):
+        return (cls.query
+                .filter_by(is_permitted=True)
+                .filter_by(status=2) # 已审核
+                .join(Notice.tags)
+                .filter_by(name="通知与公告")
+                .order_by(Notice._created_time.desc())
+                .paginate(page, num, False))
+
+    # 主页面
     @classmethod
     def list_latest_notices(cls, num):
-        return (cls.query.filter_by(is_permitted=True)
+        return (cls.query
+                .filter_by(is_permitted=True)
+                .filter_by(status=2) # 已审核
+                .join(Notice.tags)
+                .filter_by(name="通知与公告")
                 .order_by(Notice._created_time.desc())
                 .limit(num))
+
+    # 校运会在行动页面
+    @classmethod
+    def list_latest_alumni_action_notices(cls, num):
+        return (cls.query
+                .filter_by(is_permitted=True)
+                .filter_by(status=2) # 已审核
+                .join(Notice.tags)
+                .filter_by(name="校运会在行动")
+                .order_by(Notice._created_time.desc())
+                .limit(num))
+
 
     def get_status(self):
         return self.status

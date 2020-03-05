@@ -23,6 +23,8 @@ def menu(page_name):
     if pages_info != None:
         if page_name == 'index':
             pages_info['notices'] = Notice.list_latest_notices(5)
+        elif page_name == 'alumni_action':
+            pages_info['notices'] = Notice.list_latest_alumni_action_notices(5)
         return render_template('pages/' + page_name + '.html', menus = menus, pages_info = pages_info)
     else:
         return 'not found', 404
