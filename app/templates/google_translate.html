@@ -1,0 +1,156 @@
+<script type="text/javascript"
+  src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+  </script>
+<style>
+  /* menu layout */
+  @media (max-width: 995px) {
+    #google_translate_element {
+      bottom: calc(100% - 50% - 53px);
+      left: 16px !important;
+      width: 100% !important;
+
+      goog-te-gadget {
+        width: 100% !important;
+      }
+
+      .skiptranslate {
+        width: 100% !important;
+      }
+
+      .goog-te-gadget-simple {
+        width: calc(100% - 32px) !important;
+        text-align: center;
+      }
+    }
+  }
+
+  #google_translate_element {
+    position: absolute;
+    top: 2px !important;
+    right: 2px !important;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.3)
+  }
+
+  .goog-te-gadget {
+    font-family: Roboto, 'Open Sans', sans-serif !important;
+    text-transform: uppercase;
+  }
+
+  .goog-te-gadget-simple {
+    background-color: rgba(190, 184, 197, 0.178) !important;
+    border: 2px solid rgba(128, 255, 128, 0.50) !important;
+    padding: 2px !important;
+    border-radius: 5px !important;
+    font-size: 0.8rem !important;
+    line-height: 1.5rem !important;
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  .goog-te-menu2 {
+    max-width: 100%;
+  }
+
+  .goog-te-menu-value {
+    color: #fff !important;
+
+    &:before {
+      font-family: 'Material Icons';
+      content: "\E927";
+      margin-right: 16px;
+      font-size: 2rem;
+      vertical-align: -10px;
+    }
+  }
+
+  .goog-te-menu-value span:nth-child(5) {
+    display: none;
+  }
+
+  .goog-te-menu-value span:nth-child(3) {
+    border: none !important;
+    font-family: 'Material Icons';
+
+    &:after {
+      font-family: 'Material Icons';
+      content: "\E5C5";
+      font-size: 1.5rem;
+      vertical-align: -6px;
+    }
+  }
+
+  .goog-te-gadget-icon {
+    background-image: url(https://placehold.it/32) !important;
+    background-position: 0px 0px;
+    height: 32px !important;
+    width: 32px !important;
+    margin-right: 8px !important;
+    display: none;
+  }
+
+  /* ============ HIDE TOP BAR ============ */
+  .goog-te-banner-frame.skiptranslate {
+    display: none !important;
+  }
+
+  body {
+    top: 0px !important;
+  }
+</style>
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'zh-CN',
+      includedLanguages: 'en,zh-CN,ja,ko,fr,it,es',
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+      autoDisplay: false
+    }, 'google_translate_element');
+  }
+  $('#google_translate_element').on("click", function () {
+
+    $("iframe").contents().find(".goog-te-menu2-item div, .goog-te-menu2-item:link div, .goog-te-menu2-item:visited div, .goog-te-menu2-item:active div, .goog-te-menu2 *")
+      .css({
+        'color': '#544F4B',
+        'font-family': 'Roboto',
+        'width': '100%'
+      });
+    // Change menu's padding
+    $("iframe").contents().find('.goog-te-menu2-item-selected').css('display', 'none');
+
+    // Change menu's padding
+    $("iframe").contents().find('.goog-te-menu2').css('padding', '0px');
+
+    // Change the padding of the languages
+    $("iframe").contents().find('.goog-te-menu2-item div').css('padding', '20px');
+
+    // Change the width of the languages
+    $("iframe").contents().find('.goog-te-menu2-item').css('width', '100%');
+    $("iframe").contents().find('td').css('width', '100%');
+
+    // Change hover effects
+    $("iframe").contents().find(".goog-te-menu2-item div").hover(function () {
+      $(this).css('background-color', '#4385F5').find('span.text').css('color', 'white');
+    }, function () {
+      $(this).css('background-color', 'white').find('span.text').css('color', '#544F4B');
+    });
+
+    // Change Google's default blue border
+    $("iframe").contents().find('.goog-te-menu2').css('border', 'none');
+
+    // Change the iframe's box shadow
+    $(".goog-te-menu-frame").css('box-shadow', '0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3)');
+
+    // Change the iframe's size and position?
+    $(".goog-te-menu-frame").css({
+      'height': '100%',
+      'width': '100%',
+      'top': '0px'
+    });
+    // Change iframes's size
+    $("iframe").contents().find('.goog-te-menu2').css({
+      'height': '100%',
+      'width': '100%'
+    });
+  });
+</script>
