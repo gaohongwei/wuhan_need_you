@@ -27,8 +27,7 @@ def recreate_database(app):
         db.session.add(User(username="test3", role=3, password="test3"))
         for name in ['广告', '信息', '置顶', '紧急', '通知与公告', '校运会在行动']:
             db.session.add(Tag(name=name))
-        try:
-            db.session.commit()
-        except IntegrityError as e:
-            pass
-
+            try:
+                db.session.commit()
+            except IntegrityError as e:
+                db.session.rollback()
