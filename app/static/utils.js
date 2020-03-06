@@ -86,6 +86,10 @@ const dateFromAsiaSeconds = seconds => {
     asiaTime.setSeconds(seconds);
     return asiaTime;
 };
+
+/**
+ * Example: getAttr(obj, 'a.b.c')
+ **/
 const getAttr = (obj, key) => {
     const keys = key.split('.');
     for (let k of keys) {
@@ -96,6 +100,7 @@ const getAttr = (obj, key) => {
     }
     return obj;
 };
+
 /**
  * An dict to [{key, value}]
  **/
