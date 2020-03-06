@@ -266,7 +266,10 @@ const render_map = async function (containerId, data, map='china') {
     const name = data.name;
     const items = data.items;
     const time = data.time;
-    const title = data.title || '';
+    let title = data.title || '';
+    if (time) {
+        title += `${time}`;
+    }
 
     if (!name || !items) {
         return;
@@ -276,7 +279,18 @@ const render_map = async function (containerId, data, map='china') {
     // const max = Math.max(...items.map(i => i.value));
 
     const option = {
-        title: {text: 'ABC', borderColor: '#c00'},
+        title: {
+            text: title,
+            borderColor: '#c00',
+            left: 'center',
+            x: 'center',
+            show: true,
+            textStyle: {
+                fontSize: 16,
+                fontWeight: 'bolder',
+                color: '#000'
+            }
+        },
         tooltip: {},
         visualMap: {
             ...createPieces(items, 4, i => parseFloat(i.value)),
