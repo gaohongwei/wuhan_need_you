@@ -13,28 +13,26 @@ install() {
 }
 
 init() {
-	su -u postgres
     # create a user if not exist
-    psql -tc "SELECT 1 FROM pg_roles WHERE username='$USER'" | grep -q 1 \
-    	|| psql -c "create role $USER with login password '$PASSWORD';"
+    sudo -u postgres psql -tc "SELECT 1 FROM pg_roles WHERE rolname='$USER'" | grep -q 1 \
+    	|| sudo -u postgres psql -c "create role $USER with login password '$PASSWORD';"
     # create a database if not exist
-    psql -c "SELECT 1" -d $DATABASE &>/dev/null \
-    	|| createdb --owner $USER $DATABASE
-    psql -c "SELECT 1" -d $DATABASE_TEST &>/dev/null \
-    	|| createdb --owner $USER $DATABASE_TEST
+    sudo -u postgres psql -c "SELECT 1" -d $DATABASE &>/dev/null \
+    	|| sudo -u postgres createdb --owner $USER $DATABASE
+    sudo -u postgres psql -c "SELECT 1" -d $DATABASE_TEST &>/dev/null \
+    	|| sudo -u postgres createdb --owner $USER $DATABASE_TEST
     
     echo "Databases are created, connect it with "
-    echo "\t$USER:$PASSWORD@localhost/$DATABASE"
-    echo "\t$USER:$PASSWORD@localhost/$DATABASE_TEST"
+    echo -e "\t$USER:$PASSWORD@localhost/$DATABASE"
+    echo -e "\t$USER:$PASSWORD@localhost/$DATABASE_TEST"
 }
 
 delete() {
-	su -u postgres
-    psql -c "DROP ROLE $USER"
+    sudo -u postgres psql -c "DROP ROLE $USER"
 	echo "User $USER is deleted"
-    psql -c "DROP DATABASE $DATABASE"
+    sudo -u postgres psql -c "DROP DATABASE $DATABASE"
 	echo "Database $DATABASE is deleted"
-    psql -c "DROP DATABASE $DATABASE_TEST"
+    sudo -u postgres psql -c "DROP DATABASE $DATABASE_TEST"
 	echo "Database $DATABASE_TEST is deleted"
 }
 
@@ -43,18 +41,17 @@ backup() {
 		mkdir $BACKUP
 	fi
 	FILE=$BACKUP/$DATABASE-`date +%Y%m%d-%H%M%S`.dump
-	pg_dump -U $USER -Fc $DATABASE >$BACKUP/$DATABASE-`date +%Y%m%d-%H%M%S`.dump
+	PGPASSWORD=$PASSWORD pg_dump -U $USER -Fc $DATABASE >$BACKUP/$DATABASE-`date +%Y%m%d-%H%M%S`.dump
 	echo "Database is backuped to $FILE"
 }
 
 restore() {
-	su -u postgres
 	latest=`ls -1 -rt $BACKUP/*.dump 2>/dev/null | tail -1`
 	if [ -z "$latest" ]; then
 		echo "ERROR: no backup exists"
 		exit 1
 	fi
-	pg_restore -Fc --role=$USER $BACKUP/$latest \
+	sudo -u postgres pg_restore -Fc --role=$USER $BACKUP/$latest \
 		&& echo "Database is restored from $BACKUP/$latest"
 }
 

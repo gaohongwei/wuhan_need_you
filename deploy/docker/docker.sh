@@ -58,7 +58,9 @@ if (( $# == 0 )); then
 	exit 1
 fi
 
-case $1 in
+cmd=$1
+shift
+case $cmd in
 	build)
 		build
 		;;

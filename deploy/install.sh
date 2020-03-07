@@ -14,7 +14,10 @@ if ! [ -f /etc/nginx/nginx.conf.bak ]; then
 fi
 cp deploy/nginx.conf /etc/nginx/
 systemctl restart nginx
+systemctl enable nginx
 nginx -s reload
+systemctl restart postgresql
+systemctl enable postgresql
 
 # Install server
 cp -r * $ROOT/

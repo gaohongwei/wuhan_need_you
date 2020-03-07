@@ -7,7 +7,7 @@ COPY sources.list /etc/apt/
 COPY pip.conf /root/.pip/
 
 RUN apt-get update && \
-		apt install -y openssh-server
+		apt install -y openssh-server sudo
 
 RUN systemctl enable ssh
 
