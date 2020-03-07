@@ -10,6 +10,7 @@ is_mac() {
 
 goto_docker_dir() {
 	if is_mac; then
+		# `brew install greadlink` beforehand
 		cd `dirname $(greadlink -f $0)`
 	else
 		cd `dirname $(readlink -f $0)`
@@ -34,15 +35,17 @@ deploy() {
 		docker cp $i $CONTAINER_NAME:$APP_DIR
 	done
 	docker exec -it $CONTAINER_NAME $APP_DIR/deploy/install.sh
-	test
 }
 
 test() {
-	if wget -t 1 127.0.0.1:8180 >/dev/null 2>&1; then
-		echo 'TEST SUCCESS'
-	else
-		echo 'TEST FAILED'
-	fi
+	BASE=127.0.0.1:8180
+	for url in / /api/reports/overall /api/reports/world /api/reports/provinces; do
+		if wget -t 1 $BASE/$url >/dev/null 2>&1; then
+			echo "[DONE] $url"
+		else
+			echo "[FAIL] $url"
+		fi
+	done
 }
 
 db() {

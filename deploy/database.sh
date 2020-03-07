@@ -1,9 +1,9 @@
 #!/bin/bash
 
 USER=wuhan
+PASSWORD=1234567890
 DATABASE=wuhan_need_you
 DATABASE_TEST=wuhan_need_you_test
-PASSWORD=1234567890
 ROOT=$(dirname `readlink -f $0`)/..
 BACKUP=$ROOT/backup
 
@@ -41,7 +41,7 @@ backup() {
 		mkdir $BACKUP
 	fi
 	FILE=$BACKUP/$DATABASE-`date +%Y%m%d-%H%M%S`.dump
-	PGPASSWORD=$PASSWORD pg_dump -U $USER -Fc $DATABASE >$BACKUP/$DATABASE-`date +%Y%m%d-%H%M%S`.dump
+	sudo -u postgres pg_dump -Fc -d $DATABASE >$BACKUP/$DATABASE-`date +%Y%m%d-%H%M%S`.dump
 	echo "Database is backuped to $FILE"
 }
 
@@ -51,8 +51,8 @@ restore() {
 		echo "ERROR: no backup exists"
 		exit 1
 	fi
-	sudo -u postgres pg_restore -Fc --role=$USER $BACKUP/$latest \
-		&& echo "Database is restored from $BACKUP/$latest"
+	sudo -u postgres pg_restore -Fc --role=$USER $latest \
+		&& echo "Database is restored from $latest"
 }
 
 check() {
