@@ -315,11 +315,8 @@ const render_map = async function (containerId, data, map='china') {
             roam: true,
             label: {
                 normal: {
-                    show: false,
-                    color: 'rgba(0,0,0,0.4)',
-                    formatter: params => {
-                        return params.name;
-                    }
+                    show: map !== 'world', // by default the world map not show country name
+                    color: 'rgba(0,0,0,0.4)'
                 }
             },
             itemStyle: {
