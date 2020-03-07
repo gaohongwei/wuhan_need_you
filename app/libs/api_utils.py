@@ -8,34 +8,17 @@ from app.models import Cache
 from app.libs.dxy_utils import get_overall, get_dxy_json
 from app.libs.tx_utils import get_china_provinces_data, get_world_data, get_tx_json
 
-
-def get_realtime_overall_from_server():
-    current_app.logger.info('get overall from server')
-    data = get_json('https://lab.isaaclin.cn/nCoV/api/overall')
-    if data == None:
-        return None
-    return data['results'][0];
-
-def get_realtime_overall_from_cache():
-    current_app.logger.info('get overall from cache')
-    cache = Cache.get_latest('dxy-')
-    if cache == None:
-        return None, None
-    data = json.loads(cache.value)
-    return data, cache
-
 def get_realtime_overall():
     load_timeout = 1800
-    data, cache = get_realtime_overall_from_cache()
     def load_from_remote():
         data = get_overall()
         if data == None:
             return None
         return {'key': str(data['updateTime']), 'value': data}
 
-    cache = Cache.get_latest_or_update('dxy-', load_timeout, load_from_remote)
+    cache = Cache.try_get_latest_or_update('dxy-overall-', load_timeout, load_from_remote)
     if cache == None:
-        return 'not found', 404
+        return ('not found', 404)
     data = cache.get_value_as_json()
     return {'results': [data]}
 
@@ -47,7 +30,7 @@ def get_cached_tx_json():
             return None
         return {'key': str(data['lastUpdateTime']), 'value': data}
 
-    cache = Cache.get_latest_or_update('tx-', load_timeout, load_from_remote)
+    cache = Cache.try_get_latest_or_update('tx-', load_timeout, load_from_remote)
     if cache == None:
         return 'not found', 404
     data = cache.get_value_as_json()
@@ -61,7 +44,7 @@ def get_cached_dxy_json():
             return None
         return {'key': str(data['lastUpdateTime']), 'value': data}
 
-    cache = Cache.get_latest_or_update('dxy-world-', load_timeout, load_from_remote)
+    cache = Cache.try_get_latest_or_update('dxy-world-', load_timeout, load_from_remote)
     if cache == None:
         return 'not found', 404
     data = cache.get_value_as_json()

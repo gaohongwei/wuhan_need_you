@@ -62,6 +62,18 @@ class Cache(db.Model):
         return None
 
     @classmethod
+    def try_get_latest_or_update(cls, key_prefix, timeout_in_seconds, producer):
+        '''
+        call get_latest_or_update first()
+        if return None: return get_latest()
+        '''
+        cache = cls.get_latest_or_update(key_prefix, timeout_in_seconds, producer)
+        if cache == None:
+            return cls.get_latest(key_prefix, timeout_in_seconds)
+        else:
+            return cache
+
+    @classmethod
     def delete(cls, key):
         '''
         delete a cache item if exists

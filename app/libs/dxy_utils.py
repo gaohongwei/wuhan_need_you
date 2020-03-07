@@ -86,7 +86,7 @@ def get_world_reports_dxy(raw_html=None):
             }
     chinaUpdatedTime = max([p['lastUpdateTime'] for p in provinces])
     china = {
-            'name': '中国',
+            'name': '涓浗',
             'lastUpdateTime': chinaUpdatedTime,
             'total': chinaTotal,
             'children': provinces
