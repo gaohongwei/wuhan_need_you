@@ -154,6 +154,10 @@ const createElement = (tag, className, styles, options) => {
     return el;
 };
 
+const isEmptyValue = value => {
+    return isNaN(value) || value === undefined || value === null;
+};
+
 const Utils = {
     post,
     get,
@@ -169,7 +173,8 @@ const Utils = {
     isScriptLoaded,
     insert_script,
     addCSS,
-    createElement
+    createElement,
+    isEmptyValue
 };
 
 return Utils;

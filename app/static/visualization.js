@@ -67,7 +67,8 @@ const createPieces = (values, numPieces, mapper) => {
 };
 
 const world_country_name_map = {
-    'Singapore Rep.':'新加坡',
+    'Palau': '帕劳',
+    'Singapore':'新加坡',
     'Dominican Rep.':'多米尼加',
     'Palestine':'巴勒斯坦',
     'Bahamas':'巴哈马',
@@ -291,7 +292,13 @@ const render_map = async function (containerId, data, map='china') {
                 color: '#000'
             }
         },
-        tooltip: {},
+        tooltip: {
+            trigger: 'item',
+            formatter: params => {
+                const {name, seriesName, value} = params;
+                return (Utils.isEmptyValue(value)) ? '' : `${name}<br/>${seriesName}: ${value}`;
+            }
+        },
         visualMap: {
             ...createPieces(items, 4, i => parseFloat(i.value)),
             left: 'left',
@@ -307,8 +314,13 @@ const render_map = async function (containerId, data, map='china') {
             map: map,
             roam: true,
             label: {
-                show: true,
-                color: 'rgba(0,0,0,0.4)'
+                normal: {
+                    show: false,
+                    color: 'rgba(0,0,0,0.4)',
+                    formatter: params => {
+                        return params.name;
+                    }
+                }
             },
             itemStyle: {
                 borderColor: 'rgba(0, 0, 0, 0.2)'
@@ -341,7 +353,20 @@ const render_map = async function (containerId, data, map='china') {
     await insert_scripts();
     const dom = document.getElementById(containerId);
     const myChart = echarts.init(dom);
-    myChart.setOption(option, true);
+    myChart.setOption(option);
+
+    const camera = {zoom: undefined, center: undefined};
+    const zoomThresholdForLabel = 3;
+    myChart.on('georoam', () => {
+        let {zoom, center} = myChart.getOption().geo[0];
+        camera.zoom = zoom;
+        camera.center = center;
+        refresh();
+    });
+    const refresh = () => {
+        option.geo.label.normal.show = camera.zoom > zoomThresholdForLabel;
+        myChart.setOption(option); // refresh
+    };
     const resize = () => {
         dom.style.width = '80%';
         dom.style.height = '80%';
