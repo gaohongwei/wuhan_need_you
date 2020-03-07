@@ -57,3 +57,48 @@ def get_overall(raw_html=None):
     data['updateTime'] = get_timestamp(raw_html)
     return data
 
+def get_world_reports_dxy(raw_html=None):
+    print('abc')
+    raw_html = raw_html or get_html()
+    print('def')
+    data = get_json('getListByCountryTypeService2', raw_html)
+    if data == None:
+        return None
+    def parseItem(country):
+        res = {}
+        res['name'] = country['provinceName']
+        res['total'] = {
+                'confirm': country['confirmedCount'],
+                'suspect': country['suspectedCount'],
+                'heal': country['curedCount'],
+                'dead': country['deadCount']
+                }
+        res['lastUpdateTime'] = parse_timestamp(country['modifyTime'])
+        for i in country:
+            res[i] = country[i]
+        return res
+    provinces = [parseItem(i) for i in get_json('getListByCountryTypeService1')]
+    chinaTotal = {
+            'confirm': sum([p['total']['confirm'] for p in provinces]),
+            'suspect': sum([p['total']['suspect'] for p in provinces]),
+            'heal': sum([p['total']['heal'] for p in provinces]),
+            'dead': sum([p['total']['dead'] for p in provinces])
+            }
+    chinaUpdatedTime = max([p['lastUpdateTime'] for p in provinces])
+    china = {
+            'name': '涓浗',
+            'lastUpdateTime': chinaUpdatedTime,
+            'total': chinaTotal,
+            'children': provinces
+            }
+    data = [china] + [parseItem(country) for country in data]
+    utcTime = max([i['lastUpdateTime'] for i in data])
+    for country in data:
+        country['lastUpdateTime'] = country['lastUpdateTime'].isoformat()
+        for province in country.get('children', []):
+            province['lastUpdateTime'] = province['lastUpdateTime'].isoformat()
+    return {'data': data, 'lastUpdateTime': utcTime.isoformat()}
+
+def get_dxy_json(raw_html=None):
+    return get_world_reports_dxy(raw_html)
+

@@ -2,65 +2,60 @@
 {% block title %}Home{% endblock %}
 {% block body %}
 
+<div class="jumbotron" style="background-color:rgb(36,59,43); padding: 1.8rem;">
+	<h1 style="text-align: center;color:white;">武汉疫情动态</h1>
+</div>
+
+<div id='overview' class='row'
+    style="align-items: center; justify-content: center;">
+
+    <div class="col-1"></div>
+    <div class="col-10">
+        <p>
+            {{pages_info.introduction}}
+        </p>
+
+		<div><b>统计数据</b>
+        <ul>
+            <li>累计确诊：<span id='confirmedCount'></span></li>
+            <li>累计治愈：<span id='curedCount'></span></li>
+            <li>现存重症：<span id='seriousCount'></span></li>
+            <li>现存疑似：<span id='suspectedCount'></span></li>
+            <li>累计死亡：<span id='deadCount'></span></li>
+        </ul>
+		<div><b>较昨日变化</b>
+        <ul>
+            <li>新增重症：<span id='seriousIncr'></span></li>
+            <li>新增治愈：<span id='curedIncr'></span></li>
+            <li>新增疑似：<span id='suspectedIncr'></span></li>
+            <li>新增死亡：<span id='deadInc'></span></li>
+        </ul>
+		</div>
+		<div><b>备注</b><span id='remarks'></span></div>
+		<div><b>说明</b><span id='notes'></span></div>
+		<div style="height:600px"><b>全国各省概况地图</b>
+			&nbsp;&nbsp;
+			<span><select id='chinaMapSelect'></select></span>
+			<div id='chinaMap'></div>
+		</div>
+		<div style="height:600px"><b>世界各国概况地图</b>
+			&nbsp;&nbsp;
+			<span><select id='worldMapSelect'></select></span>
+			<div id='worldMap'></div>
+		</div>
+		<div><b>概况</b><div id='dailyPics' style="width:60%"></div></div>
+        <div><b>全国趋势图</b><div id='quanguoTrendChart' style="width:60%"></div></div>
+        <div><b>湖北/非湖北趋势图</b><div id='hbFeiHbTrendChart' style="width:60%"></div></div>
+		<div><b>更新日期：</b><span id='updateTime'></span></div>
+		<div><b>数据来源：</b>
+            <a href='https://ncov.dxy.cn/ncovh5/view/pneumonia'>丁香园</a>
+            <a href='https://xw.qq.com/act/qgfeiyan'>腾讯</a>
+        </div>
+    </div>
+    <div class="col-1"></div>
+</div>
+
 <script>
-    const getJson = url => {
-        const req = new XMLHttpRequest();
-        return new Promise((resolve, reject) => {
-            req.addEventListener('load', function () { resolve(JSON.parse(this.responseText)); });
-            req.open('GET', url);
-            req.send();
-        });
-    };
-	const getElementById = id => {
-		const el = document.getElementById(id);
-		if (!el) {
-			throw new Event('no such id ' + id);
-		}
-		return el;
-	};
-	const getElementByTagNameAndId= (tagName, id) => {
-		const el = getElementById(id);
-		const currentTagName = el.tagName.toLowerCase();
-		if (currentTagName !== (tagName + '').toLowerCase()) {
-			throw new Event(`element with id ${id} has tagName ${currentTagName}, but ${tagName} is required`);
-		}
-		return el;
-	};
-	/**
-	 * Add multiple <option value="value">name</option> to the <select></select>
-	 **/
-	const setupSelect = (id, nameValues, callback) => {
-		const select = getElementByTagNameAndId('select', id);
-		const createOption = ({name, value}) => {
-			const option = document.createElement('option');
-			option.value = value;
-			option.innerText = name;
-			return option;
-		};
-		const options = (nameValues || []).map(createOption);
-		options.forEach(option => {
-			select.appendChild(option);
-		});
-		if (callback) {
-			select.addEventListener('change', () => callback(select.value));
-		}
-	};
-    const dateWithTimeZone = (timeZone, year, month, day, hour, minute, second) => {
-        let date = new Date(Date.UTC(year, month, day, hour, minute, second));
-
-        let utcDate = new Date(date.toLocaleString('en-US', { timeZone: "UTC" }));
-        let tzDate = new Date(date.toLocaleString('en-US', { timeZone: timeZone }));
-        let offset = utcDate.getTime() - tzDate.getTime();
-
-        date.setTime(date.getTime() + offset);
-
-        return date;
-    };
-    const dateFromAsiaSeconds = seconds => {
-        const asiaTime = dateWithTimeZone('Asia/Shanghai', 1970, 0, 1, 0, 0, 0);
-        asiaTime.setSeconds(seconds);
-        return asiaTime;
-    };
     const parseOverall = function (data) {
         const info = data.results[0];
 		const dailyPics = (info.dailyPic || '').split(',').filter(i => !!i.trim());
@@ -75,7 +70,7 @@
         const seriousIncr = info.seriousIncr;
         const curedIncr = info.curedIncr;
         const deadInc = info.deadIncr;
-        const updateTime = dateFromAsiaSeconds(info.updateTime * 0.001);
+        const updateTime = Utils.dateFromAsiaSeconds(info.updateTime * 0.001);
         const remarks = [];
         const notes = [];
         for (let key in info) {
@@ -117,56 +112,49 @@
         });
         elem.appendChild(ul);
     };
-	const getAttr = (obj, key) => {
-		const keys = key.split('.');
-		for (let k of keys) {
-			if (obj === undefined || obj === null) {
-				return null;
-			}
-			obj = obj[k];
-		}
-		return obj;
-	};
 	/**
 	 * An dict to [{key, value}]
 	 **/
-	const mapToPairs = map => {
-		const pairs = [];
-		for (let key in map) {
-			pairs.push({key, value: map[key]});
-		}
-		return pairs;
+	const chinaDataMap = {
+		'today.confirm': '今日确诊数目',
+		'total.confirm': '累计确诊总数',
+		'total.dead': '累计死亡总数',
+		'total.deadRate': '累计死亡率',
+		'total.heal': '累计治愈',
+		'total.healRate': '累计治愈率'
 	};
-	const displayChinaMap = async function() {
-		const dataMap = {
-			'today.confirm': '今日确诊数目',
-			'total.confirm': '累计确诊总数',
-			'total.dead': '累计死亡总数',
-			'total.deadRate': '累计死亡率',
-			'total.heal': '累计治愈',
-			'total.healRate': '累计治愈率'
-		};
+	const worldDataMap = {
+		'total.dead': '累计死亡总数',
+		'total.confirm': '累计确诊总数',
+		'total.heal': '累计治愈',
+	};
+    const displayMap = async function(mapId, selectId, api, map, dataMap) {
 		const getMapData = (key, jsonData) => {
-			const provinces = jsonData.map(i => {
-				return {name: i.name, value: getAttr(i, key), data: i};
-			});
-			const mapData = {name: dataMap[key], provinces};
+			const items = jsonData.data.map(i => {
+				return {name: i.name, value: Utils.getAttr(i, key), data: i};
+            }).filter(i => !!i && i.value !== null && i.value !== undefined);
+            if (items.length === 0) {
+                return null;
+            }
+			const mapData = {name: dataMap[key], items, time: new Date(jsonData.lastUpdateTime)};
 			return mapData;
 		};
 		const renderMap = (key, jsonData) => {
-			console.log('render ' + key);
 			const mapData = getMapData(key, jsonData);
-			visualization.render_china_map('chinaMap', mapData);
+			visualization.render_map(mapId, mapData, map);
 		};
-		const jsonData = await getJson('/api/reports/provinces') || [];
-		setupSelect('chinaMapSelect',
-			mapToPairs(dataMap).map(i => new Object({name: i.value, value: i.key})),
+        const jsonData = await Utils.get(api) || {};
+        const pairs = Utils.mapToPairs(dataMap).map(i => new Object({name: i.value, value: i.key}));
+		Utils.setupSelect(selectId,
+			pairs,
 			key => renderMap(key, jsonData)
 		);
-		renderMap('today.confirm', jsonData);
-	};
+		renderMap(pairs[0].value, jsonData);
+    };
+    const displayChinaMap = () => displayMap('chinaMap', 'chinaMapSelect', '/api/reports/provinces', 'china', chinaDataMap);
+    const displayWorldMap = () => displayMap('worldMap', 'worldMapSelect', '/api/reports/world', 'world', worldDataMap);
     const displayOverall = async function () {
-        const data = await getJson('/api/reports/overall');
+        const data = await Utils.get('/api/reports/overall');
         const info = parseOverall(data);
         for (let key in info) {
             const elem = document.getElementById(key);
@@ -181,60 +169,9 @@
             }
         }
     };
-window.addEventListener('load', () => {
 	displayOverall();
 	displayChinaMap();
-});
+    displayWorldMap();
 </script>
 
-
-<div class="jumbotron" style="background-color:rgb(36,59,43); padding: 1.8rem;">
-	<h1 style="text-align: center;color:white;">武汉疫情动态</h1>
-</div>
-
-<div id='overview' class='row'
-    style="align-items: center; justify-content: center;">
-
-
-
-    <div class="col-1"></div>
-    <div class="col-10">
-        <p>
-            {{pages_info.introduction}}
-        </p>
-
-		<div><b>统计数据</b>
-        <ul>
-            <li>累计确诊：<span id='confirmedCount'></span></li>
-            <li>累计治愈：<span id='curedCount'></span></li>
-            <li>现存重症：<span id='seriousCount'></span></li>
-            <li>现存疑似：<span id='suspectedCount'></span></li>
-            <li>累计死亡：<span id='deadCount'></span></li>
-        </ul>
-		<div><b>较昨日变化</b>
-        <ul>
-            <li>新增重症：<span id='seriousIncr'></span></li>
-            <li>新增治愈：<span id='curedIncr'></span></li>
-            <li>新增疑似：<span id='suspectedIncr'></span></li>
-            <li>新增死亡：<span id='deadInc'></span></li>
-        </ul>
-		</div>
-		<div><b>备注</b><span id='remarks'></span></div>
-		<div><b>说明</b><span id='notes'></span></div>
-		<div style="height:600px"><b>全国各省概况地图</b>
-			&nbsp;&nbsp;
-			<span><select id='chinaMapSelect'></select></span>
-			<div id='chinaMap'></div>
-		</div>
-		<div><b>概况</b><div id='dailyPics' style="width:60%"></div></div>
-        <div><b>全国趋势图</b><div id='quanguoTrendChart' style="width:60%"></div></div>
-        <div><b>湖北/非湖北趋势图</b><div id='hbFeiHbTrendChart' style="width:60%"></div></div>
-		<div><b>更新日期：</b><span id='updateTime'></span></div>
-		<div><b>数据来源：</b>
-            <a href='https://ncov.dxy.cn/ncovh5/view/pneumonia'>丁香园</a>
-            <a href='https://xw.qq.com/act/qgfeiyan'>腾讯</a>
-        </div>
-    </div>
-    <div class="col-1"></div>
-</div>
 {% endblock %}

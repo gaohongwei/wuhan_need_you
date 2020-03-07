@@ -86,6 +86,10 @@ const dateFromAsiaSeconds = seconds => {
     asiaTime.setSeconds(seconds);
     return asiaTime;
 };
+
+/**
+ * Example: getAttr(obj, 'a.b.c')
+ **/
 const getAttr = (obj, key) => {
     const keys = key.split('.');
     for (let k of keys) {
@@ -96,6 +100,7 @@ const getAttr = (obj, key) => {
     }
     return obj;
 };
+
 /**
  * An dict to [{key, value}]
  **/
@@ -149,6 +154,10 @@ const createElement = (tag, className, styles, options) => {
     return el;
 };
 
+const isEmptyValue = value => {
+    return isNaN(value) || value === undefined || value === null;
+};
+
 const Utils = {
     post,
     get,
@@ -164,7 +173,8 @@ const Utils = {
     isScriptLoaded,
     insert_script,
     addCSS,
-    createElement
+    createElement,
+    isEmptyValue
 };
 
 return Utils;
