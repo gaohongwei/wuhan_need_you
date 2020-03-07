@@ -1,5 +1,6 @@
 # coding: utf-8
 
+import json
 from app.db import db
 from app.libs.date_utils import utcnow, time_diff_in_seconds
 from sqlalchemy import func
@@ -20,14 +21,57 @@ class Cache(db.Model):
         '''
         cache = cls.get(key)
         if cache == None:
-            db.session.add(cls(key=key, value=value))
+            cache = cls(key=key, value=value)
+            db.session.add(cache)
         else:
             cache.value = value
         db.session.commit()
+        return cache
 
     @classmethod
-    def get_latest(cls):
-        return cls.query.order_by(cls.timestamp.desc()).limit(1).first()
+    def get_latest(cls, key_prefix=None, timeout_in_seconds=None):
+        if key_prefix == None:
+            cache = cls.query.order_by(cls.timestamp.desc()).limit(1).first()
+        else :
+            cache = cls.query.filter(cls.key.like( '{}%'.format(key_prefix))).order_by(cls.timestamp.desc()).limit(1).first()
+        if cache == None:
+            return None
+        if timeout_in_seconds != None and cache.is_outdated(timeout_in_seconds):
+            return None
+        return cache
+
+
+    @classmethod
+    def get_latest_or_update(cls, key_prefix, timeout_in_seconds, producer):
+        '''
+        key_prefix: used to identify the type of a cache
+        producer: generate an object {key, value}, both key and value are strings, the value may be object
+        '''
+        key_prefix = key_prefix or ''
+        cache = cls.get_latest(key_prefix, timeout_in_seconds)
+        if cache != None:
+            return cache
+        result = producer()
+        if result != None:
+            key = key_prefix + result['key']
+            value = result['value']
+            if not isinstance(value, str):
+                value = json.dumps(value)
+            cache = cls.set(key, value)
+            return cache
+        return None
+
+    @classmethod
+    def try_get_latest_or_update(cls, key_prefix, timeout_in_seconds, producer):
+        '''
+        call get_latest_or_update first()
+        if return None: return get_latest()
+        '''
+        cache = cls.get_latest_or_update(key_prefix, timeout_in_seconds, producer)
+        if cache == None:
+            return cls.get_latest(key_prefix, timeout_in_seconds)
+        else:
+            return cache
 
     @classmethod
     def delete(cls, key):
@@ -87,9 +131,15 @@ class Cache(db.Model):
         cache = cls.get(key)
         if cache == None:
             db.session.add(cache)
-        elif time_diff_in_seconds(utcnow(), cache.timestamp) <= timeout_in_seconds:
+        elif cache.is_outdated(timeout_in_seconds):
             cache.value = value
         db.session.commit()
+
+    def is_outdated(self, timeout_in_seconds):
+        return time_diff_in_seconds(utcnow(), self.timestamp) > timeout_in_seconds
+
+    def get_value_as_json(self):
+        return json.loads(self.value)
 
     @classmethod
     def update_timestamp(cls, key):
