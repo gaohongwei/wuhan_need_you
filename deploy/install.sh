@@ -13,6 +13,7 @@ if ! [ -f /etc/nginx/nginx.conf.bak ]; then
 	cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
 fi
 cp deploy/nginx.conf /etc/nginx/
+systemctl restart nginx
 nginx -s reload
 
 # Install server
