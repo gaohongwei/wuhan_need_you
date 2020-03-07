@@ -46,6 +46,9 @@ class Config:
 
     NOTICES_PER_PAGE = 20
 
+    # TODO: how to enable wtf_csrf and provide csrf token?
+    WTF_CSRF_SECRET_KEY = 'a secret key ' + randstr(10)
+    WTF_CSRF_ENABLED = False
     CKEDITOR_ENABLE_CSRF = True
     IMAGE_FILE_UPLOAD_DIRECTORY = os.path.join(os.path.dirname(__file__), 'static/upload')
  
@@ -57,7 +60,6 @@ class DeploymentConfig(Config):
     DEBUG = False
     PRESERVE_CONTEXT_ON_EXCEPTION = False
     SQLALCHEMY_DATABASE_URI = DEPLOYMENT_DATABASE_URL
-    WTF_CSRF_SECRET_KEY = 'a secret key ' + randstr(10)
  
     @classmethod
     def init_app(cls, app):
@@ -89,7 +91,6 @@ class DeploymentConfig(Config):
 class TestingConfig(Config):
     PRESERVE_CONTEXT_ON_EXCEPTION = False
     SQLALCHEMY_DATABASE_URI = TESTING_DATABASE_URL
-    WTF_CSRF_SECRET_KEY = 'a secret key ' + randstr(10)
  
     @classmethod
     def init_app(cls, app):
@@ -122,7 +123,6 @@ class TestingConfig(Config):
 class DevelopmentConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = DEVELOPMENT_DATABASE_URL
-    WTF_CSRF_ENABLED = False
     SQLALCHEMY_ECHO = True
 
 
