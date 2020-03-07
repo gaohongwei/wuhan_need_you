@@ -1,7 +1,10 @@
+# coding: utf-8
+
 import os
 import logging
 from flask import Flask
 from .libs.AlchemyEncoder import AlchemyEncoder
+from .libs import randstr
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 logPath = os.environ.get('LOG_DIR') or os.path.join(basedir, '..', 'logs')
@@ -54,6 +57,7 @@ class DeploymentConfig(Config):
     DEBUG = False
     PRESERVE_CONTEXT_ON_EXCEPTION = False
     SQLALCHEMY_DATABASE_URI = DEPLOYMENT_DATABASE_URL
+    WTF_CSRF_SECRET_KEY = 'a secret key ' + randstr(10)
  
     @classmethod
     def init_app(cls, app):
@@ -81,42 +85,43 @@ class DeploymentConfig(Config):
         file_handler_error.setFormatter(formatter)
         file_handler_error.setLevel(logging.ERROR)
         app.logger.addHandler(file_handler_error)
- 
-class DevelopmentConfig(Config):
-    PRESERVE_CONTEXT_ON_EXCEPTION = False
-    SQLALCHEMY_DATABASE_URI = DEVELOPMENT_DATABASE_URL
- 
-    @classmethod
-    def init_app(cls, app):
-        Config.init_app(app)
- 
-        # email errors to the administrators
-        import logging
-        from logging.handlers import RotatingFileHandler
-        # Formatter
-        formatter = logging.Formatter(
-            '%(asctime)s %(levelname)s %(process)d %(thread)d '
-            '%(pathname)s %(lineno)s %(message)s')
- 
- 
-        # FileHandler Info
-        file_handler_info = RotatingFileHandler(filename=cls.LOG_PATH_INFO)
-        file_handler_info.setFormatter(formatter)
-        file_handler_info.setLevel(logging.INFO)
-        info_filter = InfoFilter()
-        file_handler_info.addFilter(info_filter)
-        app.logger.addHandler(file_handler_info)
- 
-        # FileHandler Error
-        file_handler_error = RotatingFileHandler(filename=cls.LOG_PATH_ERROR)
-        file_handler_error.setFormatter(formatter)
-        file_handler_error.setLevel(logging.ERROR)
-        app.logger.addHandler(file_handler_error)
- 
  
 class TestingConfig(Config):
-    TESTING = True
+    PRESERVE_CONTEXT_ON_EXCEPTION = False
     SQLALCHEMY_DATABASE_URI = TESTING_DATABASE_URL
+    WTF_CSRF_SECRET_KEY = 'a secret key ' + randstr(10)
+ 
+    @classmethod
+    def init_app(cls, app):
+        Config.init_app(app)
+ 
+        # email errors to the administrators
+        import logging
+        from logging.handlers import RotatingFileHandler
+        # Formatter
+        formatter = logging.Formatter(
+            '%(asctime)s %(levelname)s %(process)d %(thread)d '
+            '%(pathname)s %(lineno)s %(message)s')
+ 
+ 
+        # FileHandler Info
+        file_handler_info = RotatingFileHandler(filename=cls.LOG_PATH_INFO)
+        file_handler_info.setFormatter(formatter)
+        file_handler_info.setLevel(logging.INFO)
+        info_filter = InfoFilter()
+        file_handler_info.addFilter(info_filter)
+        app.logger.addHandler(file_handler_info)
+ 
+        # FileHandler Error
+        file_handler_error = RotatingFileHandler(filename=cls.LOG_PATH_ERROR)
+        file_handler_error.setFormatter(formatter)
+        file_handler_error.setLevel(logging.ERROR)
+        app.logger.addHandler(file_handler_error)
+ 
+ 
+class DevelopmentConfig(Config):
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = DEVELOPMENT_DATABASE_URL
     WTF_CSRF_ENABLED = False
     SQLALCHEMY_ECHO = True
 

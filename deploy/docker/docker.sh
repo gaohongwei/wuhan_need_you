@@ -35,12 +35,14 @@ deploy() {
 		docker cp $i $CONTAINER_NAME:$APP_DIR
 	done
 	docker exec -it $CONTAINER_NAME $APP_DIR/deploy/install.sh
+    sleep 5
+    test
 }
 
 test() {
 	BASE=127.0.0.1:8180
 	for url in / /api/reports/overall /api/reports/world /api/reports/provinces; do
-		if wget -t 1 $BASE/$url >/dev/null 2>&1; then
+		if wget -t 1 $BASE/$url -O - >/dev/null 2>&1; then
 			echo "[DONE] $url"
 		else
 			echo "[FAIL] $url"

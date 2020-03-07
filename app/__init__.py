@@ -14,7 +14,7 @@ from app.views import register_blueprints
 from app.listeners import register_after_requests, register_before_requests
 
 # Load the config file
-# Initialize the app, APPLICATION_MODE can be one of 'depolyment', 'development', 'testing'
+# Initialize the app, APPLICATION_MODE can be one of 'deployment', 'development', 'testing'
 app = create_app(os.environ.get('APPLICATION_MODE'))
 
 admin = Admin(app=app, name='后台管理', index_view=AdminIndexView(name='主页'))

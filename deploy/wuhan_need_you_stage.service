@@ -3,7 +3,7 @@ Description=website for WuHan Need You (Stage)
 After=network.target
 
 [Service]
-Environment=APPLICATION_MODE=deployment
+Environment="APPLICATION_MODE=testing"
 User=root
 Group=www-data
 WorkingDirectory=/usr/local/wuhan_need_you_stage
