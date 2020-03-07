@@ -6,10 +6,15 @@ from .libs.AlchemyEncoder import AlchemyEncoder
 basedir = os.path.abspath(os.path.dirname(__file__))
 logPath = os.environ.get('LOG_DIR') or os.path.join(basedir, '..', 'logs')
 
-DEV_DATABASE_URL = os.environ.get('DEV_DATABASE_URL') \
-        or 'postgres://postgres:12345678@127.0.0.1:5432/wuhan_need_you'
-TEST_DATABASE_URL = os.environ.get('TEST_DATABASE_URL') or \
+# develop by sqlite
+DEVELOPMENT_DATABASE_URL = os.environ.get('DEVELOPMENT_DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'data-test.sqlite')
+# test by postgresql
+TESTING_DATABASE_URL = os.environ.get('TESTING_DATABASE_URL') or \
+        'postgres://wuhan:1234567890@127.0.0.1:5432/wuhan_need_you_test'
+# deploy by postgresql
+DEPLOYMENT_DATABASE_URL = os.environ.get('DEPLOYMENT_DATABASE_URL') or \
+        'postgres://wuhan:1234567890@127.0.0.1:5432/wuhan_need_you'
 
 class InfoFilter(logging.Filter):
     '''
@@ -48,7 +53,7 @@ class Config:
 class DeploymentConfig(Config):
     DEBUG = False
     PRESERVE_CONTEXT_ON_EXCEPTION = False
-    SQLALCHEMY_DATABASE_URI = DEV_DATABASE_URL
+    SQLALCHEMY_DATABASE_URI = DEPLOYMENT_DATABASE_URL
  
     @classmethod
     def init_app(cls, app):
@@ -79,7 +84,7 @@ class DeploymentConfig(Config):
  
 class DevelopmentConfig(Config):
     PRESERVE_CONTEXT_ON_EXCEPTION = False
-    SQLALCHEMY_DATABASE_URI = DEV_DATABASE_URL
+    SQLALCHEMY_DATABASE_URI = DEVELOPMENT_DATABASE_URL
  
     @classmethod
     def init_app(cls, app):
@@ -111,19 +116,19 @@ class DevelopmentConfig(Config):
  
 class TestingConfig(Config):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = TEST_DATABASE_URL
+    SQLALCHEMY_DATABASE_URI = TESTING_DATABASE_URL
     WTF_CSRF_ENABLED = False
     SQLALCHEMY_ECHO = True
 
 
 config = {
-    'depolyment': DeploymentConfig,
-    'development': DevelopmentConfig,
+    'deployment': DeploymentConfig,
     'testing': TestingConfig,
-    'default': TestingConfig
+    'development': DevelopmentConfig,
+    'default': DevelopmentConfig
     }
 
-# use TestingConfig by default
+# use DevelopmentConfig by default
 def create_app(config_name):
     try:
         os.mkdir(logPath)
@@ -134,6 +139,7 @@ def create_app(config_name):
     conf = config.get(config_name, config['default'])
     app.config.from_object(conf)
     conf.init_app(app)
+    app.logger.info('Application tries to load config with name ' + str(config_name))
     app.logger.info('Application is running in {} mode'.format(conf.__name__))
     return app
 
