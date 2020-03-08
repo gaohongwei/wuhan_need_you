@@ -16,6 +16,7 @@ USER=${DB_USER:-wuhan}
 PASSWORD=${DB_PASSWORD:-1234567890}
 DATABASE=wuhan_need_you
 DATABASE_TEST=wuhan_need_you_test
+DB_HOST=${DB_HOST:-127.0.0.1}
 ROOT=$(dirname `readlink -f $0`)/..
 BACKUP=$ROOT/backup
 
@@ -40,12 +41,15 @@ init() {
 }
 
 delete() {
-    sudo -u postgres psql -c "DROP DATABASE $DATABASE" && \
-		echo "Database $DATABASE is deleted"
-    sudo -u postgres psql -c "DROP DATABASE $DATABASE_TEST" && \
-		echo "Database $DATABASE_TEST is deleted"
-    sudo -u postgres psql -c "DROP ROLE $USER" && \
-		echo "User $USER is deleted"
+    sudo -u postgres psql -c "DROP DATABASE $DATABASE" >/dev/null 2>&1 \
+		&& echo "[DONE] Database $DATABASE is deleted" \
+		|| echo "[FAIL] Database $DATABASE fail to delete"
+    sudo -u postgres psql -c "DROP DATABASE $DATABASE_TEST" >/dev/null 2>&1 \
+		&& echo "[DONE] Database $DATABASE_TEST is deleted" \
+		|| echo "[FAIL] Database $DATABASE_TEST fail to delete"
+    sudo -u postgres psql -c "DROP ROLE $USER" >/dev/null 2>&1 \
+		&& echo "[DONE] Role $USER is deleted" \
+		|| echo "[FAIL] Role $USER fail to delete"
 }
 
 backup() {
@@ -53,8 +57,17 @@ backup() {
 		mkdir $BACKUP
 	fi
 	FILE=$BACKUP/$DATABASE-`date +%Y%m%d-%H%M%S`.dump
-	sudo -u postgres pg_dump -Fc -d $DATABASE >$BACKUP/$DATABASE-`date +%Y%m%d-%H%M%S`.dump
-	echo "Database is backuped to $FILE"
+	sudo -u postgres pg_dump -Fc -d $DATABASE >$FILE \
+		&& echo "[DONE] Database $DATABASE is saved to $FILE" \
+		|| echo "[FAIL] Database $DATABASE fail to save to $FILE"
+}
+
+# count_table dbname tbname
+count_table() {
+	count=`PGPASSWORD=$PASSWORD psql -h $DB_HOST -U $USER -t -c "SELECT count(*) FROM $2;" $1 2>/dev/null`
+	count=${count#"${count%%[![:space:]]*}"}
+	count=${count%"${count##[![:space:]]*}"}
+	echo $count
 }
 
 restore() {
@@ -63,15 +76,40 @@ restore() {
 		echo "ERROR: no backup exists"
 		exit 1
 	fi
-	sudo -u postgres pg_restore -Fc --role=$USER -d $DATABASE $latest >/dev/null 2>&1 \
-		&& echo "Database is restored from $latest"
+	sudo -u postgres pg_restore -Fc --role=$USER -d $DATABASE $latest >/dev/null 2>&1
+
+	echo "There may be some errors when restoring, but it may be harmless. Just check the tables"
+
+	count=`count_table $DATABASE tags` \
+		&& echo "[DONE] Table $DATABASE.tags has rows=$count" \
+		|| echo "[FAIL] Count table $DATABASE.tags failed"
+	count=`count_table $DATABASE users` \
+		&& echo "[DONE] Table $DATABASE.users has rows=$count" \
+		|| echo "[FAIL] Count table $DATABASE.users failed"
+	count=`count_table $DATABASE notices` \
+		&& echo "[DONE] Table $DATABASE.notices has rows=$count" \
+		|| echo "[FAIL] Count table $DATABASE.notices failed"
+	count=`count_table $DATABASE caches` \
+		&& echo "[DONE] Table $DATABASE.caches has rows=$count" \
+		|| echo "[FAIL] Count table $DATABASE.caches failed"
+}
+
+# check_table dbname tbname
+check_table() {
+	count=`count_table` 2>/dev/null \
+		&& echo "[DONE] Table $2 is ready, nrows=${count}" \
+		|| echo "[FAIL] Table $1.$2 is NOT ready" 
 }
 
 check() {
-	PGPASSWORD=$PASSWORD psql -U $USER -c "SELECT * FROM pg_catalog.pg_tables;" $DATABASE >/dev/null 2>&1 \
-		&& echo "Database $DATABASE is ready"
-	PGPASSWORD=$PASSWORD psql -U $USER -c "SELECT * FROM pg_catalog.pg_tables;" $DATABASE_TEST >/dev/null 2>&1 \
-		&& echo "Database $DATABASE_TEST is ready"
+	PGPASSWORD=$PASSWORD psql -h $DB_HOST -U $USER -c "SELECT * FROM pg_catalog.pg_tables;" $DATABASE >/dev/null 2>&1 \
+		&& echo "[DONE] Database $DATABASE is ready" \
+		|| echo "[FAIL] Database $DATABASE is NOT ready" 
+	PGPASSWORD=$PASSWORD psql -h $DB_HOST -U $USER -c "SELECT * FROM pg_catalog.pg_tables;" $DATABASE_TEST >/dev/null 2>&1 \
+		&& echo "[DONE] Database $DATABASE_TEST is ready" \
+		|| echo "[FAIL] Database $DATABASE_TEST is NOT ready" 
+	check_table $DATABASE caches
+	check_table $DATABASE tags
 }
 
 help() {

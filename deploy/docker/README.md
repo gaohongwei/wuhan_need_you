@@ -37,3 +37,17 @@ Test the website is normal
 sudo ./docker.sh test
 ```
 
+### Stop/restart the website
+
+Before we delete the database, we should stop the website first.
+
+```
+sudo ./docker.sh stop_website
+```
+
+And restart it with
+
+```
+sudo ./docker.sh start_website
+```
+

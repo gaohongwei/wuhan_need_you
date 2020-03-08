@@ -61,7 +61,7 @@ test() {
 }
 
 db() {
-	docker exec -it $CONTAINER_NAME $APP_DIR/deploy/database.sh $@
+	docker exec -it $CONTAINER_NAME /usr/local/wuhan_need_you/deploy/database.sh $@
 }
 
 help() {
