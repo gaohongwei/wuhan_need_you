@@ -18,23 +18,27 @@ goto_docker_dir() {
 	fi
 }
 
+# build the image of ubuntu server 18.04
 build() {
 	goto_docker_dir
 	docker build -t $IMAGE_NAME .
 }
 
-run() {
+# run/restart the image as container
+restart() {
 	docker stop $CONTAINER_NAME >/dev/null 2>&1
 	docker rm $CONTAINER_NAME >/dev/null 2>&1
 	docker run -d --privileged -p 8122:22 -p 8180:80 -p 8150:5000 --name $CONTAINER_NAME $IMAGE_NAME 
 }
 
+# deploy the webiste to the container
 deploy() {
 	goto_docker_dir
 	docker exec -it $CONTAINER_NAME mkdir -p $APP_DIR
 	for i in ../../*; do
 		docker cp $i $CONTAINER_NAME:$APP_DIR
 	done
+	docker exec -it $CONTAINER_NAME $APP_DIR/deploy/docker/init_tz.sh
 	docker exec -it $CONTAINER_NAME $APP_DIR/deploy/install.sh
     sleep 5
     test
@@ -65,7 +69,7 @@ db() {
 }
 
 help() {
-	echo "USAGE: $0 build|run|deploy|stop_website|start_website|test|db"
+	echo "USAGE: $0 build|restart|deploy|stop_website|start_website|test|db"
 }
 
 if (( $# == 0 )); then
@@ -79,8 +83,8 @@ case $cmd in
 	build)
 		build
 		;;
-	run)
-		run
+	restart)
+		restart
 		;;
 	deploy)
 		deploy

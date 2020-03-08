@@ -18,7 +18,7 @@ sudo ./docker.sh build
 Restart/start a container named `wuhan_need_you`:
 
 ```
-sudo ./docker.sh run
+sudo ./docker.sh restart
 ```
 
 ### Deploy the website
