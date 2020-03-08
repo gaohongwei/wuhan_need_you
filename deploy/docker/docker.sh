@@ -3,6 +3,7 @@
 IMAGE_NAME=ubuntu-18.04-server
 CONTAINER_NAME=wuhan_need_you
 APP_DIR=/app/wuhan_need_you
+APP_SERVICE=wuhan_need_you
 
 is_mac() {
 	uname -a | grep Darwin >/dev/null
@@ -39,6 +40,15 @@ deploy() {
     test
 }
 
+# start the website
+start_website() {
+    docker exec -it $CONTAINER_NAME systemctl restart $APP_SERVICE
+}
+# stop the website
+stop_website() {
+    docker exec -it $CONTAINER_NAME systemctl stop $APP_SERVICE
+}
+
 test() {
 	BASE=127.0.0.1:8180
 	for url in / /api/reports/overall /api/reports/world /api/reports/provinces; do
@@ -55,7 +65,7 @@ db() {
 }
 
 help() {
-	echo "USAGE: $0 build|run|deploy|test|db"
+	echo "USAGE: $0 build|run|deploy|stop_website|start_website|test|db"
 }
 
 if (( $# == 0 )); then
@@ -75,6 +85,12 @@ case $cmd in
 	deploy)
 		deploy
 		;;
+    stop_website)
+        stop_website
+        ;;
+    start_website)
+        start_website
+        ;;
 	test)
 		test
 		;;

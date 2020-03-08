@@ -1,7 +1,19 @@
 #!/bin/bash
 
-USER=wuhan
-PASSWORD=1234567890
+# A script to manipulate the postgresql database
+#
+# Envrionment variables
+#
+#   DB_USER: default wuhan
+#   DB_PASSWORD: default 1234567890
+#
+# If the user want to change the default user and password, set it first, e.g.
+#
+#   DB_USER=another_user DB_PASSWORD=another_password sudo database.sh init 
+#
+
+USER=${DB_USER:-wuhan}
+PASSWORD=${DB_PASSWORD:-1234567890}
 DATABASE=wuhan_need_you
 DATABASE_TEST=wuhan_need_you_test
 ROOT=$(dirname `readlink -f $0`)/..
@@ -28,12 +40,12 @@ init() {
 }
 
 delete() {
-    sudo -u postgres psql -c "DROP ROLE $USER"
-	echo "User $USER is deleted"
-    sudo -u postgres psql -c "DROP DATABASE $DATABASE"
-	echo "Database $DATABASE is deleted"
-    sudo -u postgres psql -c "DROP DATABASE $DATABASE_TEST"
-	echo "Database $DATABASE_TEST is deleted"
+    sudo -u postgres psql -c "DROP DATABASE $DATABASE" && \
+		echo "Database $DATABASE is deleted"
+    sudo -u postgres psql -c "DROP DATABASE $DATABASE_TEST" && \
+		echo "Database $DATABASE_TEST is deleted"
+    sudo -u postgres psql -c "DROP ROLE $USER" && \
+		echo "User $USER is deleted"
 }
 
 backup() {
@@ -51,15 +63,15 @@ restore() {
 		echo "ERROR: no backup exists"
 		exit 1
 	fi
-	sudo -u postgres pg_restore -Fc --role=$USER $latest \
+	sudo -u postgres pg_restore -Fc --role=$USER -d $DATABASE $latest >/dev/null 2>&1 \
 		&& echo "Database is restored from $latest"
 }
 
 check() {
 	PGPASSWORD=$PASSWORD psql -U $USER -c "SELECT * FROM pg_catalog.pg_tables;" $DATABASE >/dev/null 2>&1 \
-		|| echo "Database $DATABASE is ready"
+		&& echo "Database $DATABASE is ready"
 	PGPASSWORD=$PASSWORD psql -U $USER -c "SELECT * FROM pg_catalog.pg_tables;" $DATABASE_TEST >/dev/null 2>&1 \
-		|| echo "Database $DATABASE_TEST is ready"
+		&& echo "Database $DATABASE_TEST is ready"
 }
 
 help() {
