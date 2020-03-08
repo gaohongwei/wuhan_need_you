@@ -37,7 +37,7 @@ sudo ./docker.sh deploy
 
 ### Test the website
 
-Test the website is normal
+Test the website is normal (The first few tries may fail)
 
 ```
 sudo ./docker.sh test
