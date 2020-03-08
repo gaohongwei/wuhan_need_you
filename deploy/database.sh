@@ -25,6 +25,7 @@ install() {
 	apt install postgresql postgresql-client
 }
 
+# init the database if user/tables do not exist
 init() {
     # create a user if not exist
     sudo -u postgres psql -tc "SELECT 1 FROM pg_roles WHERE rolname='$USER'" | grep -q 1 \
@@ -52,11 +53,12 @@ delete() {
 		|| echo "[FAIL] Role $USER fail to delete"
 }
 
+# backup [backup.dump]
 backup() {
-	if ! [ -d $BACKUP ]; then
-		mkdir $BACKUP
+	FILE=${1:-$BACKUP/$DATABASE-`date +%Y%m%d-%H%M%S`.dump}
+	if ! [ -d `dirname $FILE` ]; then
+		mkdir -p `dirname $FILE`
 	fi
-	FILE=$BACKUP/$DATABASE-`date +%Y%m%d-%H%M%S`.dump
 	sudo -u postgres pg_dump -Fc -d $DATABASE >$FILE \
 		&& echo "[DONE] Database $DATABASE is saved to $FILE" \
 		|| echo "[FAIL] Database $DATABASE fail to save to $FILE"
@@ -70,14 +72,19 @@ count_table() {
 	echo $count
 }
 
+# restore [restore.dump]
 restore() {
-	latest=`ls -1 -rt $BACKUP/*.dump 2>/dev/null | tail -1`
+	default_latest=`ls -1 -rt $BACKUP/*.dump 2>/dev/null | tail -1`
+	latest=${1:-$default_latest}
 	if [ -z "$latest" ]; then
 		echo "ERROR: no backup exists"
 		exit 1
 	fi
 	sudo -u postgres pg_restore -Fc --role=$USER -d $DATABASE $latest >/dev/null 2>&1
 
+	echo "Delete the database and init it before restore"
+	echo -e "\t sudo ./database.sh delete"
+	echo -e "\t sudo ./database.sh init"
 	echo "There may be some errors when restoring, but it may be harmless. Just check the tables"
 
 	count=`count_table $DATABASE tags` \
@@ -121,7 +128,9 @@ if (( $# == 0 )); then
 	exit 1
 fi
 
-case $1 in
+CMD=$1
+shift
+case $CMD in
 	install)
 		install
 		;;
@@ -132,10 +141,10 @@ case $1 in
 		delete
 		;;
 	backup)
-		backup
+		backup $@
 		;;
 	restore)
-		restore
+		restore $@
 		;;
 	check)
 		check

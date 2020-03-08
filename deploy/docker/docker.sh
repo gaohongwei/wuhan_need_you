@@ -39,9 +39,13 @@ deploy() {
 		docker cp $i $CONTAINER_NAME:$APP_DIR
 	done
 	docker exec -it $CONTAINER_NAME $APP_DIR/deploy/docker/init_tz.sh
+	db install
+	db init
 	docker exec -it $CONTAINER_NAME $APP_DIR/deploy/install.sh
+	echo 'Wait 5 seconds to test the website'
     sleep 5
     test
+	echo 'If not success, try "sudo ./docker.sh test" a few times again'
 }
 
 # start the website
@@ -57,15 +61,16 @@ test() {
 	BASE=127.0.0.1:8180
 	for url in / /api/reports/overall /api/reports/world /api/reports/provinces; do
 		if wget -t 1 $BASE/$url -O - >/dev/null 2>&1; then
-			echo "[DONE] $url"
+			echo "[DONE] $BASE/$url"
 		else
-			echo "[FAIL] $url"
+			echo "[FAIL] $BASE/$url"
 		fi
 	done
 }
 
+# db operation
 db() {
-	docker exec -it $CONTAINER_NAME /usr/local/wuhan_need_you/deploy/database.sh $@
+	docker exec -it $CONTAINER_NAME $APP_DIR/deploy/database.sh $@
 }
 
 help() {

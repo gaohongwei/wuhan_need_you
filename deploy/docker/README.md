@@ -21,12 +21,6 @@ Restart/start a container named `wuhan_need_you`:
 sudo ./docker.sh restart
 ```
 
-### Init database
-
-```
-sudo ./docker.sh db init
-```
-
 ### Deploy the website
 
 Deploy the website on the container, with exposed port `8180`:
@@ -57,3 +51,12 @@ And restart it with
 sudo ./docker.sh start_website
 ```
 
+### Operate the database
+
+```
+sudo ./docker.sh db install
+sudo ./docker.sh db init 
+sudo ./docker.sh db check
+sudo ./docker.sh db backup
+sudo ./docker.sh db restore
+```
