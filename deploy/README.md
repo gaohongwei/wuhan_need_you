@@ -26,3 +26,14 @@ sudo deploy/database.sh restore # to restore from the latest file in backup/
 
 ## Deploy website
 
+Assume the database has been setup (`sudo deploy/database.sh check` success).
+
+```bash
+sudo deploy/install.sh
+```
+
+The `username/password` adopts the default in all the settings, which is safe only if the 5432 port is not exposed.
+
+If the administrator wants to use other username and password,
+he/she shoud revise `deploy/database.sh`, and set `DEPLOY_DATABASE_URL` in `wuhan_need_you.service`.
+
