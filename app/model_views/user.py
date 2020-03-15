@@ -62,7 +62,7 @@ class UserModelView(sqla.ModelView):
             'password': PasswordField('密码', [validators.required()]),
             'email': TextField('电子邮件', [validators.required()]),
             'role': SelectField('角色', [validators.required()],
-                choices=[],
+                choices=[(1,1),(2,2),(3,3)],
                 coerce=int)
             }
     def __init__(self, *args, **kwargs):
