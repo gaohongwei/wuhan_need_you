@@ -20,10 +20,8 @@ def recreate_database(app):
     with app.app_context():
         # db.drop_all()
         db.create_all()
-        # db.session.add(User(username="admin", role=1, password="admin"))
-        # db.session.add(User(username="test", role=1, password="test"))
-        # db.session.add(User(username="test2", role=2, password="test2"))
-        # db.session.add(User(username="test3", role=3, password="test3"))
+        # admin account for test and development only, but deploy would be changed!
+        db.session.add(User(username="admin", role=1, password="admin"))
         for name in ['广告', '信息', '置顶', '紧急', '通知与公告', '校运会在行动']:
             db.session.add(Tag(name=name))
             try:
