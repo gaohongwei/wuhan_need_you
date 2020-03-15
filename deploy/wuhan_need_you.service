@@ -3,6 +3,7 @@ Description=website for WuHan Need You
 After=network.target
 
 [Service]
+Environment="APPLICATION_MODE=deployment"
 User=root
 Group=www-data
 WorkingDirectory=/usr/local/wuhan_need_you
