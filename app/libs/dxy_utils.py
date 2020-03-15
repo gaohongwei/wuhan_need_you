@@ -29,7 +29,7 @@ def get_timestamp(raw_html=None):
 
 def get_json(name, raw_html=None):
     raw_html = raw_html or get_html()
-    match = re.search('window.' + name + ' = (.*?)}catch', raw_html)
+    match = re.search('window.' + name + '[a-z]* = (.*?)}catch', raw_html)
     if match == None:
         return None
     raw_json = match.group(1)
@@ -58,9 +58,8 @@ def get_overall(raw_html=None):
     return data
 
 def get_world_reports_dxy(raw_html=None):
-    print('abc')
     raw_html = raw_html or get_html()
-    print('def')
+    print(raw_html)
     data = get_json('getListByCountryTypeService2', raw_html)
     if data == None:
         return None
@@ -86,7 +85,7 @@ def get_world_reports_dxy(raw_html=None):
             }
     chinaUpdatedTime = max([p['lastUpdateTime'] for p in provinces])
     china = {
-            'name': '涓浗',
+            'name': '中国',
             'lastUpdateTime': chinaUpdatedTime,
             'total': chinaTotal,
             'children': provinces
@@ -102,3 +101,5 @@ def get_world_reports_dxy(raw_html=None):
 def get_dxy_json(raw_html=None):
     return get_world_reports_dxy(raw_html)
 
+if __name__ == '__main__':
+    print(get_dxy_json())
