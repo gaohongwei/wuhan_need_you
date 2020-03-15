@@ -15,41 +15,50 @@
             {{pages_info.introduction}}
         </p>
 
-		<div><b>统计数据</b>
-        <ul>
-            <li>累计确诊：<span id='confirmedCount'></span></li>
-            <li>累计治愈：<span id='curedCount'></span></li>
-            <li>现存重症：<span id='seriousCount'></span></li>
-            <li>现存疑似：<span id='suspectedCount'></span></li>
-            <li>累计死亡：<span id='deadCount'></span></li>
-        </ul>
-		<div><b>较昨日变化</b>
-        <ul>
-            <li>新增重症：<span id='seriousIncr'></span></li>
-            <li>新增治愈：<span id='curedIncr'></span></li>
-            <li>新增疑似：<span id='suspectedIncr'></span></li>
-            <li>新增死亡：<span id='deadInc'></span></li>
-        </ul>
-		</div>
-		<div><b>备注</b><span id='remarks'></span></div>
-		<div><b>说明</b><span id='notes'></span></div>
-		<div style="height:600px"><b>全国各省概况地图</b>
+        <div style="margin-left: 5%;">
+            <div><b>统计数据</b>
+                <ul>
+                    <li>累计确诊：<span id='confirmedCount'></span></li>
+                    <li>累计治愈：<span id='curedCount'></span></li>
+                    <li>现存重症：<span id='seriousCount'></span></li>
+                    <li>现存疑似：<span id='suspectedCount'></span></li>
+                    <li>累计死亡：<span id='deadCount'></span></li>
+                </ul>
+            </div>
+                
+            <div><b>较昨日变化</b>
+                <ul>
+                    <li>新增重症：<span id='seriousIncr'></span></li>
+                    <li>新增治愈：<span id='curedIncr'></span></li>
+                    <li>新增疑似：<span id='suspectedIncr'></span></li>
+                    <li>新增死亡：<span id='deadInc'></span></li>
+                </ul>
+            </div>
+
+            <div><b>备注</b><span id='remarks'></span></div>
+            <div><b>说明</b><span id='notes'></span></div>
+        </div>
+	
+        
+		<div style="height:600px; text-align: center;"><b>全国各省概况地图</b>
 			&nbsp;&nbsp;
 			<span><select id='chinaMapSelect'></select></span>
-			<div id='chinaMap'></div>
+			<div id='chinaMap' style="width:60%; margin: auto;"></div>
 		</div>
-		<div style="height:600px"><b>世界各国概况地图</b>
+		<div style="height:600px; text-align: center;"><b>世界各国概况地图</b>
 			&nbsp;&nbsp;
 			<span><select id='worldMapSelect'></select></span>
-			<div id='worldMap'></div>
-		</div>
-		<div><b>概况</b><div id='dailyPics' style="width:60%"></div></div>
-        <div><b>全国趋势图</b><div id='quanguoTrendChart' style="width:60%"></div></div>
-        <div><b>湖北/非湖北趋势图</b><div id='hbFeiHbTrendChart' style="width:60%"></div></div>
-		<div><b>更新日期：</b><span id='updateTime'></span></div>
-		<div><b>数据来源：</b>
-            <a href='https://ncov.dxy.cn/ncovh5/view/pneumonia'>丁香园</a>
-            <a href='https://xw.qq.com/act/qgfeiyan'>腾讯</a>
+			<div id='worldMap' style="width:60%; margin: auto;"></div>
+        </div>
+        <div style="text-align: center;">
+            <div><b>概况</b><div id='dailyPics' style="width:60%; margin: auto;"></div></div>
+            <div><b>全国趋势图</b><div id='quanguoTrendChart' style="width:60%; margin: auto;"></div></div>
+            <div><b>湖北/非湖北趋势图</b><div id='hbFeiHbTrendChart' style="width:60%; margin: auto;"></div></div>
+            <div><b>更新日期：</b><span id='updateTime'></span></div>
+            <div><b>数据来源：</b>
+                <a href='https://ncov.dxy.cn/ncovh5/view/pneumonia'>丁香园</a>
+                <a href='https://xw.qq.com/act/qgfeiyan'>腾讯</a>
+            </div>
         </div>
     </div>
     <div class="col-1"></div>
