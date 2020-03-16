@@ -47,7 +47,6 @@ class UserModelView(sqla.ModelView):
     can_view_details = True
     column_details_exclude_list = ['password', 'password_hash']
     column_detail_list = ['username', 'first_name', 'last_name', 'email', 'role', 'register_time']
-
     # hide 'With select' 
     action_disallowed_list = ['delete']
 
@@ -62,9 +61,12 @@ class UserModelView(sqla.ModelView):
             'password': PasswordField('密码', [validators.required()]),
             'email': TextField('电子邮件', [validators.required()]),
             'role': SelectField('角色', [validators.required()],
-                choices=[(1,1),(2,2),(3,3)],
+                choices=[],
                 coerce=int)
             }
+    # override to avoid edit role
+    edit_template = "admin/edit_user.html"
+
     def __init__(self, *args, **kwargs):
         super().__init__(User, db.session, name='用户管理')
     # override to add auth filter
