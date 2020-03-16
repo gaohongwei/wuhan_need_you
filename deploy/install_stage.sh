@@ -2,7 +2,7 @@
 
 NAME=wuhan_need_you_stage
 ROOT=/usr/local/$NAME
-rm -rf $ROOT
+find $ROOT \( -name upload -prune \) -o -type f -exec rm {} + >/dev/null 2>&1
 mkdir -p $ROOT
 SRC_DIR=`dirname $(readlink -f $0)`/..
 cd $SRC_DIR
