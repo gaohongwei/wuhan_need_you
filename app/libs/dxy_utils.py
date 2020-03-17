@@ -59,7 +59,6 @@ def get_overall(raw_html=None):
 
 def get_world_reports_dxy(raw_html=None):
     raw_html = raw_html or get_html()
-    print(raw_html)
     data = get_json('getListByCountryTypeService2', raw_html)
     if data == None:
         return None
@@ -72,18 +71,34 @@ def get_world_reports_dxy(raw_html=None):
                 'heal': country['curedCount'],
                 'dead': country['deadCount']
                 }
-        res['lastUpdateTime'] = parse_timestamp(country['modifyTime'])
+        modifyTime = country.get('modifyTime', None)
+        res['lastUpdateTime'] = parse_timestamp(country.get('modifyTime', None)) if modifyTime else None
         for i in country:
             res[i] = country[i]
         return res
-    provinces = [parseItem(i) for i in get_json('getListByCountryTypeService1')]
+    provinces = (get_json('getListByCountryTypeService1', raw_html) \
+            or get_json('getAreaStat', raw_html)
+            or []
+            )
+    if len(provinces) == 0:
+        print('Error: parse china data from dxy failed')
+    provinces = [parseItem(i) for i in provinces]
     chinaTotal = {
             'confirm': sum([p['total']['confirm'] for p in provinces]),
             'suspect': sum([p['total']['suspect'] for p in provinces]),
             'heal': sum([p['total']['heal'] for p in provinces]),
             'dead': sum([p['total']['dead'] for p in provinces])
             }
-    chinaUpdatedTime = max([p['lastUpdateTime'] for p in provinces])
+    def maxByKey(d, key):
+        items = [i.get(key, None) for i in d if i != None]
+        items = [i for i in items if i != None]
+        if len(items) == 0:
+            return None
+        return max(items)
+    def isoformat(date):
+        return date.isoformat() if date != None else 'null'
+    provincesUpdateTimes = [p['lastUpdateTime'] for p in provinces if p['lastUpdateTime'] != None]
+    chinaUpdatedTime = maxByKey(provinces, 'lastUpdateTime')
     china = {
             'name': '中国',
             'lastUpdateTime': chinaUpdatedTime,
@@ -91,12 +106,12 @@ def get_world_reports_dxy(raw_html=None):
             'children': provinces
             }
     data = [china] + [parseItem(country) for country in data]
-    utcTime = max([i['lastUpdateTime'] for i in data])
+    utcTime = maxByKey(data, 'lastUpdateTime')
     for country in data:
-        country['lastUpdateTime'] = country['lastUpdateTime'].isoformat()
+        country['lastUpdateTime'] = isoformat(country['lastUpdateTime'])
         for province in country.get('children', []):
-            province['lastUpdateTime'] = province['lastUpdateTime'].isoformat()
-    return {'data': data, 'lastUpdateTime': utcTime.isoformat()}
+            province['lastUpdateTime'] = isoformat(province['lastUpdateTime'])
+    return {'data': data, 'lastUpdateTime': isoformat(utcTime)}
 
 def get_dxy_json(raw_html=None):
     return get_world_reports_dxy(raw_html)
