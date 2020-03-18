@@ -11,7 +11,7 @@ menus = [
             'path': '/pages/alumni_activities'
             },
         {
-            'label': "武汉疫情动态",
+            'label': "全球疫情动态",
             #'path': '/pages/wuhan_situation'
             'path': '/reports'
             },
