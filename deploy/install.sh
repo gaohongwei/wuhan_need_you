@@ -1,6 +1,7 @@
 #!/bin/bash
 
 ROOT=/usr/local/wuhan_need_you
+find $ROOT \( -name upload -prune \) -o -type f -exec rm {} + >/dev/null 2>&1
 rm -rf $ROOT
 mkdir -p $ROOT
 SRC_DIR=`dirname $(readlink -f $0)`/..

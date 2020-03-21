@@ -11,8 +11,13 @@ from app.libs.tx_utils import get_china_provinces_data, get_world_data, get_tx_j
 def get_realtime_overall():
     load_timeout = 1800
     def load_from_remote():
-        data = get_overall()
+        data = None
+        try:
+            data = get_overall()
+        except Exception as e:
+            print(e)
         if data == None:
+            print('ERROR: parsing data from dxy.cn failed')
             return None
         return {'key': str(data['updateTime']), 'value': data}
 
@@ -39,8 +44,13 @@ def get_cached_tx_json():
 def get_cached_dxy_json():
     load_timeout = 1800
     def load_from_remote():
-        data = get_dxy_json()
+        data = None
+        try:
+            data = get_dxy_json()
+        except Exception as e:
+            print(data)
         if data == None:
+            print('ERROR: parsing data from dxy.cn failed')
             return None
         return {'key': str(data['lastUpdateTime']), 'value': data}
 
