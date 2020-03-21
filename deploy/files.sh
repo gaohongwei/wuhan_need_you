@@ -47,7 +47,7 @@ backup() {
 	echo "Backup to $FILE..."
 	make_dir_for_file $FILE
 	cd $UPLOAD
-	tar czvf $FILE * >/dev/null 2>&1 \
+	tar czvf $FILE * >/dev/null \
 		&& echo "Backup to $FILE success" \
 		|| echo "Backup failed"
 }
@@ -60,8 +60,13 @@ restore() {
 		echo "ERROR: no backup exists"
 		exit 1
 	fi
+	if ! [ -f "$latest" ]; then
+		echo "ERROR: file $latest not exist"
+		exit 1
+	fi
+	latest=`get_absolute_path $latest`
 	cd $UPLOAD
-	tar xzvf $latest >/dev/null 2>&1 \
+	tar xzvf $latest >/dev/null \
 		&& echo "Restore from $latest successfully" \
 		|| echo "Restore from $latest failed"
 }
