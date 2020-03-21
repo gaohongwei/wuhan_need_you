@@ -15,6 +15,18 @@ get_root_dir() {
 		echo `dirname $(readlink -f $0)`/..
 	fi
 }
+get_absolute_path() {
+	if is_mac; then
+		# `brew install greadlink` beforehand
+		echo `greadlink -f $1`
+	else
+		echo `readlink -f $1`
+	fi
+}
+make_dir_for_file() {
+	path=`dirname $1`
+	mkdir -p $path >/dev/null 2>&1
+}
 
 APP_ROOT=/usr/local/wuhan_need_you
 UPLOAD=$APP_ROOT/app/static/upload
@@ -29,9 +41,9 @@ backup() {
 	fi
 	DIR=${1:-$BACKUP}
 	FILE=$DIR/upload-`date +%Y%m%d-%H%M%S`.tar.gz
-	if ! [ -d $DIR ]; then
-		mkdir -p $DIR
-	fi
+	FILE=`get_absolute_path $FILE`
+	make_dir_for_file $FILE
+	echo "Backup to $FILE..."
 	cd $UPLOAD
 	tar czvf $FILE * >/dev/null 2>&1 \
 		&& echo "Backup to $FILE success" \
