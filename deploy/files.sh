@@ -4,9 +4,21 @@
 # A script to back static/upload
 #
 
+is_mac() {
+	uname -a | grep Darwin >/dev/null
+}
+get_root_dir() {
+	if is_mac; then
+		# `brew install greadlink` beforehand
+		echo `dirname $(greadlink -f $0)`/..
+	else
+		echo `dirname $(readlink -f $0)`/..
+	fi
+}
+
 APP_ROOT=/usr/local/wuhan_need_you
 UPLOAD=$APP_ROOT/app/static/upload
-ROOT=$(dirname `greadlink -f $0`)/..
+ROOT=`get_root_dir`
 BACKUP=$ROOT/backup
 
 # backup [backup_dir]
