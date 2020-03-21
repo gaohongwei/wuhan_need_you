@@ -40,10 +40,12 @@ backup() {
 		exit 1
 	fi
 	DIR=${1:-$BACKUP}
-	FILE=$DIR/upload-`date +%Y%m%d-%H%M%S`.tar.gz
-	FILE=`get_absolute_path $FILE`
-	make_dir_for_file $FILE
+	if ! [ -d $DIR ]; then
+		mkdir -p $DIR
+	fi
+	FILE=`get_absolute_path $DIR`/upload-`date +%Y%m%d-%H%M%S`.tar.gz
 	echo "Backup to $FILE..."
+	make_dir_for_file $FILE
 	cd $UPLOAD
 	tar czvf $FILE * >/dev/null 2>&1 \
 		&& echo "Backup to $FILE success" \
