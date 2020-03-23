@@ -65,6 +65,7 @@ img {vertical-align: middle;}
 @media only screen and (max-width: 300px) {
   .text {font-size: 11px}
 }
+
 </style>
 </head>
 
@@ -117,7 +118,7 @@ img {vertical-align: middle;}
 </div>
 
 {% set notices_brief_list = pages_info['notices'] %}
-<div style="width:80%; margin:0 auto;">
+<div style="width:90%; margin:0 auto; border-style: none none none none; border-bottom-color: #0b3819;">
   {% include "notices_brief_list.html" %}
 </div>
 
@@ -204,7 +205,7 @@ img {vertical-align: middle;}
       <img class="card-img-top" src="{{url_for('static', filename=topic.image) }}">
       <div class="card-body text-center">
         {% for index in range(topic.link|length) %}
-        <a href={{topic.link[index]}} class="btn btn-primary">
+        <a href={{topic.link[index]}} class="btn btn-primary" style="background-color: #800000; color: white">
           {{topic.title[index]}}
       </a>
         {% endfor %}

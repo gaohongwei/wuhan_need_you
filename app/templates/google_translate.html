@@ -38,10 +38,10 @@
   }
 
   .goog-te-gadget-simple {
-    background-color: rgba(190, 184, 197, 0.178) !important;
-    border: 2px solid rgba(128, 255, 128, 0.50) !important;
+    background-color: none !important;
+    border: none !important;
     padding: 2px !important;
-    border-radius: 5px !important;
+    border-radius: none !important;
     font-size: 0.8rem !important;
     line-height: 1.5rem !important;
     display: inline-block;
@@ -53,7 +53,7 @@
   }
 
   .goog-te-menu-value {
-    color: #fff !important;
+    color: #0C1D0F !important;
 
     &:before {
       font-family: 'Material Icons';
@@ -111,7 +111,7 @@
 
     $("iframe").contents().find(".goog-te-menu2-item div, .goog-te-menu2-item:link div, .goog-te-menu2-item:visited div, .goog-te-menu2-item:active div, .goog-te-menu2 *")
       .css({
-        'color': '#544F4B',
+        'color': 'black',
         'font-family': 'Roboto',
         'width': '100%'
       });
@@ -130,9 +130,9 @@
 
     // Change hover effects
     $("iframe").contents().find(".goog-te-menu2-item div").hover(function () {
-      $(this).css('background-color', '#4385F5').find('span.text').css('color', 'white');
+      $(this).css('background-color', 'green').find('span.text').css('color', 'white');
     }, function () {
-      $(this).css('background-color', 'white').find('span.text').css('color', '#544F4B');
+      $(this).css('background-color', 'white').find('span.text').css('color', '#black');
     });
 
     // Change Google's default blue border
