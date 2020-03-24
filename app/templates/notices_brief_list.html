@@ -5,15 +5,36 @@
     Parameters:
       notices_brief_list: a list of notices to show
 #}-->
+<head>
+<style>
+/* unvisited link */
+a:link {
+  color: black;
+}
 
-<div class="card m-3 p-1" style="border-color: grey">
-<h5 class="card-title text-center" style="color: #243B2B; font-size: 1.5em"><strong>通知和公告</strong><small class="float-right"><a href='/notices'>更多</a></small></h5>
+/* visited link */
+a:visited {
+  color: green;
+}
+
+/* mouse over link */
+a:hover {
+  color: #0b3819;
+}
+
+/* selected link */
+a:active {
+  color: #0b3819;
+}
+</style>
+</head>
+<div class="card m-3 p-1" style="border: none; background-color: #F5F5F5; width: 100%;">
+<h5 class="card-title text-center" style="color: #243B2B; font-size: 1.5em"><strong>通知和公告</strong><small class="float-right"><a href='/notices' >更多</a></small></h5>
 <div class="card-body">
   {% for notice in notices_brief_list %}
     {% if notice.title %}
       <li>
           <a href='/notices/{{notice.id}}'>{{ notice.title }}</a>
-          <span class="float-right">{{notice.created_time | datetime_format_cn}}</span>
       </li>
     {% endif %}
   {% endfor %}

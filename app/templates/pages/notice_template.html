@@ -1,11 +1,33 @@
 <!-- template only for one notice -->
+<head>
+<style>
+/* unvisited link */
+a:link {
+  color: black;
+}
 
+/* visited link */
+a:visited {
+  color: green;
+}
+
+/* mouse over link */
+a:hover {
+  color: #0b3819;
+}
+
+/* selected link */
+a:active {
+  color: #0b3819;
+}
+</style>
+</head>
 {% for item in data %}
 	{% for tag in item %}
 		{% if tag == 'title' %}
-			<h2 class='text-center'>{{item[tag]}}</h2>
+			<h2>{{item[tag]}}</h2>
 		{% elif tag == 'sub_title' %}
-			<h4 class='text-center'>{{item[tag]}}</h4>
+			<h4>{{item[tag]}}</h4>
 		{% elif tag == 'paragraph' %}
 			<p>{{item[tag]}}</p>
 		{% elif tag == 'image' %}
