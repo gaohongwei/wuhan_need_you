@@ -12,3 +12,4 @@ venv
 /app/static/upload/
 /logs
 /backup
+/backup_img
