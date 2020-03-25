@@ -38,6 +38,18 @@ const insert_scripts = async function () {
 };
 
 /**
+ * Remain only a unique element for continuous same elements. e.g. [1,2,2,3] => [1,2,3]
+ * @arr The array should be sorted first
+ * @getValue the mapper to convert the element to another value for comparison. It is nullable
+ **/
+const uniq = (arr, getValue) => {
+    if (!getValue) {
+        getValue = i => i;
+    }
+    return arr.filter((e, i) => getValue(e) !== getValue(arr[i+1]));
+};
+
+/**
  * Create pieces for echarts visualMap
  * values: an array of any format. 
  *         If the elements are numbers, mapper can be null,
@@ -49,6 +61,7 @@ const createPieces = (values, numPieces, mapper) => {
     mapper = mapper || (i => i);
     let cmp = (i, j) => {i = mapper(i); j = mapper(j); return (i > j) ? 1 : (i < j ? -1 : 0)};
     values = values.sort(cmp);
+    values = uniq(values, v => !!v ? v.name : undefined);
     const numPerPiece = Math.floor(values.length / numPieces);
     const createPiece = i => {
         const beg = values[i * numPerPiece];
@@ -63,7 +76,7 @@ const createPieces = (values, numPieces, mapper) => {
     const pieces = new Array(numPieces).fill().map((_, i) => createPiece(i));
     const min = mapper(values[0]);
     const max = mapper(values[values.length - 2]); // ignore the max
-    return {pieces, min, max};
+    return {values, pieces, min, max};
 };
 
 const world_country_name_map = {
@@ -268,16 +281,14 @@ const render_map = async function (containerId, data, map='china') {
     const items = data.items;
     const time = data.time;
     let title = data.title || '';
+    const {values, pieces, min, max} = createPieces(items, 4, i => parseFloat(i.value));
     if (time) {
         title += `${time}`;
     }
 
-    if (!name || !items) {
+    if (!name || !values) {
         return;
     }
-
-    // const min = Math.min(...items.map(i => i.value));
-    // const max = Math.max(...items.map(i => i.value));
 
     const option = {
         title: {
@@ -300,7 +311,9 @@ const render_map = async function (containerId, data, map='china') {
             }
         },
         visualMap: {
-            ...createPieces(items, 4, i => parseFloat(i.value)),
+            pieces,
+            min,
+            max,
             left: 'left',
             top: 'bottom',
             text: ['High','Low'],
@@ -338,7 +351,7 @@ const render_map = async function (containerId, data, map='china') {
                 name: name,
                 type: 'map',
                 geoIndex: 0,
-                data: items
+                data: values
             }
         ]
     };
