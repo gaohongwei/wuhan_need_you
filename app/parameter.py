@@ -554,67 +554,67 @@ donate_info = {
 
             # notice start
             [
-                {
-                    'title': "财务公示和募捐计划重要更新 (2月3日)"
-                    },
-                {
-                    'sub_title': "财务信息公示"
-                    },
-                {
-                    'paragraph': "非常感谢热心支援新冠状病毒疫区的各位捐赠人。截止于美国西部时间2月2日（募款第5天）0时，Wuhan United筹集到的资金总额为$240,273。这些资金将陆续从各个捐助平台转入为Wuhan United募捐的武大海外校友科学基金会和华科硅谷基金会。各主要平台具体捐赠情况如下："
-                    },
-                {
-                    'table': [
-                        "|GoFundMe|Benevity(incl employer match)|Paypal",
-                        "武大海外校友科学基金会|$138,308.00|$32,374.64|$17,302.36",
-                        "华科硅谷基金会|NA|$22,214.00|30,074.00"
-                        ]
-                    },
-                {
-                    'paragraph': "Wuhan United执委会自2020年1月23日成立以来，就设立了一个急迫的工作目标： 迅速筹集国内医院急需的医用物资， 并将筹集到的物资运送到疫区一线医院。"
-                    },
-                {
-                    'paragraph': "为实现这个目标，Wuhan United 执委会从1月23日起就组建专业人士团队寻找大批量的急需医用物资，如N95口罩，防护服等。然而很快发现市场上极难找到符合标准的可靠现货货源。由于捐款平台的运作方式，我们预计到2月中下旬才能得到捐款平台的支付。这样的现金流也是无法大批量及时地购买武汉所急需的物资的。为此我们的团队在摸索几天时间后做出决定，并在极短的时间内与美国大型NGO建立合作，争取捐助意向，帮助他们与疫区医院对接，确定援助物资，并帮助他们完成运输物资所需要的所有文件，协调运输通关，以及通过国内热心校友与志愿者们保驾护航，确保物资快速顺利到达指定医院。1月31日在武汉协和医院物资告急的时刻，终于将第一批Direct Relief捐赠的2.5吨医疗物资直接送达！详细报道请参考公众号前文，及全程录像"
-                    },
-                {
-                    'source': {
-                        'title': "",
-                        'content': 'https://www.youtube.com/watch?v=6SqgCPgioVE',
-                        'link': 'https://www.youtube.com/watch?v=6SqgCPgioVE'
-                        }
-                    },
-                {
-                    'paragraph': '除了与Direct Relief进行合作，我们也和MAP International建立了合作伙伴关系。我们承诺将部分捐款用于支持他们。由MAP International牵头，Wuhan United 以及其他捐赠机构共同捐助的超过134万个口罩，1万件防护服，还有28万双手套将发往湖北疫区。具体报道请参考'
-                    },
-                {
-                    'source': {
-                        'title': "",
-                        'content': 'https://sites.google.com/view/wuhan-ncov-crisis-fundraise/our-work/wuhan-united-partnered-with-map-international',
-                        'link': 'https://sites.google.com/view/wuhan-ncov-crisis-fundraise/our-work/wuhan-united-partnered-with-map-international'
-                        },
-                    },
-                {
-                    'source': {
-                        'title': "",
-                        'content': 'https://www.map.org/media',
-                        'link': 'https://www.map.org/media'
-                        },
-                    },
-                {
-                    'paragraph': '今后短期内Wuhan United的工作重心将以这种模式继续与拥有稳定货源的大型NGO合作，促进更多的医疗资源迅速支援疫区。募集的资金一部分将用于深化与NGO的合作，以支持他们对疫区的贡献。疫区的情况每天都在变，我们的工作也会根据情况进行调整，一定尽我们所能为疫区做更多的事情。我们重申，所有募集到的资金都将用于支援疫区的工作中。谢谢大家的支持！'
-                    },
-                {
-                        'sub_title': '重要更新声明'
-                        },
-                {
-                        'paragraph': '基于目前通过武汉大学海外校友科学基金会善款捐赠的数额已经达到我们预先设定的范围，经Wuhan United执委会、武汉大学海外校友科学基金会和华科校友基金会商讨决定，武汉大学海外校友科学基金会将逐步停止受理对Wuhan United行动的捐赠，具体方式如下：'
-                        },
-                {
-                        'list': [ '武汉大学海外校友基金会将会在美国西部时间2020年2月5日中午12时，停止代理接收针对Wuhan United的资金捐赠。同时，以免热心的朋友没有及时看到这一条消息，武汉大学海外校友基金会将把于美国西部时间2020年6月30日中午12时之前所有对武汉大学海外校友基金会的捐赠，用于支持Wuhan United，支持武汉，支持湖北，抗击新冠疫情。',
-                            '华科校友基金会将继续为Wuhan United行动募集资金。',
-                            '华科及武大北加州校友会的志愿者们将继续全力支持Wuhan United的后续支援行动'
-                            ],
-                        },
+                # {
+                #     'title': "财务公示和募捐计划重要更新 (2月3日)"
+                #     },
+                # {
+                #     'sub_title': "财务信息公示"
+                #     },
+                # {
+                #     'paragraph': "非常感谢热心支援新冠状病毒疫区的各位捐赠人。截止于美国西部时间2月2日（募款第5天）0时，Wuhan United筹集到的资金总额为$240,273。这些资金将陆续从各个捐助平台转入为Wuhan United募捐的武大海外校友科学基金会和华科硅谷基金会。各主要平台具体捐赠情况如下："
+                #     },
+                # {
+                #     'table': [
+                #         "|GoFundMe|Benevity(incl employer match)|Paypal",
+                #         "武大海外校友科学基金会|$138,308.00|$32,374.64|$17,302.36",
+                #         "华科硅谷基金会|NA|$22,214.00|30,074.00"
+                #         ]
+                #     },
+                # {
+                #     'paragraph': "Wuhan United执委会自2020年1月23日成立以来，就设立了一个急迫的工作目标： 迅速筹集国内医院急需的医用物资， 并将筹集到的物资运送到疫区一线医院。"
+                #     },
+                # {
+                #     'paragraph': "为实现这个目标，Wuhan United 执委会从1月23日起就组建专业人士团队寻找大批量的急需医用物资，如N95口罩，防护服等。然而很快发现市场上极难找到符合标准的可靠现货货源。由于捐款平台的运作方式，我们预计到2月中下旬才能得到捐款平台的支付。这样的现金流也是无法大批量及时地购买武汉所急需的物资的。为此我们的团队在摸索几天时间后做出决定，并在极短的时间内与美国大型NGO建立合作，争取捐助意向，帮助他们与疫区医院对接，确定援助物资，并帮助他们完成运输物资所需要的所有文件，协调运输通关，以及通过国内热心校友与志愿者们保驾护航，确保物资快速顺利到达指定医院。1月31日在武汉协和医院物资告急的时刻，终于将第一批Direct Relief捐赠的2.5吨医疗物资直接送达！详细报道请参考公众号前文，及全程录像"
+                #     },
+                # {
+                #     'source': {
+                #         'title': "",
+                #         'content': 'https://www.youtube.com/watch?v=6SqgCPgioVE',
+                #         'link': 'https://www.youtube.com/watch?v=6SqgCPgioVE'
+                #         }
+                #     },
+                # {
+                #     'paragraph': '除了与Direct Relief进行合作，我们也和MAP International建立了合作伙伴关系。我们承诺将部分捐款用于支持他们。由MAP International牵头，Wuhan United 以及其他捐赠机构共同捐助的超过134万个口罩，1万件防护服，还有28万双手套将发往湖北疫区。具体报道请参考'
+                #     },
+                # {
+                #     'source': {
+                #         'title': "",
+                #         'content': 'https://sites.google.com/view/wuhan-ncov-crisis-fundraise/our-work/wuhan-united-partnered-with-map-international',
+                #         'link': 'https://sites.google.com/view/wuhan-ncov-crisis-fundraise/our-work/wuhan-united-partnered-with-map-international'
+                #         },
+                #     },
+                # {
+                #     'source': {
+                #         'title': "",
+                #         'content': 'https://www.map.org/media',
+                #         'link': 'https://www.map.org/media'
+                #         },
+                #     },
+                # {
+                #     'paragraph': '今后短期内Wuhan United的工作重心将以这种模式继续与拥有稳定货源的大型NGO合作，促进更多的医疗资源迅速支援疫区。募集的资金一部分将用于深化与NGO的合作，以支持他们对疫区的贡献。疫区的情况每天都在变，我们的工作也会根据情况进行调整，一定尽我们所能为疫区做更多的事情。我们重申，所有募集到的资金都将用于支援疫区的工作中。谢谢大家的支持！'
+                #     },
+                # {
+                #         'sub_title': '重要更新声明'
+                #         },
+                # {
+                #         'paragraph': '基于目前通过武汉大学海外校友科学基金会善款捐赠的数额已经达到我们预先设定的范围，经Wuhan United执委会、武汉大学海外校友科学基金会和华科校友基金会商讨决定，武汉大学海外校友科学基金会将逐步停止受理对Wuhan United行动的捐赠，具体方式如下：'
+                #         },
+                # {
+                #         'list': [ '武汉大学海外校友基金会将会在美国西部时间2020年2月5日中午12时，停止代理接收针对Wuhan United的资金捐赠。同时，以免热心的朋友没有及时看到这一条消息，武汉大学海外校友基金会将把于美国西部时间2020年6月30日中午12时之前所有对武汉大学海外校友基金会的捐赠，用于支持Wuhan United，支持武汉，支持湖北，抗击新冠疫情。',
+                #             '华科校友基金会将继续为Wuhan United行动募集资金。',
+                #             '华科及武大北加州校友会的志愿者们将继续全力支持Wuhan United的后续支援行动'
+                #             ],
+                #         },
                 {
                         'sub_title': 'Q&A'
                         },
