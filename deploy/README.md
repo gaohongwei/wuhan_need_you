@@ -24,6 +24,19 @@ To restore databases
 sudo deploy/database.sh restore # to restore from the latest file in backup/
 ```
 
+## Before Deploy website, backup notices images
+
+To backup images 
+```bash
+sudo deploy/files.sh backup backup_img/
+```
+
+## After Deploy website, restore notcies images 
+To restore images   
+```bash
+sudo deploy/files.sh restore backup_img/[xxx..tar.gz]
+```
+
 ## Deploy website
 
 Assume the database has been setup (`sudo deploy/database.sh check` success).
