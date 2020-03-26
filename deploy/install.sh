@@ -1,9 +1,9 @@
 #!/bin/bash
 
-ROOT=/usr/local/wuhan_need_you
-find $ROOT \( -name upload -prune \) -o -type f -exec rm {} + >/dev/null 2>&1
-rm -rf $ROOT
+NAME=wuhan_need_you
+ROOT=/usr/local/$NAME
 mkdir -p $ROOT
+find $ROOT \( -name upload -prune -o -name logs -prune \) -o -type f -exec rm {} + >/dev/null 2>&1
 SRC_DIR=`dirname $(readlink -f $0)`/..
 cd $SRC_DIR
 
@@ -25,9 +25,9 @@ cp -r * $ROOT/
 pip3 install -r requirements.txt
 
 # Install service
-cp deploy/wuhan_need_you.service /etc/systemd/system/
+cp deploy/$NAME.service /etc/systemd/system/
 systemctl daemon-reload
-systemctl restart wuhan_need_you
-systemctl enable wuhan_need_you
-systemctl status --no-pager wuhan_need_you
+systemctl restart $NAME
+systemctl enable $NAME
+systemctl status --no-pager $NAME
 
