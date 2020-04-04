@@ -588,7 +588,128 @@ donate_info = {
         'notices': [
 
             # notice start
-            [
+            [   
+                {
+                  'sub_title': "行动发起方"
+                },
+                {
+                  'paragraph': "作为众多身在硅谷的海外华人之一，华科、武大、浙大三校硅谷校友会决定共同携手，发起此次“CARE”行动，为我们生活的社区、家园，群策群力，打赢这场新冠病毒战役，我们也欢迎各界朋友加入。"
+                },
+                {
+                  'paragraph': "主办单位：华中科技大学、武汉大学、浙江大学硅谷校友会"
+                },
+                {
+                  'paragraph': "联合主办单位：加州湖北同乡总会"
+                },
+
+                {
+                  'sub_title': "捐款去向"
+                },
+                {
+                  'paragraph': "此次“CARE”行动，募捐将分两大主要去向："
+                },
+                {
+                  'paragraph': "第一，对医务人员个人防护设备（PPE）的捐助。我们将根据美国各大媒体、政府机构等发布经核实的信息，针对具体需要，对医疗机构进行资金及物资的专向捐赠。"
+                },
+                {
+                  'paragraph': "第二，为社区提供公共服务群体的捐助。随着“居家隔离令”（Shelter-in-Place）的发布，越来越多人在家工作，但公共部门如卫生部门、警察局、消防局，超市、快递、餐饮等“必需行业”的工作人员依旧为本地居民服务着，这些行业服务人员的个人防护也是关注重点。"
+                },
+                {
+                  'paragraph': "无论是医护人员，还是快递小哥，帮助他们，保护好他们，就是保护好我们自己，保护好我们的社区。"
+                },
+
+                {
+                  'sub_title': "募捐账户"
+                },
+                {
+                  'paragraph': "募捐账户如下："
+                },
+                {
+                    'source': {
+                        'title': "Paypal（Recipient：Zheda Alumni Foundation）：",
+                        'content': 'https://tinyurl.com/zheda501c3',
+                        'link': 'https://tinyurl.com/zheda501c3'
+                        }
+                },
+                {
+                  'paragraph': "或可扫描下方二维码"
+                },
+                { 'image': {
+                    'link': "../upload/ID9_donate_1.jpg",
+                    'title': ""
+                    }
+                },
+                {
+                  'paragraph': "Benevity：Zheda Alumni Foundation 可在公司捐款平台搜索到，欢迎公司有“match fund” 的校友和朋友积极参与。"
+                },
+                {
+                    'source': {
+                        'title': "欢迎点击 ",
+                        'content': 'https://tinyurl.com/zheda501c3-COVID19',
+                        'link': 'https://tinyurl.com/zheda501c3-COVID19'
+                        }
+                },
+                {
+                  'paragraph': "或扫描下方二维码填写登记表，以便我们表示感谢。"
+                },
+                { 'image': {
+                    'link': "../upload/ID9_donate_2.jpg",
+                    'title': ""
+                    }
+                },
+
+                {
+                  'sub_title': 'Q&A'
+                },
+                {
+                  'paragraph': 'Q：本次捐款活动如何保证公开透明?'
+                },
+                {
+                  'paragraph': 'A：本次捐款将会及时通过微信公众号进行募捐数额、购买、募集物资、送达结果的公布。我们将保证募捐过程的公开透明，欢迎大家监督。'
+                },
+                {
+                  'paragraph': 'Q：本次捐款的物资如何保证及时送达？'
+                },
+                {
+                  'paragraph': 'A：每次捐款，或者采购的物资将会根据接收方的需求、紧急程度进行第一时间派送，更多现场将会通过公众号进行更新。'
+                },
+                {
+                  'paragraph': 'Q：个人或企业能否通过我们的行动进行医疗物品的捐赠？'
+                },
+                {
+                  'paragraph': 'A：如果您有符合FDA医疗标准，且有现货可进行及时捐赠的大宗PPE物资，欢迎通过后台留言联系我们。'
+                },
+                {
+                  'paragraph': 'Q：是否可以提供税收减免收据？'
+                },
+                {
+                  'paragraph': 'A：我们的捐款渠道都是501(c)(3)注册的NGO。捐款都是100%税务减免。'
+                },
+                {
+                  'paragraph': 'Q：我不是三校校友，是否可以参与这次募捐？'
+                },
+                {
+                  'paragraph': 'A：无论你是三校校友，还是热心的华人志愿者，只要你愿意服务和帮助我们的社区，欢迎你进行募捐，加入我们的战疫行动，帮助我们所处的社区更快战胜疫情！欢迎各公司、组织参与捐款。'
+                },
+                {
+                  'paragraph': '如果您有志于参与硅谷线下物资的捐赠、派送，和采购，欢迎联系我们！'
+                },
+                {
+                  'paragraph': '最后，请各位校友和朋友们遵照加州和湾区县市公共卫生部门的“居家隔离”要求，保重身体，保持良好心态，关心他人。'
+                },
+
+
+                # {
+                #   'source': {
+                #     'title': "Paypal：",
+                #     'content': "https://tinyurl.com/zheda501c3",
+                #     'link': "https://tinyurl.com/zheda501c3"
+                #   }
+                # },
+                # {
+                #   'paragraph': "（Recipient：Zheda Alumni Foundation）可扫描下方二维码"
+                # },
+
                 # {
                 #     'title': "财务公示和募捐计划重要更新 (2月3日)"
                 #     },
@@ -650,45 +771,45 @@ donate_info = {
                 #             '华科及武大北加州校友会的志愿者们将继续全力支持Wuhan United的后续支援行动'
                 #             ],
                 #         },
-                {
-                        'sub_title': 'Q&A'
-                        },
-                {
-                        'paragraph': 'Q：目前已有哪些NGO合作对象'
-                        },
-                {
-                        'paragraph': 'A：我们已经和Direct Relief和MAP International建立了合作关系。同时我们也在积极寻求更多NGO的合作机会。'
-                        },
-                {
-                        'paragraph': 'Q：资金去向'
-                        },
-                {
-                        'paragraph': 'A：已经募集的资金一部分将用于深化与NGO的合作，以支持他们对疫区的贡献。疫区的情况每天都在变，我们的工作也会根据情况进行调整，一定尽我们所能为疫区做更多的事情。我们重申，所有募集到的资金都将用于支援疫区的工作中。'
-                        },
-                {
-                        'paragraph': 'Q：如何确保这些NGO的资金和物资能够用到中国疫情中'
-                        },
-                {
-                        'paragraph': 'A：我们会以各种方式参与NGO的关于疫情捐赠事宜，从争取捐助意向，帮助他们与疫区医院对接，确定援助物资，帮助他们完成运输物资所需要的所有文件，协调运输通关，以及通过国内热心校友与志愿者们保驾护航，确保物资快速顺利到达指定医院。'
-                        },
-                {
-                        'paragraph': 'Q：捐款平台会有手续费吗'
-                        },
-                {
-                        'paragraph': 'A：”The GoFundMe platform is free. A standard transaction fee of 2.9% plus $0.30 per donation allows for credit card processing and safe transfer of funds.” (Quoted from Gofundme FAQ)； PayPal有募捐手续费每笔2.2%或2.9%+$0.30'
-                        },
-                {
-                        'paragraph': 'Q：各个账户多久可以到账'
-                        },
-                {
-                        'paragraph': 'A：Gofundme：“All donations are made directly to PayPal Giving Fund (a 501(c)(3) charitable organization). After the deduction of payment processing fees, PayPal Giving Fund delivers the funds they receive on a monthly basis. Payment processing fees including PayPal‘s transaction fee and GoFundMe’s processing cost for the secure transfer of funds. PayPal Giving Fund does not charge a fee for its services.” (Quote from Gofundme policies)； Benevity 账期至少为1个月'
-                        },
-                {
-                        'paragraph': 'Q：我们如何知道捐款情况的更新'
-                        },
-                {
-                        'paragraph': 'A：每周会在网站和公众号上更新募捐情况与工作进展。'
-                        }
+                # {
+                #         'sub_title': 'Q&A'
+                #         },
+                # {
+                #         'paragraph': 'Q：目前已有哪些NGO合作对象'
+                #         },
+                # {
+                #         'paragraph': 'A：我们已经和Direct Relief和MAP International建立了合作关系。同时我们也在积极寻求更多NGO的合作机会。'
+                #         },
+                # {
+                #         'paragraph': 'Q：资金去向'
+                #         },
+                # {
+                #         'paragraph': 'A：已经募集的资金一部分将用于深化与NGO的合作，以支持他们对疫区的贡献。疫区的情况每天都在变，我们的工作也会根据情况进行调整，一定尽我们所能为疫区做更多的事情。我们重申，所有募集到的资金都将用于支援疫区的工作中。'
+                #         },
+                # {
+                #         'paragraph': 'Q：如何确保这些NGO的资金和物资能够用到中国疫情中'
+                #         },
+                # {
+                #         'paragraph': 'A：我们会以各种方式参与NGO的关于疫情捐赠事宜，从争取捐助意向，帮助他们与疫区医院对接，确定援助物资，帮助他们完成运输物资所需要的所有文件，协调运输通关，以及通过国内热心校友与志愿者们保驾护航，确保物资快速顺利到达指定医院。'
+                #         },
+                # {
+                #         'paragraph': 'Q：捐款平台会有手续费吗'
+                #         },
+                # {
+                #         'paragraph': 'A：”The GoFundMe platform is free. A standard transaction fee of 2.9% plus $0.30 per donation allows for credit card processing and safe transfer of funds.” (Quoted from Gofundme FAQ)； PayPal有募捐手续费每笔2.2%或2.9%+$0.30'
+                #         },
+                # {
+                #         'paragraph': 'Q：各个账户多久可以到账'
+                #         },
+                # {
+                #         'paragraph': 'A：Gofundme：“All donations are made directly to PayPal Giving Fund (a 501(c)(3) charitable organization). After the deduction of payment processing fees, PayPal Giving Fund delivers the funds they receive on a monthly basis. Payment processing fees including PayPal‘s transaction fee and GoFundMe’s processing cost for the secure transfer of funds. PayPal Giving Fund does not charge a fee for its services.” (Quote from Gofundme policies)； Benevity 账期至少为1个月'
+                #         },
+                # {
+                #         'paragraph': 'Q：我们如何知道捐款情况的更新'
+                #         },
+                # {
+                #         'paragraph': 'A：每周会在网站和公众号上更新募捐情况与工作进展。'
+                #         }
                 ]
         # notice end
     ]
