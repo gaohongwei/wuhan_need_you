@@ -84,12 +84,12 @@ index_info = {
     {
       'title': ["疫情动态","我要捐赠"],
       'image': "image/jiayou.jpeg",
-      'link': ['wuhan_situation', 'donate']
+      'link': ['reports', 'pages/donate']
     },
     {
       'title': ["联系我们"],
       'image': "image/alumni_activities/2017_alumni.jpg",
-      'link': ['contact_us']
+      'link': ['pages/contact_us']
     }
     ]
 
