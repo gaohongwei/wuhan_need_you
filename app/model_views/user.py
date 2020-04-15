@@ -111,7 +111,10 @@ def init_admin_user(app):
         db.create_all()
         admin_user = User(username="admin", role=1, password="admin")
         db.session.add(admin_user)
-        db.session.commit()
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
 
 def init_sample_users(app):
     with app.app_context():
@@ -123,4 +126,8 @@ def init_sample_users(app):
         db.session.add(test_user)
         test_user = User(username="test3", role=3, password="test3")
         db.session.add(test_user)
-        db.session.commit()
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
+        

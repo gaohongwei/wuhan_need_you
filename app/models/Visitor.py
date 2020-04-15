@@ -11,7 +11,7 @@ from app.libs.net_utils import get_ip
 class Visitor(db.Model):
     __tablename__ = 'visitors'
     id = db.Column(db.Integer, primary_key=True)
-    url = db.Column(db.String(80), nullable=False)
+    url = db.Column(db.String(150), nullable=False)
     ip_addr = db.Column(db.String(16), nullable=False)
     visited_time = db.Column(db.DateTime, default=utcnow)
 
@@ -47,7 +47,10 @@ class Visitor(db.Model):
             for (url, ip_addr, visited_time) in cls.queue:
                 db.session.add(Visitor(url=url, ip_addr=ip_addr, visited_time=visited_time))
                 current_app.logger.info('batch recording')
-            db.session.commit()
+            try:
+                db.session.commit()
+            except:
+                db.session.rollback()
             cls.queue = []
         return True
 
