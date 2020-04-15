@@ -25,7 +25,10 @@ class Cache(db.Model):
             db.session.add(cache)
         else:
             cache.value = value
-        db.session.commit()
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
         return cache
 
     @classmethod
@@ -81,7 +84,10 @@ class Cache(db.Model):
         if cache == None:
             return
         db.session.remove(cache)
-        db.session.commit()
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
 
     @classmethod
     def clear(cls):
@@ -89,7 +95,10 @@ class Cache(db.Model):
         delete all
         '''
         db.session.query(cls).delete()
-        db.session.commit()
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
 
     @classmethod
     def get(cls, key):
@@ -132,7 +141,10 @@ class Cache(db.Model):
             db.session.add(cache)
         elif cache.is_outdated(timeout_in_seconds):
             cache.value = value
-        db.session.commit()
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
 
     def is_outdated(self, timeout_in_seconds):
         return time_diff_in_seconds(utcnow(), self.timestamp) > timeout_in_seconds
@@ -148,5 +160,9 @@ class Cache(db.Model):
         cache = cls.get(key)
         if cache != None:
             cache.timestamp = utcnow()
-            db.session.commit()
+            try:
+                db.session.commit()
+            except:
+                db.session.rollback()
+
 

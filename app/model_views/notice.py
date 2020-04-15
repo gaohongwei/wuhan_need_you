@@ -150,7 +150,10 @@ class NoticeModelView(ModelView):
                                         'permitted_time': utcnow()
                                     },
                                 synchronize_session=False)
-            db.session.commit()
+            try:
+                db.session.commit()
+            except:
+                db.session.rollback()
 
             message = '{} notices have been successfully approved'.format(rows)
             flash(message, 'success')
@@ -173,7 +176,10 @@ class NoticeModelView(ModelView):
                                         'permitted_time': utcnow()
                                     },
                                 synchronize_session=False)
-            db.session.commit()
+            try:
+                db.session.commit()
+            except:
+                db.session.rollback()
 
             message = '{} notices have been successfully disapproved'.format(rows)
             flash(message, 'success')

@@ -30,7 +30,10 @@ class Comment(db.Model):
                 notice_title=notice_title,
                 notice_id=notice_id)
         db.session.add(c)
-        db.session.commit()
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
         current_app.logger.info(comment + ' is recorded')
         return True
 

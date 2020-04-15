@@ -47,7 +47,10 @@ class Visitor(db.Model):
             for (url, ip_addr, visited_time) in cls.queue:
                 db.session.add(Visitor(url=url, ip_addr=ip_addr, visited_time=visited_time))
                 current_app.logger.info('batch recording')
-            db.session.commit()
+            try:
+                db.session.commit()
+            except:
+                db.session.rollback()
             cls.queue = []
         return True
 
