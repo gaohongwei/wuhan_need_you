@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Info{% endblock %}
+{% block body %}
+
+<div class="container">
+  <div>
+      <div class="text-center">
+          <h2 id="notice_title" class="text-primary" style="font-size: 1.6em">{{notice.title}}</h2>
+          <p class="float-right">ID: <small id="notice_id">{{notice.id}}</small></p>
+          <p>创建时间：{{ notice.created_time | datetime_format_cn }} 修改时间: {{ notice.modified_time | datetime_format_cn }}</p>
+          {% if current_user.is_authenticated %}
+          <p>创建人: {{ notice.create_user }} 审核人: {{ notice.permit_user }} </p>
+          <p>状态: {{ notice.status }}</p>
+          <p>类型: {{ notice.type }}</p>
+          <p>优先级: {{ notice.priority }}</p>
+          {% endif %}
+      </div>
+      <div>
+          {{notice.content | safe }}
+      </div>
+
+    <hr>
+
+     {% include "common/comment.html" %}
+
+  </div>
+</div>
+{% endblock %} 

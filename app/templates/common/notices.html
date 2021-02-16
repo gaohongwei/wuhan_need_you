@@ -1,0 +1,21 @@
+<div class="jumbotron" style="background-color:rgb(36,59,43); padding: 1.8rem;">
+    <h1 style="text-align: center;color:white;">所有信息</h1>
+</div>
+
+<div class="container">
+
+  {% for notice in pagination.items %}
+  <h3 class="text-success">
+    {% if notice.title %}
+    <a href='/notices/{{notice.id}}'>{{ notice.title }}</a>
+    {% endif %}
+  </h3>
+  <p>{{ notice.created_time | datetime_format_cn }}</p>
+  <!-- {{ notice.content | safe }} -->
+  
+  <br />
+  {% endfor %}
+
+  {% set pagination_endpoint = 'notices.list_notices' %}
+  {% include "common/pagination.html" %}
+</div>

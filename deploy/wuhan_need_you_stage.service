@@ -1,0 +1,13 @@
+[Unit]
+Description=website for WuHan Need You (Stage)
+After=network.target
+
+[Service]
+Environment="APPLICATION_MODE=testing"
+User=root
+Group=www-data
+WorkingDirectory=/usr/local/wuhan_need_you_stage
+ExecStart=/usr/local/bin/uwsgi --ini /usr/local/wuhan_need_you_stage/deploy/uwsgi_stage.ini
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,15 @@
+{% extends 'admin/model/edit.html' %}
+
+{% block body %}
+	<fieldset>
+		{% call lib.form_tag(form) %}
+			{{lib.render_form_fields([form.username])}}
+			{{lib.render_form_fields([form.password])}}
+			{{lib.render_form_fields([form.first_name])}}
+			{{lib.render_form_fields([form.last_name])}}
+			{{lib.render_form_fields([form.email])}}
+			
+			{{ lib.render_form_buttons(return_url) }}
+		{% endcall %}
+	</fieldset>
+{% endblock %}

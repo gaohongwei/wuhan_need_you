@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}QA{% endblock %}
+{% block body %}
+
+<style>.jumbotron{background-color:rgb(36,59,43)!important; } </style>
+<style>.jumbotron{border-radius:0.2rem!important; } </style>
+<div class="jumbotron" style="color: rgb(255, 255, 255); padding: 1.8rem;">
+  <h1 style="text-align: center;">{{pages_info.title}}</h1>
+</div>
+
+<ul class="list-group list-group-flush">
+  
+  {% for question in pages_info.questions %}
+    <li class="list-group-item">
+      <p>Q{{loop.index0 + 1}}:  {{question.q}}</p>
+      <p>A{{loop.index0 + 1}}:  {{question.a}}</p>
+    </li>
+  {% endfor %}
+
+</ul>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+# Python cache
+__pycache__/
+*.pyc
+*.db
+*.sqlite
+*.swp
+venv
+
+# Mac desktop service store files
+.DS_Store
+.vscode/
+/app/static/upload/
+/logs
+/backup
+/backup_img
